@@ -26,13 +26,13 @@ import judgels.api.contest.announcement.ContestAnnouncement;
 import judgels.api.contest.announcement.ContestAnnouncementConfig;
 import judgels.api.contest.announcement.ContestAnnouncementData;
 import judgels.api.contest.announcement.ContestAnnouncementsResponse;
-import judgels.api.profile.Profile;
+import judgels.api.user.profile.Profile;
 import judgels.contest.ContestStore;
 import judgels.contest.log.ContestLogger;
 import judgels.core.api.AuthHeader;
 import judgels.persistence.api.Page;
-import judgels.profile.ProfileStore;
-import judgels.session.ActorChecker;
+import judgels.user.profile.ProfileStore;
+import judgels.user.session.ActorChecker;
 
 @Path("/api/v2/contests/{contestJid}/announcements")
 public class ContestAnnouncementResource {

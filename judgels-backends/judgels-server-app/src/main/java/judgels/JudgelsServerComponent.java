@@ -16,7 +16,7 @@ import judgels.training.submission.programming.TrainingGradingResponsePoller;
 
         judgels.user.superadmin.SuperadminModule.class,
         judgels.user.avatar.UserAvatarModule.class,
-        judgels.session.SessionModule.class,
+        judgels.user.session.SessionModule.class,
         judgels.setting.SettingModule.class,
 
         judgels.core.messaging.RabbitMQModule.class,
@@ -45,7 +45,7 @@ import judgels.training.submission.programming.TrainingGradingResponsePoller;
         judgels.tasks.JudgelsServerTaskModule.class})
 @Singleton
 public interface JudgelsServerComponent {
-    judgels.session.SessionResource sessionResource();
+    judgels.user.session.SessionResource sessionResource();
     judgels.user.superadmin.SuperadminCreator superadminCreator();
     judgels.user.UserResource userResource();
     judgels.user.account.UserAccountResource userAccountResource();
@@ -56,7 +56,7 @@ public interface JudgelsServerComponent {
     judgels.user.search.UserSearchResource userSearchResource();
     judgels.user.web.UserWebResource userWebResource();
     judgels.user.registration.web.UserRegistrationWebResource userRegistrationWebResource();
-    judgels.profile.ProfileResource profileResource();
+    judgels.user.profile.ProfileResource profileResource();
 
     judgels.catalog.problem.ProblemResource problemResource();
     judgels.catalog.problem.ProblemRenderResource problemRenderResource();
@@ -102,7 +102,7 @@ public interface JudgelsServerComponent {
     judgels.setting.SettingResource settingResource();
     judgels.setting.SettingCreator settingCreator();
 
-    judgels.session.SessionCleaner sessionCleaner();
+    judgels.user.session.SessionCleaner sessionCleaner();
     GradingResponsePoller problemGradingResponsePoller();
     @ContestGradingResponsePoller GradingResponsePoller contestGradingResponsePoller();
     @TrainingGradingResponsePoller GradingResponsePoller trainingGradingResponsePoller();

@@ -19,9 +19,9 @@ import judgels.api.training.problem.TrainingProblemsResponse;
 import judgels.catalog.problem.ProblemService;
 import judgels.core.api.AuthHeader;
 import judgels.persistence.api.Page;
-import judgels.session.ActorChecker;
 import judgels.training.stats.ProblemDifficultyStore;
 import judgels.training.stats.StatsStore;
+import judgels.user.session.ActorChecker;
 
 @Path("/api/v4/training/problems")
 public class TrainingProblemResource {

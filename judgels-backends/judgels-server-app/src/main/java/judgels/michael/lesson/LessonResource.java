@@ -20,7 +20,7 @@ import jakarta.ws.rs.core.Response;
 import java.util.Map;
 import java.util.Optional;
 import judgels.api.catalog.lesson.Lesson;
-import judgels.api.profile.Profile;
+import judgels.api.user.profile.Profile;
 import judgels.catalog.lesson.LessonCreator;
 import judgels.michael.template.HtmlTemplate;
 import judgels.michael.template.SearchLessonsWidget;

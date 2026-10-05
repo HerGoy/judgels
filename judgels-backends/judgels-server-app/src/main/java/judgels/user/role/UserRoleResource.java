@@ -16,15 +16,15 @@ import jakarta.ws.rs.Produces;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import judgels.api.profile.Profile;
+import judgels.api.user.profile.Profile;
 import judgels.api.user.role.UserRole;
 import judgels.api.user.role.UserRolesResponse;
 import judgels.api.user.role.UserWithRole;
 import judgels.core.api.AuthHeader;
-import judgels.profile.ProfileStore;
-import judgels.session.ActorChecker;
 import judgels.user.UserRoleChecker;
 import judgels.user.UserStore;
+import judgels.user.profile.ProfileStore;
+import judgels.user.session.ActorChecker;
 
 @Path("/api/v2/user-roles")
 public class UserRoleResource {

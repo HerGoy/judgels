@@ -3,9 +3,9 @@ package judgels.api;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import judgels.BaseJudgelsApiIntegrationTests;
+import judgels.api.client.UserInfoClient;
 import judgels.api.user.User;
 import judgels.api.user.info.UserInfo;
-import judgels.user.UserInfoClient;
 import org.junit.jupiter.api.Test;
 
 class UserInfoApiIntegrationTests extends BaseJudgelsApiIntegrationTests {

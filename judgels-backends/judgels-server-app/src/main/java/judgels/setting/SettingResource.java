@@ -15,8 +15,8 @@ import jakarta.ws.rs.Produces;
 import judgels.api.setting.SettingUpdateData;
 import judgels.api.setting.Settings;
 import judgels.core.api.AuthHeader;
-import judgels.session.ActorChecker;
 import judgels.user.UserRoleChecker;
+import judgels.user.session.ActorChecker;
 
 @Path("/api/v2/settings")
 public class SettingResource {

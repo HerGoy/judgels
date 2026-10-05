@@ -1,7 +1,7 @@
 package judgels.api.submission.programming;
 
 import java.util.Map;
-import judgels.api.profile.Profile;
+import judgels.api.user.profile.Profile;
 import judgels.persistence.api.Page;
 
 public interface SubmissionsResponse {

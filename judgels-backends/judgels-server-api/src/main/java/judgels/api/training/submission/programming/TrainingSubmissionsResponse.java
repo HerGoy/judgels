@@ -3,9 +3,9 @@ package judgels.api.training.submission.programming;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 import java.util.Map;
-import judgels.api.profile.Profile;
 import judgels.api.submission.programming.Submission;
 import judgels.api.training.submission.TrainingSubmissionConfig;
+import judgels.api.user.profile.Profile;
 import judgels.persistence.api.CursorPage;
 import org.immutables.value.Value;
 

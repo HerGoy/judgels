@@ -7,13 +7,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.Instant;
 import java.util.List;
+import judgels.api.client.ProblemSetClient;
 import judgels.api.training.archive.Archive;
 import judgels.api.training.archive.ArchiveCreateData;
 import judgels.api.training.problemset.ProblemSet;
 import judgels.api.training.problemset.ProblemSetCreateData;
 import judgels.api.training.problemset.ProblemSetUpdateData;
 import judgels.api.training.problemset.problem.ProblemSetProblemData;
-import judgels.training.problemset.ProblemSetClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -18,7 +18,7 @@ import jakarta.ws.rs.core.Response;
 import java.util.List;
 import java.util.Map;
 import judgels.api.catalog.problem.Problem;
-import judgels.api.profile.Profile;
+import judgels.api.user.profile.Profile;
 import judgels.catalog.problem.tag.ProblemTagStore;
 import judgels.catalog.problem.version.ProblemVersionStore;
 import judgels.core.git.GitCommit;

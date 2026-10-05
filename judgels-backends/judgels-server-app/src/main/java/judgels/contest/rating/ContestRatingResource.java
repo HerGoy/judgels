@@ -29,7 +29,7 @@ import judgels.api.contest.rating.ContestRatingHistoryResponse;
 import judgels.api.contest.rating.ContestsPendingRatingResponse;
 import judgels.api.contest.scoreboard.Scoreboard;
 import judgels.api.contest.scoreboard.ScoreboardEntry;
-import judgels.api.profile.Profile;
+import judgels.api.user.profile.Profile;
 import judgels.api.user.rating.RatingEvent;
 import judgels.api.user.rating.UserRating;
 import judgels.api.user.rating.UserRatingEvent;
@@ -40,10 +40,10 @@ import judgels.contest.scoreboard.ContestScoreboardBuilder;
 import judgels.contest.scoreboard.ContestScoreboardStore;
 import judgels.contest.scoreboard.RawContestScoreboard;
 import judgels.core.api.AuthHeader;
-import judgels.profile.ProfileStore;
-import judgels.session.ActorChecker;
 import judgels.user.UserStore;
+import judgels.user.profile.ProfileStore;
 import judgels.user.rating.UserRatingStore;
+import judgels.user.session.ActorChecker;
 
 @Path("/api/v2/contest-rating")
 public class ContestRatingResource {

@@ -17,8 +17,8 @@ import java.util.List;
 import judgels.api.user.rating.UserRatingEvent;
 import judgels.api.user.rating.UserRatingUpdateData;
 import judgels.core.api.AuthHeader;
-import judgels.session.ActorChecker;
 import judgels.user.UserRoleChecker;
+import judgels.user.session.ActorChecker;
 
 @Path("/api/v2/user-rating")
 public class UserRatingResource {

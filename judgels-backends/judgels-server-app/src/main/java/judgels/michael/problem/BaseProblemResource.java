@@ -11,9 +11,9 @@ import judgels.catalog.problem.editorial.ProblemEditorialStore;
 import judgels.catalog.problem.statement.ProblemStatementStore;
 import judgels.michael.BaseResource;
 import judgels.michael.template.HtmlTemplate;
-import judgels.profile.ProfileStore;
 import judgels.user.Actor;
 import judgels.user.UserStore;
+import judgels.user.profile.ProfileStore;
 
 public abstract class BaseProblemResource extends BaseResource {
     @Inject protected ProblemRoleChecker roleChecker;

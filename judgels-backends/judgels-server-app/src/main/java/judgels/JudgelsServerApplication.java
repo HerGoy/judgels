@@ -24,7 +24,6 @@ import judgels.grading.GradingModule;
 import judgels.michael.DaggerMichaelComponent;
 import judgels.michael.MichaelComponent;
 import judgels.persistence.JudgelsHibernateModule;
-import judgels.session.SessionModule;
 import judgels.training.TrainingConfiguration;
 import judgels.training.stats.StatsConfiguration;
 import judgels.training.submission.bundle.TrainingItemSubmissionModule;
@@ -32,6 +31,7 @@ import judgels.training.submission.programming.TrainingSubmissionModule;
 import judgels.user.account.UserResetPasswordModule;
 import judgels.user.registration.UserRegistrationModule;
 import judgels.user.registration.web.UserRegistrationWebConfig;
+import judgels.user.session.SessionModule;
 import judgels.user.superadmin.SuperadminModule;
 import org.eclipse.jetty.server.session.SessionHandler;
 

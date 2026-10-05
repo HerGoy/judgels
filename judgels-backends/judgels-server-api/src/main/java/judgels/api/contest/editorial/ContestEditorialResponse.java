@@ -8,7 +8,7 @@ import judgels.api.catalog.problem.ProblemEditorialInfo;
 import judgels.api.catalog.problem.ProblemInfo;
 import judgels.api.catalog.problem.ProblemMetadata;
 import judgels.api.contest.problem.ContestProblem;
-import judgels.api.profile.Profile;
+import judgels.api.user.profile.Profile;
 import org.immutables.value.Value;
 
 @Value.Immutable

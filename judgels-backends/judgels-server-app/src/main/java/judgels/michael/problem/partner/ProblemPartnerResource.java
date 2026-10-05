@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Optional;
 import judgels.api.catalog.Partner;
 import judgels.api.catalog.problem.Problem;
-import judgels.api.profile.Profile;
+import judgels.api.user.profile.Profile;
 import judgels.catalog.problem.partner.ProblemPartnerStore;
 import judgels.michael.problem.BaseProblemResource;
 import judgels.michael.resource.EditPartnersForm;

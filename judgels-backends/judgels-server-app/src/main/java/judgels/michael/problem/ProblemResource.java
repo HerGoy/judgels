@@ -27,7 +27,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import judgels.api.catalog.problem.Problem;
 import judgels.api.catalog.problem.ProblemSetterRole;
-import judgels.api.profile.Profile;
+import judgels.api.user.profile.Profile;
 import judgels.catalog.problem.ProblemCreator;
 import judgels.catalog.problem.tag.ProblemTagStore;
 import judgels.michael.template.HtmlTemplate;

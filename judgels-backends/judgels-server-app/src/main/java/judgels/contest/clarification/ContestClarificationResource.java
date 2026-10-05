@@ -31,15 +31,15 @@ import judgels.api.contest.clarification.ContestClarificationAnswerData;
 import judgels.api.contest.clarification.ContestClarificationConfig;
 import judgels.api.contest.clarification.ContestClarificationData;
 import judgels.api.contest.clarification.ContestClarificationsResponse;
-import judgels.api.profile.Profile;
+import judgels.api.user.profile.Profile;
 import judgels.catalog.problem.ProblemService;
 import judgels.contest.ContestStore;
 import judgels.contest.log.ContestLogger;
 import judgels.contest.problem.ContestProblemStore;
 import judgels.core.api.AuthHeader;
 import judgels.persistence.api.Page;
-import judgels.profile.ProfileStore;
-import judgels.session.ActorChecker;
+import judgels.user.profile.ProfileStore;
+import judgels.user.session.ActorChecker;
 
 @Path("/api/v2/contests/{contestJid}/clarifications")
 public class ContestClarificationResource {

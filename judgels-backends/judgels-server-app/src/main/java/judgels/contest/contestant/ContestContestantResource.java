@@ -33,15 +33,15 @@ import judgels.api.contest.contestant.ContestContestantsDeleteResponse;
 import judgels.api.contest.contestant.ContestContestantsResponse;
 import judgels.api.contest.contestant.ContestContestantsUpsertResponse;
 import judgels.api.contest.module.VirtualModuleConfig;
-import judgels.api.profile.Profile;
+import judgels.api.user.profile.Profile;
 import judgels.contest.ContestStore;
 import judgels.contest.log.ContestLogger;
 import judgels.contest.module.ContestModuleStore;
 import judgels.core.api.AuthHeader;
 import judgels.persistence.api.Page;
-import judgels.profile.ProfileStore;
-import judgels.session.ActorChecker;
 import judgels.user.UserStore;
+import judgels.user.profile.ProfileStore;
+import judgels.user.session.ActorChecker;
 
 @Path("/api/v2/contests/{contestJid}/contestants")
 public class ContestContestantResource {

@@ -2,8 +2,8 @@ package judgels.api;
 
 import static judgels.api.contest.module.ContestModuleType.CLARIFICATION;
 
+import judgels.api.client.ContestLogClient;
 import judgels.api.contest.Contest;
-import judgels.contest.ContestLogClient;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

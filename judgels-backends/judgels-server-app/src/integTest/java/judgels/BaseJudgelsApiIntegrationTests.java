@@ -32,22 +32,22 @@ import judgels.api.catalog.lesson.Lesson;
 import judgels.api.catalog.problem.Problem;
 import judgels.api.catalog.problem.ProblemType;
 import judgels.api.catalog.problem.bundle.ItemType;
-import judgels.api.session.Credentials;
-import judgels.api.session.Session;
+import judgels.api.client.UserClient;
+import judgels.api.client.UserRoleClient;
+import judgels.api.client.UserSessionClient;
 import judgels.api.user.User;
 import judgels.api.user.UserData;
 import judgels.api.user.role.UserRole;
+import judgels.api.user.session.Credentials;
+import judgels.api.user.session.Session;
 import judgels.core.BaseJudgelsAppIntegrationTests;
 import judgels.core.JudgelsAppConfiguration;
 import judgels.core.feign.FeignClients;
 import judgels.core.mailer.MailerConfiguration;
 import judgels.core.messaging.RabbitMQConfiguration;
 import judgels.grading.JudgelsServerGradingConfiguration;
-import judgels.session.SessionClient;
 import judgels.training.TrainingConfiguration;
 import judgels.training.stats.StatsConfiguration;
-import judgels.user.UserClient;
-import judgels.user.UserRoleClient;
 import judgels.user.account.UserResetPasswordConfiguration;
 import judgels.user.registration.UserRegistrationConfiguration;
 import judgels.user.superadmin.SuperadminCreatorConfiguration;
@@ -146,7 +146,7 @@ public abstract class BaseJudgelsApiIntegrationTests extends BaseJudgelsAppInteg
         support = new DropwizardTestSupport<>(JudgelsServerApplication.class, config);
         support.before();
 
-        Session superadminSession = createClient(SessionClient.class).logIn(Credentials.of("superadmin", "superadmin"));
+        Session superadminSession = createClient(UserSessionClient.class).logIn(Credentials.of("superadmin", "superadmin"));
         superadminToken = superadminSession.getToken();
 
         admin = createUser("admin");
@@ -212,7 +212,7 @@ public abstract class BaseJudgelsApiIntegrationTests extends BaseJudgelsAppInteg
     }
 
     protected static String getToken(User user) {
-        return createClient(SessionClient.class)
+        return createClient(UserSessionClient.class)
                 .logIn(Credentials.of(user.getUsername(), "pass"))
                 .getToken();
     }

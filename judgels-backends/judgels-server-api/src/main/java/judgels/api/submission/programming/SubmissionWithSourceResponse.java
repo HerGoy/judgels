@@ -2,7 +2,7 @@ package judgels.api.submission.programming;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
-import judgels.api.profile.Profile;
+import judgels.api.user.profile.Profile;
 import org.immutables.value.Value;
 
 @Value.Immutable

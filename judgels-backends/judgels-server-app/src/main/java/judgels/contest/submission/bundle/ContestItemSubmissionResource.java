@@ -39,10 +39,10 @@ import judgels.api.contest.problem.ContestProblem;
 import judgels.api.contest.submission.ContestSubmissionConfig;
 import judgels.api.contest.submission.bundle.ContestItemSubmissionsResponse;
 import judgels.api.contest.submission.bundle.ContestSubmissionSummaryResponse;
-import judgels.api.profile.Profile;
 import judgels.api.submission.bundle.Grading;
 import judgels.api.submission.bundle.ItemSubmission;
 import judgels.api.submission.bundle.ItemSubmissionData;
+import judgels.api.user.profile.Profile;
 import judgels.catalog.problem.ProblemService;
 import judgels.contest.ContestRoleChecker;
 import judgels.contest.ContestStore;
@@ -52,12 +52,12 @@ import judgels.contest.problem.ContestProblemStore;
 import judgels.contest.submission.ContestSubmissionRoleChecker;
 import judgels.core.api.AuthHeader;
 import judgels.persistence.api.Page;
-import judgels.profile.ProfileStore;
-import judgels.session.ActorChecker;
 import judgels.submission.bundle.ItemSubmissionGraderRegistry;
 import judgels.submission.bundle.ItemSubmissionRegrader;
 import judgels.submission.bundle.ItemSubmissionStore;
 import judgels.user.UserStore;
+import judgels.user.profile.ProfileStore;
+import judgels.user.session.ActorChecker;
 
 @Path("/api/v2/contests/submissions/bundle")
 public class ContestItemSubmissionResource {

@@ -3,8 +3,8 @@ package judgels.api;
 import static judgels.api.contest.module.ContestModuleType.HIDDEN;
 import static judgels.api.contest.module.ContestModuleType.REGISTRATION;
 
+import judgels.api.client.ContestWebClient;
 import judgels.api.contest.Contest;
-import judgels.contest.ContestWebClient;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Test;
 

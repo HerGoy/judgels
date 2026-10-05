@@ -10,13 +10,13 @@ import feign.form.FormData;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import judgels.api.client.ContestSubmissionClient;
 import judgels.api.contest.Contest;
 import judgels.api.contest.submission.ContestSubmissionConfig;
 import judgels.api.contest.submission.programming.ContestUserProblemSubmissionsResponse;
 import judgels.api.contest.supervisor.SupervisorManagementPermission;
 import judgels.api.submission.programming.Submission;
 import judgels.api.submission.programming.SubmissionWithSourceResponse;
-import judgels.contest.ContestSubmissionClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

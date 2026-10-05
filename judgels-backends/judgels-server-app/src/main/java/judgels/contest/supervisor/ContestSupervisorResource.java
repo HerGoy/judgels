@@ -28,15 +28,15 @@ import judgels.api.contest.supervisor.ContestSupervisorUpsertData;
 import judgels.api.contest.supervisor.ContestSupervisorsDeleteResponse;
 import judgels.api.contest.supervisor.ContestSupervisorsResponse;
 import judgels.api.contest.supervisor.ContestSupervisorsUpsertResponse;
-import judgels.api.profile.Profile;
+import judgels.api.user.profile.Profile;
 import judgels.contest.ContestRoleChecker;
 import judgels.contest.ContestStore;
 import judgels.contest.log.ContestLogger;
 import judgels.core.api.AuthHeader;
 import judgels.persistence.api.Page;
-import judgels.profile.ProfileStore;
-import judgels.session.ActorChecker;
 import judgels.user.UserStore;
+import judgels.user.profile.ProfileStore;
+import judgels.user.session.ActorChecker;
 
 @Path("/api/v2/contests/{contestJid}/supervisors")
 public class ContestSupervisorResource {

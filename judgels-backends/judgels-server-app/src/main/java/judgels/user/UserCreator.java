@@ -12,8 +12,8 @@ import java.util.Set;
 import judgels.api.user.User;
 import judgels.api.user.UserData;
 import judgels.api.user.info.UserInfo;
-import judgels.session.SessionStore;
 import judgels.user.info.UserInfoStore;
+import judgels.user.session.SessionStore;
 import liquibase.util.csv.CSVReader;
 
 public class UserCreator {

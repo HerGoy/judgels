@@ -28,14 +28,14 @@ import judgels.api.contest.manager.ContestManagerConfig;
 import judgels.api.contest.manager.ContestManagersDeleteResponse;
 import judgels.api.contest.manager.ContestManagersResponse;
 import judgels.api.contest.manager.ContestManagersUpsertResponse;
-import judgels.api.profile.Profile;
+import judgels.api.user.profile.Profile;
 import judgels.contest.ContestStore;
 import judgels.contest.log.ContestLogger;
 import judgels.core.api.AuthHeader;
 import judgels.persistence.api.Page;
-import judgels.profile.ProfileStore;
-import judgels.session.ActorChecker;
 import judgels.user.UserStore;
+import judgels.user.profile.ProfileStore;
+import judgels.user.session.ActorChecker;
 
 @Path("/api/v2/contests/{contestJid}/managers")
 public class ContestManagerResource {

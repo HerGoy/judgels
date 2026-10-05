@@ -25,10 +25,10 @@ import judgels.api.training.course.CourseUpdateData;
 import judgels.api.training.course.CoursesResponse;
 import judgels.api.training.curriculum.Curriculum;
 import judgels.core.api.AuthHeader;
-import judgels.session.ActorChecker;
 import judgels.training.curriculum.CurriculumStore;
 import judgels.training.stats.StatsStore;
 import judgels.user.role.TrainingAdminRoleChecker;
+import judgels.user.session.ActorChecker;
 
 @Path("/api/v2/courses")
 public class CourseResource {

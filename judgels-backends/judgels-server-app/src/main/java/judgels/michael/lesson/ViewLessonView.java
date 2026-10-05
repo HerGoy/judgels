@@ -1,7 +1,7 @@
 package judgels.michael.lesson;
 
 import judgels.api.catalog.lesson.Lesson;
-import judgels.api.profile.Profile;
+import judgels.api.user.profile.Profile;
 import judgels.michael.template.HtmlTemplate;
 import judgels.michael.template.TemplateView;
 

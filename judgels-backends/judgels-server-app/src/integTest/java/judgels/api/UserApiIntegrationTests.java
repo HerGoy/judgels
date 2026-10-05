@@ -7,24 +7,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import judgels.BaseJudgelsApiIntegrationTests;
-import judgels.api.session.Credentials;
-import judgels.api.session.Session;
+import judgels.api.client.UserClient;
+import judgels.api.client.UserInfoClient;
+import judgels.api.client.UserSearchClient;
+import judgels.api.client.UserSessionClient;
 import judgels.api.user.User;
 import judgels.api.user.UserData;
 import judgels.api.user.UsersResponse;
 import judgels.api.user.UsersUpsertResponse;
 import judgels.api.user.info.UserInfo;
-import judgels.session.SessionClient;
-import judgels.user.UserClient;
-import judgels.user.UserInfoClient;
-import judgels.user.UserSearchClient;
+import judgels.api.user.session.Credentials;
+import judgels.api.user.session.Session;
 import org.junit.jupiter.api.Test;
 
 class UserApiIntegrationTests extends BaseJudgelsApiIntegrationTests {
     private final UserClient userClient = createClient(UserClient.class);
     private final UserInfoClient userInfoClient = createClient(UserInfoClient.class);
     private final UserSearchClient userSearchClient = createClient(UserSearchClient.class);
-    private final SessionClient sessionClient = createClient(SessionClient.class);
+    private final UserSessionClient userSessionClient = createClient(UserSessionClient.class);
 
     @Test
     void create_get_export_users() {
@@ -46,7 +46,7 @@ class UserApiIntegrationTests extends BaseJudgelsApiIntegrationTests {
                 .email("nani@domain.com")
                 .build());
 
-        sessionClient.logIn(Credentials.of("nano", "pass")).getToken();
+        userSessionClient.logIn(Credentials.of("nano", "pass")).getToken();
 
         UsersResponse response = userClient.getUsers(adminToken);
         assertThat(response.getData().getPage()).contains(nani, nano);
@@ -128,26 +128,26 @@ class UserApiIntegrationTests extends BaseJudgelsApiIntegrationTests {
         UserInfo andiInfo = userInfoClient.getInfo(adminToken, andi.getJid());
         assertThat(andiInfo.getCountry()).contains("ID");
         assertThat(andiInfo.getName()).contains("Andi Indo");
-        Session andiSession = sessionClient.logIn(Credentials.of("andi", "123"));
+        Session andiSession = userSessionClient.logIn(Credentials.of("andi", "123"));
 
         User budi = userClient.getUser(adminToken, usernameToJid.get("budi"));
         assertThat(budi.getEmail()).isEqualTo("budi2@judgels.com");
         UserInfo budiInfo = userInfoClient.getInfo(adminToken, budi.getJid());
         assertThat(budiInfo.getCountry()).contains("TH");
         assertThat(budiInfo.getName()).contains("Budi Thai 2");
-        Session budiSession = sessionClient.logIn(Credentials.of("budi", "333"));
+        Session budiSession = userSessionClient.logIn(Credentials.of("budi", "333"));
 
         User caca = userClient.getUser(adminToken, usernameToJid.get("caca"));
         assertThat(caca.getEmail()).isEqualTo("caca@judgels.com");
         UserInfo cacaInfo = userInfoClient.getInfo(adminToken, caca.getJid());
         assertThat(cacaInfo.getCountry()).contains("MY");
         assertThat(cacaInfo.getName()).contains("Caca Malay");
-        Session cacaSession = sessionClient.logIn(Credentials.of("caca", "778"));
+        Session cacaSession = userSessionClient.logIn(Credentials.of("caca", "778"));
 
         User dudi = userClient.getUser(adminToken, usernameToJid.get("dudi"));
         assertThat(dudi.getJid()).isEqualTo("JID123");
         assertThat(dudi.getEmail()).isEqualTo("dudidudi@judgels.com");
-        Session dudiSession = sessionClient.logIn(Credentials.of("dudi", "888"));
+        Session dudiSession = userSessionClient.logIn(Credentials.of("dudi", "888"));
 
         // update non-passwords, still logged in
         response = userClient.upsertUsers(adminToken, "username,country\r\n"

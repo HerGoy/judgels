@@ -8,12 +8,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import judgels.api.client.ContestAnnouncementClient;
 import judgels.api.contest.Contest;
 import judgels.api.contest.announcement.ContestAnnouncement;
 import judgels.api.contest.announcement.ContestAnnouncementData;
 import judgels.api.contest.announcement.ContestAnnouncementStatus;
 import judgels.api.contest.supervisor.SupervisorManagementPermission;
-import judgels.contest.ContestAnnouncementClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

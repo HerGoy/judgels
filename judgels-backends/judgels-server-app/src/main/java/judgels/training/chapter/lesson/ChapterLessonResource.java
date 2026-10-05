@@ -33,10 +33,10 @@ import judgels.api.training.chapter.lesson.ChapterLessonStatement;
 import judgels.api.training.chapter.lesson.ChapterLessonsResponse;
 import judgels.catalog.lesson.LessonService;
 import judgels.core.api.AuthHeader;
-import judgels.session.ActorChecker;
 import judgels.training.chapter.ChapterNavigationStore;
 import judgels.training.chapter.ChapterStore;
 import judgels.user.role.TrainingAdminRoleChecker;
+import judgels.user.session.ActorChecker;
 
 @Path("/api/v2/chapters/{chapterJid}/lessons")
 public class ChapterLessonResource {

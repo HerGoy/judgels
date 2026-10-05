@@ -28,13 +28,13 @@ import judgels.api.contest.Contest;
 import judgels.api.contest.editorial.ContestEditorialResponse;
 import judgels.api.contest.module.EditorialModuleConfig;
 import judgels.api.contest.problem.ContestProblem;
-import judgels.api.profile.Profile;
+import judgels.api.user.profile.Profile;
 import judgels.catalog.problem.ProblemService;
 import judgels.contest.ContestStore;
 import judgels.contest.log.ContestLogger;
 import judgels.contest.module.ContestModuleStore;
 import judgels.contest.problem.ContestProblemStore;
-import judgels.profile.ProfileStore;
+import judgels.user.profile.ProfileStore;
 
 @Path("/api/v2/contests/{contestJid}/editorial")
 public class ContestEditorialResource {

@@ -3,11 +3,11 @@ package judgels.api;
 import static judgels.api.contest.announcement.ContestAnnouncementStatus.PUBLISHED;
 import static judgels.api.contest.module.ContestModuleType.REGISTRATION;
 
+import judgels.api.client.ContestAnnouncementClient;
 import judgels.api.contest.Contest;
 import judgels.api.contest.announcement.ContestAnnouncement;
 import judgels.api.contest.announcement.ContestAnnouncementData;
 import judgels.api.contest.supervisor.SupervisorManagementPermission;
-import judgels.contest.ContestAnnouncementClient;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

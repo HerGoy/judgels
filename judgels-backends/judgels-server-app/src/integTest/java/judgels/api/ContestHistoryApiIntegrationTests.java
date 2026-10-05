@@ -7,13 +7,13 @@ import static org.hibernate.cfg.AvailableSettings.GENERATE_STATISTICS;
 import static org.hibernate.cfg.AvailableSettings.URL;
 
 import java.time.Instant;
+import judgels.api.client.ContestHistoryClient;
+import judgels.api.client.UserRatingClient;
 import judgels.api.contest.Contest;
 import judgels.api.contest.history.ContestHistoryResponse;
 import judgels.api.contest.module.ContestModuleType;
 import judgels.api.user.rating.UserRating;
 import judgels.api.user.rating.UserRatingUpdateData;
-import judgels.contest.ContestHistoryClient;
-import judgels.user.UserRatingClient;
 import org.h2.Driver;
 import org.hibernate.Session;
 import org.hibernate.Transaction;

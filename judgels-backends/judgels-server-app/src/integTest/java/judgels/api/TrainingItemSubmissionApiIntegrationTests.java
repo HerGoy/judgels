@@ -7,6 +7,7 @@ import jakarta.ws.rs.core.Form;
 import java.util.List;
 import java.util.Map;
 import judgels.api.catalog.problem.bundle.ItemType;
+import judgels.api.client.TrainingItemSubmissionClient;
 import judgels.api.submission.bundle.ItemSubmission;
 import judgels.api.submission.bundle.ItemSubmissionData;
 import judgels.api.submission.bundle.Verdict;
@@ -14,7 +15,6 @@ import judgels.api.training.archive.ArchiveCreateData;
 import judgels.api.training.problemset.ProblemSet;
 import judgels.api.training.problemset.ProblemSetCreateData;
 import judgels.api.training.problemset.problem.ProblemSetProblemData;
-import judgels.training.submission.TrainingItemSubmissionClient;
 import org.junit.jupiter.api.Test;
 
 class TrainingItemSubmissionApiIntegrationTests extends BaseTrainingApiIntegrationTests {

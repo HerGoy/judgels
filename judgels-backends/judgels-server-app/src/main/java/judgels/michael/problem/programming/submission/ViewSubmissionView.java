@@ -2,8 +2,8 @@ package judgels.michael.problem.programming.submission;
 
 import java.util.Map;
 import java.util.Optional;
-import judgels.api.profile.Profile;
 import judgels.api.submission.programming.Submission;
+import judgels.api.user.profile.Profile;
 import judgels.grading.api.GradingResultDetails;
 import judgels.grading.api.OutputOnlyOverrides;
 import judgels.grading.api.SourceFile;

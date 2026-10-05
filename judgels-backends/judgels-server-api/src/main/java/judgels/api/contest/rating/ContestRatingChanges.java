@@ -2,7 +2,7 @@ package judgels.api.contest.rating;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Map;
-import judgels.api.profile.Profile;
+import judgels.api.user.profile.Profile;
 import judgels.api.user.rating.UserRating;
 import org.immutables.value.Value;
 

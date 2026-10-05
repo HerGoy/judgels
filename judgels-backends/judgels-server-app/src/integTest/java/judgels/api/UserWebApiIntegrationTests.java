@@ -3,12 +3,12 @@ package judgels.api;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import judgels.BaseJudgelsApiIntegrationTests;
+import judgels.api.client.SettingClient;
+import judgels.api.client.UserWebClient;
 import judgels.api.setting.AppSettings;
 import judgels.api.setting.HomeSettings;
 import judgels.api.setting.SettingUpdateData;
 import judgels.api.user.web.UserWebConfig;
-import judgels.setting.SettingClient;
-import judgels.user.UserWebClient;
 import org.junit.jupiter.api.Test;
 
 class UserWebApiIntegrationTests extends BaseJudgelsApiIntegrationTests {

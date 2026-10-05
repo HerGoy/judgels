@@ -29,9 +29,9 @@ import judgels.api.contest.scoreboard.ContestScoreboardType;
 import judgels.api.contest.scoreboard.Scoreboard;
 import judgels.api.contest.scoreboard.ScoreboardEntry;
 import judgels.api.contest.scoreboard.ScoreboardState;
-import judgels.api.profile.Profile;
 import judgels.api.submission.bundle.ItemSubmission;
 import judgels.api.submission.programming.Submission;
+import judgels.api.user.profile.Profile;
 import judgels.api.user.rating.UserRating;
 import judgels.catalog.problem.ProblemService;
 import judgels.contest.ContestStore;
@@ -41,9 +41,9 @@ import judgels.contest.module.ContestModuleStore;
 import judgels.contest.problem.ContestProblemStore;
 import judgels.contest.rating.ContestRatingProvider;
 import judgels.grading.api.ScoringConfig;
-import judgels.profile.ProfileStore;
 import judgels.submission.bundle.ItemSubmissionStore;
 import judgels.submission.programming.SubmissionStore;
+import judgels.user.profile.ProfileStore;
 
 public class ContestScoreboardUpdater {
     private final ObjectMapper objectMapper;

@@ -37,8 +37,8 @@ import judgels.api.user.UsersUpsertResponse;
 import judgels.core.api.AuthHeader;
 import judgels.persistence.api.OrderDir;
 import judgels.persistence.api.Page;
-import judgels.session.ActorChecker;
-import judgels.session.SessionStore;
+import judgels.user.session.ActorChecker;
+import judgels.user.session.SessionStore;
 
 @Path("/api/v2/users")
 public class UserResource {

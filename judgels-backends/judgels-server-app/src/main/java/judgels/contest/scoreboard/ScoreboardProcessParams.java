@@ -8,9 +8,9 @@ import java.util.Set;
 import judgels.api.contest.contestant.ContestContestant;
 import judgels.api.contest.module.StyleModuleConfig;
 import judgels.api.contest.scoreboard.ScoreboardState;
-import judgels.api.profile.Profile;
 import judgels.api.submission.bundle.ItemSubmission;
 import judgels.api.submission.programming.Submission;
+import judgels.api.user.profile.Profile;
 import judgels.grading.api.ScoringConfig;
 import org.immutables.value.Value;
 

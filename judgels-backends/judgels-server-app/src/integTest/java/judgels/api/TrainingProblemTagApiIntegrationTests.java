@@ -4,10 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import judgels.BaseJudgelsApiIntegrationTests;
+import judgels.api.client.TrainingProblemTagClient;
 import judgels.api.training.problem.ProblemTagCategory;
 import judgels.api.training.problem.ProblemTagOption;
 import judgels.api.training.problem.ProblemTagsResponse;
-import judgels.training.problem.TrainingProblemTagClient;
 import org.junit.jupiter.api.Test;
 
 class TrainingProblemTagApiIntegrationTests extends BaseJudgelsApiIntegrationTests {

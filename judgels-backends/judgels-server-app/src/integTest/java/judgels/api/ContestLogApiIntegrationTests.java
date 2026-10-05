@@ -10,12 +10,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import judgels.api.client.ContestClarificationClient;
+import judgels.api.client.ContestLogClient;
 import judgels.api.contest.Contest;
 import judgels.api.contest.clarification.ContestClarification;
 import judgels.api.contest.clarification.ContestClarificationData;
 import judgels.api.contest.log.ContestLog;
-import judgels.contest.ContestClarificationClient;
-import judgels.contest.ContestLogClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

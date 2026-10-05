@@ -7,6 +7,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import judgels.api.catalog.problem.bundle.ItemType;
+import judgels.api.client.ContestItemSubmissionClient;
 import judgels.api.contest.Contest;
 import judgels.api.contest.submission.bundle.ContestItemSubmissionsResponse;
 import judgels.api.contest.submission.bundle.ContestSubmissionSummaryResponse;
@@ -14,7 +15,6 @@ import judgels.api.submission.bundle.Grading;
 import judgels.api.submission.bundle.ItemSubmission;
 import judgels.api.submission.bundle.ItemSubmissionData;
 import judgels.api.submission.bundle.Verdict;
-import judgels.contest.ContestItemSubmissionClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

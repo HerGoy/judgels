@@ -28,10 +28,10 @@ import judgels.api.user.User;
 import judgels.core.JudgelsResponseBuilders;
 import judgels.core.api.AuthHeader;
 import judgels.core.fs.FileSystem;
-import judgels.session.ActorChecker;
 import judgels.user.RandomCodeGenerator;
 import judgels.user.UserRoleChecker;
 import judgels.user.UserStore;
+import judgels.user.session.ActorChecker;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 

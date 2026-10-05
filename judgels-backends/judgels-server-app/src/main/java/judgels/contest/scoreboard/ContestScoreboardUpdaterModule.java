@@ -16,9 +16,9 @@ import judgels.contest.rating.ContestRatingProvider;
 import judgels.contest.submission.bundle.ContestItemSubmissionStore;
 import judgels.contest.submission.programming.ContestSubmissionStore;
 import judgels.core.JudgelsScheduler;
-import judgels.profile.ProfileStore;
 import judgels.submission.bundle.ItemSubmissionStore;
 import judgels.submission.programming.SubmissionStore;
+import judgels.user.profile.ProfileStore;
 import org.hibernate.SessionFactory;
 
 @Module

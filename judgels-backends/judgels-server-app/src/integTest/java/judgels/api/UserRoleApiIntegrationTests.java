@@ -4,10 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Map;
 import judgels.BaseJudgelsApiIntegrationTests;
+import judgels.api.client.UserRoleClient;
 import judgels.api.user.User;
 import judgels.api.user.role.UserRole;
 import judgels.api.user.role.UserWithRole;
-import judgels.user.UserRoleClient;
 import org.junit.jupiter.api.Test;
 
 public class UserRoleApiIntegrationTests extends BaseJudgelsApiIntegrationTests {

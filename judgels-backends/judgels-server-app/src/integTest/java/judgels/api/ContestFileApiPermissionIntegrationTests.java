@@ -4,9 +4,9 @@ import static jakarta.ws.rs.core.MediaType.MULTIPART_FORM_DATA;
 import static judgels.api.contest.module.ContestModuleType.FILE;
 
 import feign.form.FormData;
+import judgels.api.client.ContestFileClient;
 import judgels.api.contest.Contest;
 import judgels.api.contest.supervisor.SupervisorManagementPermission;
-import judgels.contest.ContestFileClient;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

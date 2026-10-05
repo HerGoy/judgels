@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import judgels.api.profile.Profile;
 import judgels.api.training.archive.Archive;
 import judgels.api.training.problemset.ProblemSet;
 import judgels.api.training.problemset.ProblemSetCreateData;
@@ -37,15 +36,16 @@ import judgels.api.training.problemset.ProblemSetUserProgressesResponse;
 import judgels.api.training.problemset.ProblemSetsResponse;
 import judgels.api.training.problemset.problem.ProblemSetProblem;
 import judgels.api.training.stats.ProblemProgress;
+import judgels.api.user.profile.Profile;
 import judgels.core.api.AuthHeader;
 import judgels.persistence.api.Page;
-import judgels.profile.ProfileStore;
-import judgels.session.ActorChecker;
 import judgels.training.archive.ArchiveStore;
 import judgels.training.problemset.problem.ProblemSetProblemStore;
 import judgels.training.stats.StatsStore;
 import judgels.user.UserStore;
+import judgels.user.profile.ProfileStore;
 import judgels.user.role.TrainingAdminRoleChecker;
+import judgels.user.session.ActorChecker;
 
 @Path("/api/v2/problemsets")
 public class ProblemSetResource {

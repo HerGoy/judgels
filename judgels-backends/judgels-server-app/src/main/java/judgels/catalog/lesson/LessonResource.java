@@ -17,8 +17,8 @@ import judgels.api.catalog.lesson.Lesson;
 import judgels.api.catalog.lesson.LessonsResponse;
 import judgels.core.api.AuthHeader;
 import judgels.persistence.api.Page;
-import judgels.profile.ProfileStore;
-import judgels.session.ActorChecker;
+import judgels.user.profile.ProfileStore;
+import judgels.user.session.ActorChecker;
 
 @Path("/api/v4/lessons")
 public class LessonResource {

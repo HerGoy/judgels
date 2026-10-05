@@ -7,14 +7,14 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response;
 import java.net.URI;
 import java.util.Optional;
-import judgels.api.session.Session;
 import judgels.api.user.User;
 import judgels.api.user.role.UserRole;
+import judgels.api.user.session.Session;
 import judgels.core.PerRequestActorProvider;
-import judgels.session.SessionStore;
 import judgels.user.Actor;
 import judgels.user.UserStore;
 import judgels.user.role.UserRoleStore;
+import judgels.user.session.SessionStore;
 
 public class ActorChecker {
     private final SessionStore sessionStore;

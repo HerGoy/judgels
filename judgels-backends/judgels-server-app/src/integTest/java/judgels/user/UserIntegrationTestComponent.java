@@ -5,10 +5,10 @@ import jakarta.inject.Singleton;
 import judgels.core.JudgelsModule;
 import judgels.persistence.JudgelsHibernateModule;
 import judgels.persistence.JudgelsPersistenceModule;
-import judgels.session.SessionStore;
 import judgels.user.account.UserResetPasswordStore;
 import judgels.user.avatar.UserAvatarIntegrationTestModule;
 import judgels.user.role.SuperadminRoleStore;
+import judgels.user.session.SessionStore;
 
 @Component(modules = {
         JudgelsModule.class,

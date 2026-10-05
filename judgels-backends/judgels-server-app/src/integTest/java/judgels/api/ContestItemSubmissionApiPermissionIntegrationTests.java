@@ -2,9 +2,9 @@ package judgels.api;
 
 import jakarta.ws.rs.core.Form;
 import judgels.api.catalog.problem.bundle.ItemType;
+import judgels.api.client.ContestItemSubmissionClient;
 import judgels.api.contest.Contest;
 import judgels.api.submission.bundle.ItemSubmissionData;
-import judgels.contest.ContestItemSubmissionClient;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

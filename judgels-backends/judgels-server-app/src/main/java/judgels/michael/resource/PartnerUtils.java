@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 import judgels.api.catalog.Partner;
 import judgels.api.catalog.PartnerPermission;
-import judgels.api.profile.Profile;
+import judgels.api.user.profile.Profile;
 import judgels.user.UserStore;
 
 public class PartnerUtils {

@@ -1,8 +1,8 @@
 package judgels.api;
 
 import judgels.BaseJudgelsApiIntegrationTests;
+import judgels.api.client.SettingClient;
 import judgels.api.setting.SettingUpdateData;
-import judgels.setting.SettingClient;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Test;
 

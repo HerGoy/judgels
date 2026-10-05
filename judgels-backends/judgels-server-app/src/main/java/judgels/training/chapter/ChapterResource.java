@@ -20,8 +20,8 @@ import judgels.api.training.chapter.ChapterCreateData;
 import judgels.api.training.chapter.ChapterUpdateData;
 import judgels.api.training.chapter.ChaptersResponse;
 import judgels.core.api.AuthHeader;
-import judgels.session.ActorChecker;
 import judgels.user.role.TrainingAdminRoleChecker;
+import judgels.user.session.ActorChecker;
 
 @Path("/api/v2/chapters")
 public class ChapterResource {

@@ -2,8 +2,8 @@ package judgels.api;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import judgels.api.client.TrainingUserStatsClient;
 import judgels.api.training.stats.UserStats;
-import judgels.training.stats.TrainingUserStatsClient;
 import org.junit.jupiter.api.Test;
 
 class TrainingUserStatsApiIntegrationTests extends BaseTrainingApiIntegrationTests {

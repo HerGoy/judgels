@@ -14,10 +14,10 @@ import judgels.api.setting.Settings;
 import judgels.api.user.role.UserRole;
 import judgels.api.user.web.UserWebConfig;
 import judgels.core.api.AuthHeader;
-import judgels.profile.ProfileStore;
-import judgels.session.ActorChecker;
 import judgels.setting.SettingStore;
+import judgels.user.profile.ProfileStore;
 import judgels.user.role.UserRoleStore;
+import judgels.user.session.ActorChecker;
 
 @Path("/api/v2/user-web")
 public class UserWebResource {

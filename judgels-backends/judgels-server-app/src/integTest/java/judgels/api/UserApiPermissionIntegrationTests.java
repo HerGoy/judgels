@@ -2,9 +2,9 @@ package judgels.api;
 
 import java.util.List;
 import judgels.BaseJudgelsApiIntegrationTests;
+import judgels.api.client.UserClient;
 import judgels.api.user.User;
 import judgels.api.user.UserData;
-import judgels.user.UserClient;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Test;
 

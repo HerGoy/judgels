@@ -16,6 +16,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import judgels.api.client.ContestClarificationClient;
+import judgels.api.client.ContestWebClient;
 import judgels.api.contest.Contest;
 import judgels.api.contest.clarification.ContestClarification;
 import judgels.api.contest.clarification.ContestClarificationAnswerData;
@@ -27,8 +29,6 @@ import judgels.api.contest.supervisor.SupervisorManagementPermission;
 import judgels.api.contest.web.ContestState;
 import judgels.api.contest.web.ContestTab;
 import judgels.api.contest.web.ContestWebConfig;
-import judgels.contest.ContestClarificationClient;
-import judgels.contest.ContestWebClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

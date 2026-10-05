@@ -3,7 +3,7 @@ package judgels.api.training.problemset;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Map;
 import java.util.Optional;
-import judgels.api.profile.Profile;
+import judgels.api.user.profile.Profile;
 import judgels.persistence.api.Page;
 import org.immutables.value.Value;
 

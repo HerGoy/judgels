@@ -6,6 +6,7 @@ import static judgels.api.contest.module.ContestModuleType.PAUSE;
 
 import java.time.Duration;
 import java.time.Instant;
+import judgels.api.client.ContestClarificationClient;
 import judgels.api.contest.Contest;
 import judgels.api.contest.ContestUpdateData;
 import judgels.api.contest.clarification.ContestClarification;
@@ -14,7 +15,6 @@ import judgels.api.contest.clarification.ContestClarificationData;
 import judgels.api.contest.module.ClarificationTimeLimitModuleConfig;
 import judgels.api.contest.module.ContestModulesConfig;
 import judgels.api.contest.supervisor.SupervisorManagementPermission;
-import judgels.contest.ContestClarificationClient;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

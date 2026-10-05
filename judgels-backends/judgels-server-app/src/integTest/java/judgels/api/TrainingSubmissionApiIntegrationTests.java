@@ -7,13 +7,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import feign.form.FormData;
 import java.util.List;
 import java.util.Map;
+import judgels.api.client.TrainingSubmissionClient;
 import judgels.api.submission.programming.Submission;
 import judgels.api.submission.programming.SubmissionWithSourceResponse;
 import judgels.api.training.archive.ArchiveCreateData;
 import judgels.api.training.problemset.ProblemSet;
 import judgels.api.training.problemset.ProblemSetCreateData;
 import judgels.api.training.problemset.problem.ProblemSetProblemData;
-import judgels.training.submission.TrainingSubmissionClient;
 import org.junit.jupiter.api.Test;
 
 class TrainingSubmissionApiIntegrationTests extends BaseTrainingApiIntegrationTests {

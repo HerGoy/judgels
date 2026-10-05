@@ -19,15 +19,15 @@ import java.net.URI;
 import java.time.Duration;
 import java.util.Date;
 import java.util.Optional;
-import judgels.api.session.Session;
 import judgels.api.user.User;
+import judgels.api.user.session.Session;
 import judgels.core.auth.google.GoogleAuth;
 import judgels.michael.BaseResource;
 import judgels.michael.template.HtmlTemplate;
-import judgels.session.SessionStore;
-import judgels.session.SessionTokenGenerator;
 import judgels.user.UserStore;
 import judgels.user.registration.UserRegistrationEmailStore;
+import judgels.user.session.SessionStore;
+import judgels.user.session.SessionTokenGenerator;
 
 @Path("/")
 public class IndexResource extends BaseResource {

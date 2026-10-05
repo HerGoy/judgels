@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 import judgels.api.catalog.problem.bundle.BundleItem;
 import judgels.api.catalog.problem.bundle.Item;
 import judgels.api.catalog.problem.bundle.ItemType;
-import judgels.api.profile.Profile;
 import judgels.api.submission.bundle.Grading;
 import judgels.api.submission.bundle.ItemSubmission;
 import judgels.api.submission.bundle.ItemSubmissionData;
@@ -38,11 +37,10 @@ import judgels.api.training.problemset.problem.ProblemSetProblem;
 import judgels.api.training.submission.TrainingSubmissionConfig;
 import judgels.api.training.submission.bundle.TrainingItemSubmissionsResponse;
 import judgels.api.training.submission.bundle.TrainingSubmissionSummaryResponse;
+import judgels.api.user.profile.Profile;
 import judgels.catalog.problem.ProblemService;
 import judgels.core.api.AuthHeader;
 import judgels.persistence.api.Page;
-import judgels.profile.ProfileStore;
-import judgels.session.ActorChecker;
 import judgels.submission.bundle.ItemSubmissionConsumer;
 import judgels.submission.bundle.ItemSubmissionGraderRegistry;
 import judgels.submission.bundle.ItemSubmissionRegrader;
@@ -52,6 +50,8 @@ import judgels.training.problemset.problem.ProblemSetProblemStore;
 import judgels.training.submission.TrainingSubmissionRoleChecker;
 import judgels.training.submission.TrainingSubmissionUtils;
 import judgels.user.UserStore;
+import judgels.user.profile.ProfileStore;
+import judgels.user.session.ActorChecker;
 
 @Path("/api/v4/training/submissions/bundle")
 public class TrainingItemSubmissionResource {

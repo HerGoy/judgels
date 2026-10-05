@@ -12,13 +12,13 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import java.util.Map;
-import judgels.api.profile.Profile;
 import judgels.api.training.stats.UserStats;
 import judgels.api.training.stats.UserTopStatsEntry;
 import judgels.api.training.stats.UserTopStatsResponse;
+import judgels.api.user.profile.Profile;
 import judgels.persistence.api.Page;
-import judgels.profile.ProfileStore;
 import judgels.user.UserStore;
+import judgels.user.profile.ProfileStore;
 
 @Path("/api/v4/training/stats/users")
 public class TrainingUserStatsResource {

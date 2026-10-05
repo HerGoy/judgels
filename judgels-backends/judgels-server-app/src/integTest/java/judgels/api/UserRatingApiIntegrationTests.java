@@ -4,11 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.Instant;
 import judgels.BaseJudgelsApiIntegrationTests;
+import judgels.api.client.UserRatingClient;
 import judgels.api.user.User;
 import judgels.api.user.rating.UserRating;
 import judgels.api.user.rating.UserRatingEvent;
 import judgels.api.user.rating.UserRatingUpdateData;
-import judgels.user.UserRatingClient;
 import org.junit.jupiter.api.Test;
 
 public class UserRatingApiIntegrationTests extends BaseJudgelsApiIntegrationTests {

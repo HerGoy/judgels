@@ -4,10 +4,10 @@ import com.google.common.collect.ImmutableMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
-import judgels.api.profile.Profile;
 import judgels.api.submission.bundle.BundleAnswer;
 import judgels.api.submission.bundle.BundleSubmission;
 import judgels.api.submission.bundle.ItemGradingResult;
+import judgels.api.user.profile.Profile;
 import judgels.michael.template.HtmlTemplate;
 import judgels.michael.template.TemplateView;
 

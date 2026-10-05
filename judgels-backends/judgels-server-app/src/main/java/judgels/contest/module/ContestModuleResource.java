@@ -23,8 +23,8 @@ import judgels.contest.ContestRoleChecker;
 import judgels.contest.ContestStore;
 import judgels.contest.log.ContestLogger;
 import judgels.core.api.AuthHeader;
-import judgels.profile.ProfileStore;
-import judgels.session.ActorChecker;
+import judgels.user.profile.ProfileStore;
+import judgels.user.session.ActorChecker;
 
 @Path("/api/v2/contests/{contestJid}/modules")
 public class ContestModuleResource {

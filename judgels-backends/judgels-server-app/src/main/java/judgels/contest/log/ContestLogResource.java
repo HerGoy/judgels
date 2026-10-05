@@ -25,7 +25,7 @@ import judgels.api.contest.log.ContestLog;
 import judgels.api.contest.log.ContestLogConfig;
 import judgels.api.contest.log.ContestLogsResponse;
 import judgels.api.contest.problem.ContestProblem;
-import judgels.api.profile.Profile;
+import judgels.api.user.profile.Profile;
 import judgels.contest.ContestRoleChecker;
 import judgels.contest.ContestStore;
 import judgels.contest.contestant.ContestContestantStore;
@@ -33,9 +33,9 @@ import judgels.contest.problem.ContestProblemStore;
 import judgels.contest.supervisor.ContestSupervisorStore;
 import judgels.core.api.AuthHeader;
 import judgels.persistence.api.Page;
-import judgels.profile.ProfileStore;
-import judgels.session.ActorChecker;
 import judgels.user.UserStore;
+import judgels.user.profile.ProfileStore;
+import judgels.user.session.ActorChecker;
 
 @Path("/api/v2/contests/{contestJid}/logs")
 public class ContestLogResource {

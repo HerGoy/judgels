@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Map;
 import judgels.api.catalog.problem.ProblemMetadata;
 import judgels.api.contest.ContestInfo;
-import judgels.api.profile.Profile;
 import judgels.api.training.stats.ProblemDifficulty;
 import judgels.api.training.stats.ProblemProgress;
 import judgels.api.training.stats.ProblemTopStats;
+import judgels.api.user.profile.Profile;
 import org.immutables.value.Value;
 
 @Value.Immutable

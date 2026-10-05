@@ -22,13 +22,13 @@ import judgels.api.contest.Contest;
 import judgels.api.contest.scoreboard.ContestScoreboardConfig;
 import judgels.api.contest.scoreboard.ContestScoreboardResponse;
 import judgels.api.contest.scoreboard.ScoreboardEntry;
-import judgels.api.profile.Profile;
+import judgels.api.user.profile.Profile;
 import judgels.contest.ContestStore;
 import judgels.contest.log.ContestLogger;
 import judgels.contest.submission.ContestSubmissionRoleChecker;
 import judgels.core.api.AuthHeader;
-import judgels.profile.ProfileStore;
-import judgels.session.ActorChecker;
+import judgels.user.profile.ProfileStore;
+import judgels.user.session.ActorChecker;
 
 @Path("/api/v2/contests/{contestJid}/scoreboard")
 public class ContestScoreboardResource {

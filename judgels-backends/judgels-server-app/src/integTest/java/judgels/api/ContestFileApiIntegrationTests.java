@@ -8,11 +8,11 @@ import feign.form.FormData;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import judgels.api.client.ContestFileClient;
 import judgels.api.contest.Contest;
 import judgels.api.contest.file.ContestFile;
 import judgels.api.contest.file.ContestFileConfig;
 import judgels.api.contest.supervisor.SupervisorManagementPermission;
-import judgels.contest.ContestFileClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

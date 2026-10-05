@@ -2,8 +2,8 @@ package judgels.api;
 
 import java.time.Instant;
 import judgels.BaseJudgelsApiIntegrationTests;
+import judgels.api.client.UserRatingClient;
 import judgels.api.user.rating.UserRatingUpdateData;
-import judgels.user.UserRatingClient;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Test;
 

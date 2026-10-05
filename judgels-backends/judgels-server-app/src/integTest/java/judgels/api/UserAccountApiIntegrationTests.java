@@ -7,21 +7,21 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import judgels.BaseJudgelsApiIntegrationTests;
-import judgels.api.session.Credentials;
-import judgels.api.session.SessionWithRegistrationErrors;
+import judgels.api.client.UserAccountClient;
+import judgels.api.client.UserClient;
+import judgels.api.client.UserSessionClient;
 import judgels.api.user.UserData;
 import judgels.api.user.account.PasswordResetData;
 import judgels.api.user.account.UserRegistrationData;
-import judgels.session.SessionClient;
-import judgels.user.UserAccountClient;
-import judgels.user.UserClient;
+import judgels.api.user.session.Credentials;
+import judgels.api.user.session.SessionWithRegistrationErrors;
 import org.junit.jupiter.api.Test;
 import org.subethamail.wiser.Wiser;
 
 class UserAccountApiIntegrationTests extends BaseJudgelsApiIntegrationTests {
     private final UserClient userClient = createClient(UserClient.class);
     private final UserAccountClient accountClient = createClient(UserAccountClient.class);
-    private final SessionClient sessionClient = createClient(SessionClient.class);
+    private final UserSessionClient userSessionClient = createClient(UserSessionClient.class);
 
     @Test
     void register_activate_user() {
@@ -38,7 +38,7 @@ class UserAccountApiIntegrationTests extends BaseJudgelsApiIntegrationTests {
         Credentials credentials = Credentials.of("beta", "pass");
 
         // log in before activation
-        assertForbidden(() -> sessionClient.logIn(credentials))
+        assertForbidden(() -> userSessionClient.logIn(credentials))
                 .hasMessageContaining(SessionWithRegistrationErrors.USER_NOT_ACTIVATED);
 
         // read activation email
@@ -48,7 +48,7 @@ class UserAccountApiIntegrationTests extends BaseJudgelsApiIntegrationTests {
         accountClient.activateUser(emailCode);
 
         // log in after activation
-        assertPermitted(() -> sessionClient.logIn(credentials));
+        assertPermitted(() -> userSessionClient.logIn(credentials));
 
         wiser.stop();
     }
@@ -106,7 +106,7 @@ class UserAccountApiIntegrationTests extends BaseJudgelsApiIntegrationTests {
         accountClient.requestToResetPassword("delta@domain.com");
 
         // can still log in if password is not actually reset
-        assertPermitted(() -> sessionClient.logIn(Credentials.of("delta", "pass")));
+        assertPermitted(() -> userSessionClient.logIn(Credentials.of("delta", "pass")));
 
         String email = readEmail(wiser, 0);
         String emailCode = extractEmailCode(email);
