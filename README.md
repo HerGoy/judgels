@@ -38,6 +38,7 @@ This is a non-exhaustive list of Judgels's features:
 
 This repository is an optimized and modernized edition of the original [ia-toki/judgels](https://github.com/ia-toki/judgels), featuring:
 
+- **Universal Multi-Resolution & Mobile-Friendly Overhaul:** Full responsive design adapting to any screen resolution (from 320px compact smartphones, tablets, laptops, to 4K ultra-wide monitors) across all core navigation, scoreboards, problem statements, math formulas (KaTeX), code editor, and administration dialogs.
 - **Complete Modern Problem Management SPA:** Full REST API (`/problems/api`) and React interfaces for creating and editing statements, test data, grading configs, and permissions without legacy server-side rendering.
 - **Resilient Submission & Container Routing:** Eliminates broken or unclickable problem links when problemsets or course chapters are reorganized or deleted through automatic fallback resolution.
 - **Crash-Resistant Frontend Initialization:** Defensive client bootstrapping and synchronous configuration execution preventing blank white screen issues.

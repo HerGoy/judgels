@@ -1,4 +1,6 @@
 .layout-full-width-page {
+  width: 100%;
+  box-sizing: border-box;
   min-height: calc(100vh - 195px);
 }
 

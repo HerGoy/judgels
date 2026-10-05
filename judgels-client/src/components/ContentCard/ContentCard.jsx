@@ -23,7 +23,7 @@ export function ContentCard({ id, className, header, title, subtitle, action, ch
     if (subtitle) {
       return (
         <>
-          <Flex justifyContent="space-between" alignItems="baseline">
+          <Flex justifyContent="space-between" alignItems="baseline" wrap="wrap" gap={1}>
             <h3>{title}</h3>
             <small>{subtitle}</small>
           </Flex>
@@ -34,7 +34,7 @@ export function ContentCard({ id, className, header, title, subtitle, action, ch
     if (action) {
       return (
         <>
-          <Flex gap={2} alignItems="baseline">
+          <Flex gap={2} alignItems="baseline" wrap="wrap">
             <h3>{title}</h3>
             {action}
           </Flex>

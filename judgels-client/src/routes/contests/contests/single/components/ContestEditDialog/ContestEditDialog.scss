@@ -99,25 +99,41 @@
   }
 
   .contest-edit-dialog {
-    width: initial;
-    min-width: 350px;
-    height: 850px;
+    width: calc(100vw - 20px) !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    max-height: calc(100vh - 30px) !important;
+    overflow-y: auto !important;
+    margin: 10px auto !important;
 
     .bp6-tabs {
       display: block;
+      width: 100%;
     }
 
     .bp6-tab-list {
       width: 100%;
-      margin-bottom: 25px;
+      margin-bottom: 15px;
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
+
+      .bp6-tab {
+        flex-shrink: 0;
+      }
     }
 
     .bp6-tab-panel {
       padding-left: 0 !important;
+      max-width: 100%;
     }
   }
 
   .contest-edit-dialog__content {
-    max-height: 460px;
+    max-height: calc(100vh - 220px);
+    overflow: auto;
   }
 }

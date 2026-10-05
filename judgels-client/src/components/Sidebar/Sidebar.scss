@@ -113,25 +113,59 @@
   display: none !important;
 }
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 860px) {
   .card-sidebar__full {
     display: none !important;
   }
 
   .card-sidebar__responsive {
     display: block !important;
-    width: 200px;
-    top: -15px;
+    width: 100% !important;
+    margin-bottom: 12px;
+
+    .bp6-popover-target {
+      width: 100%;
+      display: block;
+    }
+
+    .card-sidebar__responsive-menu {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 14px;
+      margin: 0;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      border: 1px solid rgba(128, 128, 128, 0.25);
+      background-color: #fff;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+      .bp6-dark & {
+        background-color: $dark-secondary-background-color;
+        border-color: rgba(255, 255, 255, 0.15);
+      }
+
+      .bp6-icon {
+        margin-right: 8px;
+        padding-bottom: 0 !important;
+      }
+    }
 
     .bp6-tab-list {
-      left: 0;
-      width: 270px;
+      width: 100%;
+      min-width: 260px;
+      max-width: calc(100vw - 32px);
+      max-height: 60vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
-  }
 
-  .card-sidebar__responsive-menu {
-    .bp6-icon {
-      padding-bottom: 0 !important;
+    .bp6-tab {
+      line-height: 44px;
+      height: 44px;
     }
   }
 }

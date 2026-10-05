@@ -28,3 +28,21 @@
 .pagination--hide {
   display: none;
 }
+
+@media only screen and (max-width: 640px) {
+  .pagination {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+
+    .bp6-button-group {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+
+  .pagination__helper-text {
+    text-align: center;
+    font-size: 12px;
+  }
+}

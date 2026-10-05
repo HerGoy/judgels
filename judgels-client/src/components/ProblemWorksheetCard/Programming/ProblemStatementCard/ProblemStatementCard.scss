@@ -4,6 +4,7 @@
 
 .programming-problem-statement__limits {
   width: 200px;
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 45px;
@@ -20,5 +21,18 @@
   embed {
     width: 100%;
     min-height: 800px;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .programming-problem-statement__limits {
+    margin-bottom: 24px;
+    font-size: 13px;
+  }
+
+  .programming-problem-statement__text {
+    embed {
+      min-height: 480px;
+    }
   }
 }

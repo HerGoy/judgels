@@ -42,6 +42,7 @@
 .widget-user__link {
   margin-right: 20px;
   font-size: 0.9 * $font-size;
+  white-space: nowrap;
 }
 
 .widget-user__burger,
@@ -49,12 +50,18 @@
   display: none !important;
 }
 
-.widget-user__menu a {
-  color: inherit !important;
+.widget-user__menu {
+  max-width: calc(100vw - 32px);
+
+  a {
+    color: inherit !important;
+  }
 }
 
 .widget-user__user__username {
   cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 @media only screen and (max-width: 600px) {
@@ -62,11 +69,34 @@
     display: none;
   }
 
+  .widget-user__link {
+    margin-right: 8px;
+    font-size: 13px;
+  }
+
+  .widget-user__user__username {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   .widget-user__burger,
   .widget-user__menu-helper {
     display: flex !important;
     align-items: center;
     cursor: pointer;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+  .widget-user__user__username {
+    max-width: 75px;
+  }
+
+  .widget-user__link {
+    margin-right: 5px;
+    font-size: 12px;
   }
 }
 

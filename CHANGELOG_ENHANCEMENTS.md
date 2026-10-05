@@ -12,6 +12,7 @@ Dokumentasi komprehensif mengenai seluruh perubahan, perbaikan, modernisasi arsi
 | **Lesson & Course Management** | Sebagian besar dikelola melalui rute web legacy atau manual backend. | **Restful API lengkap** (`LessonResource.java`) & antarmuka admin visual berbasis React. |
 | **Submission & Problem Routing** | Rentan tautan mati (*broken link*) atau unclickable link jika kontainer/problemset/chapter induk dihapus/berpindah. | **Resilient Fallback Resolution Engine.** Backend secara otomatis melacak keberadaan problem di problemset/chapter aktif dan frontend menyediakan navigasi fallback yang aman tanpa crash. |
 | **Client Bootstrapping** | Rentan layar putih (*blank white screen*) jika konfigurasi runtime (`window.conf`) terlambat dimuat saat deployment. | **Defensive Fallback & Head Script Guarantee.** Injeksi sinkron di `<head>` dan default fallback di `src/conf.js` menjamin UI tidak pernah crash. |
+| **Responsivitas & Kompatibilitas Perangkat** | Desktop-centric; tata letak tabel kontes, scoreboard, sidebar, dan editor kode sering terpotong (*clipped*) atau rusak pada resolusi smartphone/tablet. | **Family-Friendly Multi-Resolution Overhaul.** Adaptif terhadap seluruh resolusi (320px smartphone, tablet, laptop, hingga 4K ultra-wide) dengan navigasi touch-friendly, tabel responsive, sticky contestant scoreboard, formula KaTeX auto-scroll, dan dialog fluid. |
 | **Grader Sandbox Concurrency** | Default 2 worker threads (~40 submission/menit). | **4 worker threads** (~80 submission/menit) dengan isolasi `isolate` cgroup v2 native. |
 | **Database & Cache Tuning** | Konfigurasi default (Buffer pool 128 MB, connection pool standar). | **Buffer pool 512 MB**, 200 koneksi maks, thread cache dioptimalkan untuk event contest beban tinggi (*high-request*). |
 | **Network & Reverse Proxy** | Konfigurasi reverse proxy dasar tanpa keepalive upstream. | **Nginx tuning** (Keepalive connection pooling, static asset immutable caching 30 hari, port internal terisolasi `127.0.0.1`). |
@@ -68,6 +69,32 @@ Dokumentasi komprehensif mengenai seluruh perubahan, perbaikan, modernisasi arsi
 * **Solusi pada Versi Ini:**
   1. `src/conf.js` menerapkan defensive fallback: jika `window.conf` belum tersedia, variabel konfigurasi otomatis menggunakan default yang aman.
   2. Script `/var/conf/judgels-client.js` dipindahkan ke dalam tag `<head>` di `index.html` agar dieksekusi secara sinkron sebelum module scripts React dijalankan.
+
+### D. Universal Multi-Resolution & Family-Friendly Responsive Overhaul
+* **Latar Belakang:** Versi original Judgels didesain utamanya untuk desktop PC monitor sekolah/lab. Pada smartphone (layar 320px - 480px) maupun tablet, navigasi header bertumpuk, tombol autentikasi terpotong, sidebar menu mengunci lebar tetap 320px, formula matematika KaTeX memicu horizontal overflow, tabel scoreboard tidak dapat dibaca saat bergulir ke kanan, dan dialog modal Blueprint terpotong di luar viewport.
+* **Perubahan Menyeluruh:**
+  1. **Viewport & Safe Layout Foundation:**
+     - Menambahkan `viewport-fit=cover` pada meta viewport `index.html` untuk perangkat dengan notch / dynamic island.
+     - Mengunci `overflow-x: hidden; max-width: 100vw;` pada root `html` dan `body` untuk mengeliminasi *horizontal scrolling blowout*.
+     - Blueprint Dialog (`.bp6-dialog`) kini adaptif dan fluid (`max-width: calc(100vw - 24px)`, scroll internal mandiri).
+  2. **Top Navigation Header & User Widget:**
+     - Skalabilitas visual logo dan judul aplikasi proporsional (font size `18px`/`16px` pada layar sempit).
+     - Truncation nama akun dengan ellipsis pada chip profil agar tidak mendorong burger menu ke luar layar.
+     - Penataan link Login & Register ramah sentuhan tanpa merusak tinggi navbar.
+     - Sub-navigasi Topbar dilengkapi fitur touch-scroll horizontal tanpa *wrapping* teks yang rusak.
+  3. **Sidebar & Layout System:**
+     - Pada resolusi `<= 860px`, `ContentWithSidebar` beralih otomatis menjadi tata letak vertikal (100% lebar).
+     - Menu sidebar mobile ditransformasi menjadi tombol dropdown elegan selebar layar dengan target sentuh 44px dan daftar tab popover responsif.
+     - Padding dinamis pada `AppContent`, `FullPageLayout`, `FullWidthPageLayout`, dan `Footer` (10-12px di smartphone, 16px di tablet, 24px di desktop).
+  4. **Scoreboard & Tabel Kontes (ICPC, IOI, Bundle, GCJ, Troc):**
+     - Kontainer tabel memiliki scroll horizontal mandiri dengan momentum touch iOS/Android.
+     - Mengimplementasikan kolom kontestan dan peringkat yang menempel (*sticky rank & contestant columns*) pada scroll horizontal di perangkat seluler, sehingga pengguna tetap mengetahui nama kontestan saat menggeser kolom soal ke-10 atau ke-15.
+  5. **Problem Statements & KaTeX Math Formulas:**
+     - KaTeX Display block (`.katex-display`) dilengkapi auto-scroll horizontal mandiri agar persamaan matematika yang panjang tidak memaksa pelebaran halaman.
+     - Gambar dan diagram soal dibatasi `max-width: 100%; height: auto; object-fit: contain;`.
+  6. **Code Submission Editor & Forms:**
+     - Header editor (pemilih bahasa pemrograman, tag file, tombol reset) dan tombol *Submit* otomatis membungkus (*wrap*) rapi pada layar sentuh dengan tinggi tombol 36-38px untuk kemudahan penekanan satu jempol (*thumb-friendly*).
+     - `FormTable` dan `FormTableInput` otomatis berubah dari format tabel 2-kolom yang sempit menjadi form vertikal stacked (label di atas, input 100% lebar di bawah) pada resolusi `<= 640px`.
 
 ---
 

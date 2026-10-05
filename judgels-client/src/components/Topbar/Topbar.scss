@@ -3,4 +3,26 @@
 .topbar {
   font-family: $accent-font;
   margin-bottom: 10px;
+  overflow-x: auto;
+  white-space: nowrap;
+  max-width: 100%;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+
+  .bp6-button {
+    flex-shrink: 0;
+  }
+
+  &::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(125, 125, 125, 0.3);
+    border-radius: 4px;
+  }
 }

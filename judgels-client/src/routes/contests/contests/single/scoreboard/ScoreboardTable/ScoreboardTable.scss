@@ -67,3 +67,55 @@ table.scoreboard__content {
     }
   }
 }
+
+@media only screen and (max-width: 768px) {
+  table.scoreboard__content {
+    font-size: 12px;
+
+    .rank-cell {
+      position: sticky;
+      left: 0;
+      z-index: 2;
+      background-color: #fff;
+    }
+
+    .contestant-cell {
+      position: sticky;
+      left: 20px;
+      z-index: 2;
+      background-color: #fff;
+      max-width: 120px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .my-rank .rank-cell,
+    .my-rank .contestant-cell {
+      background-color: #fcf8e3 !important;
+    }
+
+    thead th.rank-cell,
+    thead th.contestant-cell {
+      z-index: 3;
+      background-color: #f5f8fa;
+    }
+  }
+
+  .bp6-dark table.scoreboard__content {
+    .rank-cell,
+    .contestant-cell {
+      background-color: $dark-background-color;
+    }
+
+    .my-rank .rank-cell,
+    .my-rank .contestant-cell {
+      background-color: $dark-gray1 !important;
+    }
+
+    thead th.rank-cell,
+    thead th.contestant-cell {
+      background-color: $dark-secondary-background-color;
+    }
+  }
+}

@@ -23,3 +23,49 @@
     padding-bottom: 4px !important;
   }
 }
+
+/* Responsive Table Wrapper and Small-Screen Optimizations */
+.table-responsive {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 12px;
+  scrollbar-width: thin;
+
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(125, 125, 125, 0.35);
+    border-radius: 4px;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .table-list,
+  .table-list-condensed {
+    font-size: 13px;
+
+    td,
+    th {
+      padding-left: 6px !important;
+      padding-right: 6px !important;
+    }
+
+    td {
+      padding-top: 5px !important;
+      padding-bottom: 5px !important;
+    }
+  }
+
+  .submissions-table {
+    min-width: 540px;
+  }
+}

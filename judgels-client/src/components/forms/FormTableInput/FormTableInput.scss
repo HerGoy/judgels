@@ -29,3 +29,36 @@
 .form-table-input .bp6-form-helper-text {
   line-height: 20px;
 }
+
+@media only screen and (max-width: 640px) {
+  table.bp6-html-table.form-table-input {
+    display: block;
+    width: 100%;
+
+    tbody {
+      display: block;
+      width: 100%;
+    }
+
+    tr {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      border-bottom: 1px solid rgba(128, 128, 128, 0.15);
+      padding: 6px 0;
+    }
+
+    td {
+      display: block;
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 2px 0 !important;
+      line-height: normal !important;
+      border: none !important;
+    }
+
+    .form-table-input__group-label {
+      padding-top: 0;
+    }
+  }
+}

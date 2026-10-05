@@ -12,20 +12,36 @@
 .content-with-sidebar__content {
   flex-grow: 1;
   max-width: 920px;
+  min-width: 0;
 }
 
 .content-with-sidebar__content--small {
   max-width: 705px;
 }
 
-@media only screen and (max-width: 750px) {
-  .content-with-sidebar {
-    display: block;
-  }
-}
-
 @media only screen and (max-width: 1280px) {
   .content-with-sidebar__sidebar {
     width: 270px;
+  }
+}
+
+@media only screen and (max-width: 860px) {
+  .content-with-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .content-with-sidebar__sidebar {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-bottom: 0;
+  }
+
+  .content-with-sidebar__content,
+  .content-with-sidebar__content--small {
+    width: 100% !important;
+    max-width: 100% !important;
   }
 }

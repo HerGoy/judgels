@@ -9,3 +9,42 @@
 .form-table--small {
   font-size: 12px;
 }
+
+@media only screen and (max-width: 640px) {
+  table.bp6-html-table:has(.form-table__title) {
+    display: block;
+    width: 100%;
+
+    tbody {
+      display: block;
+      width: 100%;
+    }
+
+    tr {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(128, 128, 128, 0.15);
+    }
+
+    td {
+      display: block;
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 2px 4px !important;
+      border: none !important;
+    }
+
+    .form-table__title {
+      font-size: 13px;
+      opacity: 0.85;
+      margin-bottom: 2px;
+    }
+
+    .form-table__value {
+      word-break: break-word;
+    }
+  }
+}

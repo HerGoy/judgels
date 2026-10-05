@@ -71,6 +71,15 @@
 @media only screen and (max-width: 600px) {
   .home-banner {
     margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+    border-radius: 6px;
+    padding: 20px 12px;
+  }
+
+  .home-banner__text h1 {
+    font-size: 24px;
+    line-height: 28px;
   }
 
   .home-banner__contents {

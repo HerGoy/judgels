@@ -33,6 +33,10 @@
 .header__wrapper {
   display: flex;
   margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0 4px;
 }
 
 .header__left {
@@ -123,6 +127,35 @@
 @media only screen and (max-width: 960px) {
   .header__subtitle {
     display: none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .header__left {
+    gap: 8px;
+  }
+
+  .header__logo {
+    height: 32px;
+  }
+
+  .header__title {
+    font-size: 18px;
+    line-height: 20px;
+  }
+}
+
+@media only screen and (max-width: 380px) {
+  .header__left {
+    gap: 6px;
+  }
+
+  .header__logo {
+    height: 28px;
+  }
+
+  .header__title {
+    font-size: 16px;
   }
 }
 

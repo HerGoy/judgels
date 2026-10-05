@@ -11,17 +11,26 @@
   width: 240px;
 }
 
+@media only screen and (max-width: 1280px) {
+  .tab-item-with-widget {
+    width: 190px;
+  }
+}
+
+@media only screen and (max-width: 860px) {
+  .tab-item-with-widget {
+    position: relative;
+    width: 100%;
+    margin-right: 8px;
+  }
+}
+
 @media only screen and (max-width: 750px) {
   .single-contest-routes__header {
     h2 {
       font-size: 20px !important;
       line-height: 22px !important;
+      word-break: break-word;
     }
-  }
-}
-
-@media only screen and (max-width: 1280px) {
-  .tab-item-with-widget {
-    width: 190px;
   }
 }
