@@ -34,12 +34,8 @@ export function UserWidget({ user, profile, items, homeRoute }) {
       <>
         <MenuItemLink text="My profile" to={`/profiles/${profile.username}`} />
         {isTLX() && <MenuItemLink text="My account" to="/account" />}
-        {canManageProblems && (
-          <>
-            <MenuDivider />
-            <MenuItemLink icon={<Edit />} text="Manage problems" to="/admin/problems" />
-          </>
-        )}
+        <MenuDivider />
+        <MenuItemLink icon={<Edit />} text="Manage problems" to="/admin/problems" />
         <MenuDivider />
         <MenuItemLink text="Log out" to="/logout" />
       </>

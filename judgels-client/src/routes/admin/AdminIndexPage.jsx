@@ -21,5 +21,5 @@ export default function AdminIndexPage() {
   if (isTLX() && role.training === TrainingAdminRole.Admin) {
     return <Navigate to="/admin/courses" />;
   }
-  return <Navigate to="/" />;
+  return <Navigate to="/admin/problems" />;
 }

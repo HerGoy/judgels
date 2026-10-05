@@ -1,3 +1,5 @@
+import { Button, Intent } from '@blueprintjs/core';
+import { Edit } from '@blueprintjs/icons';
 import { useMutation, useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { useNavigate, useParams } from '@tanstack/react-router';
 import { useEffect } from 'react';
@@ -9,6 +11,8 @@ import { ProblemWorksheetCard } from '../../../../../../../../components/Problem
 import { contestBySlugQueryOptions } from '../../../../../../../../modules/queries/contest';
 import { contestProgrammingProblemWorksheetQueryOptions } from '../../../../../../../../modules/queries/contestProblem';
 import { createProgrammingSubmissionMutationOptions } from '../../../../../../../../modules/queries/contestSubmissionProgramming';
+import { problemDetailQueryOptions } from '../../../../../../../../modules/queries/problem';
+import { useSession } from '../../../../../../../../modules/session';
 import { useWebPrefs } from '../../../../../../../../modules/webPrefs';
 import { createDocumentTitle } from '../../../../../../../../utils/title';
 
@@ -19,12 +23,21 @@ import './ContestProblemPage.scss';
 export default function ContestProblemPage() {
   const { contestSlug, problemAlias } = useParams({ strict: false });
   const navigate = useNavigate();
+  const { user } = useSession();
   const { data: contest } = useSuspenseQuery(contestBySlugQueryOptions(contestSlug));
   const { statementLanguage, gradingLanguage, setGradingLanguage } = useWebPrefs();
 
   const { data: response } = useQuery(
     contestProgrammingProblemWorksheetQueryOptions(contest.jid, problemAlias, { language: statementLanguage })
   );
+
+  const problemJid = response?.problem?.problemJid;
+  const { data: problemDetail } = useQuery({
+    ...problemDetailQueryOptions(problemJid),
+    enabled: !!user && !!problemJid,
+    retry: false,
+    staleTime: 60 * 1000,
+  });
 
   const createSubmissionMutation = useMutation(
     createProgrammingSubmissionMutationOptions(contest.jid, response?.problem?.problemJid)
@@ -52,8 +65,27 @@ export default function ContestProblemPage() {
       return null;
     }
     return (
-      <div className="contest-programming-problem-page__widget">
+      <div
+        className="contest-programming-problem-page__widget"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: 8,
+          marginBottom: 12,
+        }}
+      >
         <StatementLanguageWidget defaultLanguage={response.defaultLanguage} statementLanguages={response.languages} />
+        {problemDetail && (
+          <Button
+            small
+            intent={problemDetail.canEdit ? Intent.PRIMARY : Intent.NONE}
+            icon={<Edit />}
+            text={problemDetail.canEdit ? 'Edit problem' : 'View in manager'}
+            onClick={() => navigate({ to: `/admin/problems/${problemDetail.id || problemJid}` })}
+          />
+        )}
       </div>
     );
   };

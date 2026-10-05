@@ -99,8 +99,8 @@ describe('ContestSubmissionsPage', () => {
     });
 
     expect(data).toEqual([
-      ['20', 'A', 'C++17', '', '1 day ago', 'search'],
-      ['10', 'B', 'C++17', 'Wrong Answer70', '2 days ago', 'search'],
+      ['20', 'A', 'C++17', '', '1 day ago', 'View submission'],
+      ['10', 'B', 'C++17', 'Wrong Answer70', '2 days ago', 'View submission'],
     ]);
   });
 
@@ -116,8 +116,8 @@ describe('ContestSubmissionsPage', () => {
     });
 
     expect(data).toEqual([
-      ['20', 'user1', 'A', 'C++17', '', '1 day ago', 'search'],
-      ['10', 'user2', 'B', 'C++17', 'Wrong Answer70', '2 days ago', 'search'],
+      ['20', 'user1', 'A', 'C++17', '', '1 day ago', 'View submission'],
+      ['10', 'user2', 'B', 'C++17', 'Wrong Answer70', '2 days ago', 'View submission'],
     ]);
   });
 
@@ -133,8 +133,8 @@ describe('ContestSubmissionsPage', () => {
     });
 
     expect(data).toEqual([
-      ['20 refresh', 'user1', 'A', 'C++17', '', '1 day ago', 'search'],
-      ['10 refresh', 'user2', 'B', 'C++17', 'Wrong Answer70', '2 days ago', 'search'],
+      ['20Regrade submission', 'user1', 'A', 'C++17', '', '1 day ago', 'View submission'],
+      ['10Regrade submission', 'user2', 'B', 'C++17', 'Wrong Answer70', '2 days ago', 'View submission'],
     ]);
   });
 });

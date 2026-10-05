@@ -30,6 +30,7 @@ Dokumentasi komprehensif mengenai seluruh perubahan, perbaikan, modernisasi arsi
   * **Grading Engine Config:** Konfigurasi batas waktu (*time limit*), batas memori (*memory limit*), tipe engine (*Batch*, *Interactive*, *Output-only*).
   * **Partners & Permissions:** Manajemen kolaborator dan hak akses pembuat soal.
   * **Submissions & Re-grading:** Monitoring dan eksekusi penilaian ulang per soal.
+  * **Partner Access & Granular Permissions:** Memungkinkan pengguna dengan hak akses partner melihat daftar soal kolaborasinya via `/problems/api`, mendukung lookup via JID, ID, maupun slug, serta menyertakan flag `canEdit`, `canDelete`, dan `canCreate`.
 
 ### B. Lesson Management REST API (`LessonResource.java`)
 * Menyediakan endpoint CRUD materi pelajaran (`/lessons/api/...`) untuk mendukung modul Courses/Training tanpa antarmuka legacy.
@@ -57,6 +58,11 @@ Dokumentasi komprehensif mengenai seluruh perubahan, perbaikan, modernisasi arsi
   * `ProblemSubmissionsTab.jsx`, `ProblemBundleItemsTab.jsx`
 * Penambahan modul admin materi pelajaran di `src/routes/admin/lessons/`.
 * Penambahan kustomisasi logo dan branding di `SiteLogoSection.jsx`.
+* **Akses & Tombol Edit Soal untuk Partner / Kolaborator:**
+  * Menyediakan tombol langsung **"Edit problem"** (atau **"View in manager"**) pada setiap tampilan soal aktif: Problemset (`SingleProblemSetProblemLayout`), Kursus/Bab (`ChapterProblemLayout`), dan Kontes (`ContestProblemPage`) ketika pengguna memiliki hak akses atas soal tersebut.
+  * Menampilkan tautan **"Manage problems"** di menu profil pengguna (`UserWidget`) untuk kemudahan akses tanpa harus menunggu link manual.
+  * Tombol **"Manage"** pada halaman penjelajahan soal (`/problems`).
+  * Fitur salin tautan langsung (*Copy problem link*) di tab Partners untuk kemudahan kolaborasi.
 
 ### B. Navigasi & URL Builder Defensif (`src/modules/api/submission.js`)
 * Implementasi fungsi pembangun URL yang aman:

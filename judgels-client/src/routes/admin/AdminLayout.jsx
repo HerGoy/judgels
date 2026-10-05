@@ -63,7 +63,7 @@ export default function AdminLayout() {
     },
     {
       title: 'Problem',
-      visible: isProblemAdmin,
+      visible: true,
       children: [
         {
           path: 'problems',

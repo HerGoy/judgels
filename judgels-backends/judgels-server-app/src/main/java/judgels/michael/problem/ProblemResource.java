@@ -157,7 +157,6 @@ public class ProblemResource extends BaseProblemResource {
         Actor actor = actorChecker.check(req);
         boolean isAdmin = roleChecker.isAdmin(actor);
         boolean isWriter = roleChecker.isWriter(actor);
-        checkAllowed(isAdmin || isWriter);
 
         Optional<String> userJid = isAdmin ? Optional.empty() : Optional.of(actor.getUserJid());
         Page<Problem> problems = problemStore.getProblems(userJid, termFilter, Set.of(), pageNumber, 50);
@@ -175,6 +174,8 @@ public class ProblemResource extends BaseProblemResource {
             map.put("additionalNote", p.getAdditionalNote());
             map.put("authorUsername", profilesMap.containsKey(p.getAuthorJid()) ? profilesMap.get(p.getAuthorJid()).getUsername() : "-");
             map.put("updatedAt", p.getLastUpdateTime() != null ? p.getLastUpdateTime().toEpochMilli() : null);
+            map.put("canEdit", roleChecker.canEdit(actor, p));
+            map.put("canDelete", roleChecker.isAuthorOrAbove(actor, p));
             list.add(map);
         }
 
@@ -183,6 +184,7 @@ public class ProblemResource extends BaseProblemResource {
         res.put("totalCount", problems.getTotalCount());
         res.put("pageNumber", problems.getPageNumber());
         res.put("pageSize", problems.getPageSize());
+        res.put("canCreate", isAdmin || isWriter);
         return Response.ok(res).build();
     }
 
@@ -243,7 +245,9 @@ public class ProblemResource extends BaseProblemResource {
             Optional<Problem> p = problemStore.getProblemById(id);
             if (p.isPresent()) return p;
         } catch (NumberFormatException ignored) {}
-        return problemStore.getProblemBySlug(problemIdOrSlug);
+        Optional<Problem> p = problemStore.getProblemBySlug(problemIdOrSlug);
+        if (p.isPresent()) return p;
+        return problemStore.getProblemByJid(problemIdOrSlug);
     }
 
     @GET
@@ -399,7 +403,7 @@ public class ProblemResource extends BaseProblemResource {
 
         Actor actor = actorChecker.check(req);
         Problem problem = checkFound(findProblem(problemId));
-        checkAllowed(roleChecker.canEdit(actor, problem));
+        checkAllowed(roleChecker.isAuthorOrAbove(actor, problem));
 
         String problemJid = problem.getJid();
         try {

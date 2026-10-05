@@ -1,6 +1,7 @@
-import { ChevronRight, Home } from '@blueprintjs/icons';
+import { Button, Intent } from '@blueprintjs/core';
+import { ChevronRight, Edit, Home } from '@blueprintjs/icons';
 import { useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
-import { Link, useParams } from '@tanstack/react-router';
+import { Link, useNavigate, useParams } from '@tanstack/react-router';
 import { useEffect, useRef } from 'react';
 
 import { LoadingState } from '../../../../../../../../components/LoadingState/LoadingState';
@@ -14,6 +15,8 @@ import {
   courseChapterQueryOptions,
   courseChaptersQueryOptions,
 } from '../../../../../../../../modules/queries/course';
+import { problemDetailQueryOptions } from '../../../../../../../../modules/queries/problem';
+import { useSession } from '../../../../../../../../modules/session';
 import { useWebPrefs } from '../../../../../../../../modules/webPrefs';
 import { createDocumentTitle } from '../../../../../../../../utils/title';
 import { ChapterNavigation } from '../../resources/ChapterNavigation/ChapterNavigation';
@@ -24,6 +27,8 @@ import './ChapterProblemLayout.scss';
 
 export default function ChapterProblemLayout() {
   const { courseSlug, chapterAlias, problemAlias } = useParams({ strict: false });
+  const navigate = useNavigate();
+  const { user } = useSession();
   const queryClient = useQueryClient();
   const { data: course } = useSuspenseQuery(courseBySlugQueryOptions(courseSlug));
   const { data: chapter } = useSuspenseQuery(courseChapterQueryOptions(course.jid, chapterAlias));
@@ -35,6 +40,14 @@ export default function ChapterProblemLayout() {
   const { data: response } = useQuery(
     chapterProblemWorksheetQueryOptions(chapter.jid, problemAlias, { language: statementLanguage })
   );
+
+  const problemJid = response?.problem?.problemJid;
+  const { data: problemDetail } = useQuery({
+    ...problemDetailQueryOptions(problemJid),
+    enabled: !!user && !!problemJid,
+    retry: false,
+    staleTime: 60 * 1000,
+  });
 
   const prevProgressRef = useRef(response?.progress);
 
@@ -99,8 +112,19 @@ export default function ChapterProblemLayout() {
           {problemAlias}. {problemTitle}
         </h3>
 
-        {renderProgress()}
-        {renderNavigation()}
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+          {problemDetail && (
+            <Button
+              small
+              intent={problemDetail.canEdit ? Intent.PRIMARY : Intent.NONE}
+              icon={<Edit />}
+              text={problemDetail.canEdit ? 'Edit problem' : 'View in manager'}
+              onClick={() => navigate({ to: `/admin/problems/${problemDetail.id || problemJid}` })}
+            />
+          )}
+          {renderProgress()}
+          {renderNavigation()}
+        </div>
       </div>
     );
   };

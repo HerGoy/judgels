@@ -110,12 +110,12 @@ describe('ChapterProblemSubmissionsPage', () => {
       within(rows[0])
         .getAllByRole('cell')
         .map(td => td.textContent.trim())
-    ).toEqual(['20', 'username1', 'C++17', 'Accepted', '1 day ago', 'search']);
+    ).toEqual(['20', 'username1', 'C++17', 'Accepted', '1 day ago', 'View submission']);
     expect(
       within(rows[1])
         .getAllByRole('cell')
         .map(td => td.textContent.trim())
-    ).toEqual(['10', 'username2', 'C++17', '', '2 days ago', 'search']);
+    ).toEqual(['10', 'username2', 'C++17', '', '2 days ago', 'View submission']);
   });
 
   test('when canManage, renders the submissions', async () => {
@@ -133,8 +133,8 @@ describe('ChapterProblemSubmissionsPage', () => {
           .map(cell => cell.textContent.replace(/\s+/g, ' ').trim())
       )
     ).toEqual([
-      ['20 refresh', 'username1', 'C++17', 'Accepted', '1 day ago', 'search'],
-      ['10 refresh', 'username2', 'C++17', '', '2 days ago', 'search'],
+      ['20Regrade submission', 'username1', 'C++17', 'Accepted', '1 day ago', 'View submission'],
+      ['10Regrade submission', 'username2', 'C++17', '', '2 days ago', 'View submission'],
     ]);
   });
 });

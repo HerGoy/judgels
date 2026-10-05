@@ -72,6 +72,25 @@ export default function ProblemPartnersTab({ problem, problemId }) {
             <strong>VIEW:</strong> Hanya dapat melihat soal dan data uji tanpa izin mengubah.
           </li>
         </ul>
+        <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+          <span>
+            <em>
+              Partner yang ditambahkan dapat langsung mengelola soal ini melalui menu profil (
+              <strong>Manage problems</strong>) atau tombol <strong>Edit problem</strong> pada halaman soal.
+            </em>
+          </span>
+          <Button
+            small
+            minimal
+            icon="clipboard"
+            text="Salin Tautan Soal"
+            onClick={() => {
+              const url = `${window.location.origin}/admin/problems/${problem.id || problemId}`;
+              navigator.clipboard?.writeText(url);
+              showSuccessToast('Tautan soal berhasil disalin ke clipboard.');
+            }}
+          />
+        </div>
       </Callout>
 
       {/* ADD PARTNER FORM */}

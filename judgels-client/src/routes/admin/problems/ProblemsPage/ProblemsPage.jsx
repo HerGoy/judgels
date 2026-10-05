@@ -30,7 +30,7 @@ export default function ProblemsPage() {
   const renderAction = () => {
     return (
       <ActionButtons>
-        <ProblemCreateDialog />
+        {response?.canCreate !== false && <ProblemCreateDialog />}
         <AnchorButton href="/problems/manage" target="_blank" minimal icon={<Share />} text="Open Legacy Manager" />
       </ActionButtons>
     );
@@ -85,9 +85,9 @@ export default function ProblemsPage() {
           >
             <div className="action-button-group" style={{ justifyContent: 'center' }}>
               <Button
-                intent={Intent.PRIMARY}
+                intent={problem.canEdit !== false ? Intent.PRIMARY : Intent.NONE}
                 icon={<Edit />}
-                text="Manage"
+                text={problem.canEdit !== false ? 'Manage' : 'View'}
                 small
                 onClick={() => navigate({ to: managePath })}
               />
@@ -101,14 +101,16 @@ export default function ProblemsPage() {
               {!isBundle && (
                 <Button text="Tests" small minimal onClick={() => navigate({ to: `${managePath}?tab=testdata` })} />
               )}
-              <Button
-                intent={Intent.DANGER}
-                icon={<Trash />}
-                small
-                minimal
-                onClick={() => setProblemToDelete(problem)}
-                title="Delete problem"
-              />
+              {problem.canDelete !== false && (
+                <Button
+                  intent={Intent.DANGER}
+                  icon={<Trash />}
+                  small
+                  minimal
+                  onClick={() => setProblemToDelete(problem)}
+                  title="Delete problem"
+                />
+              )}
             </div>
           </td>
         </tr>
