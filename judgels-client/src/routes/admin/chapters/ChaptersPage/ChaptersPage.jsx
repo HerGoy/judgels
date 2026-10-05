@@ -8,8 +8,9 @@ import { ActionButtons } from '../../../../components/ActionButtons/ActionButton
 import { ContentCard } from '../../../../components/ContentCard/ContentCard';
 import { LoadingContentCard } from '../../../../components/LoadingContentCard/LoadingContentCard';
 import { chaptersQueryOptions, deleteChapterMutationOptions } from '../../../../modules/queries/chapter';
-import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 import { ChapterCreateDialog } from '../ChapterCreateDialog/ChapterCreateDialog';
+
+import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 
 export default function ChaptersPage() {
   const navigate = useNavigate();
@@ -36,26 +37,29 @@ export default function ChaptersPage() {
       <tr key={chapter.jid}>
         <td style={{ width: '60px', verticalAlign: 'middle' }}>{chapter.id}</td>
         <td style={{ width: '200px', verticalAlign: 'middle' }}>
-          <Link to={`/admin/chapters/${chapter.jid}`} style={{ fontWeight: 600 }}>{chapter.jid}</Link>
+          <Link to={`/admin/chapters/${chapter.jid}`} style={{ fontWeight: 600 }}>
+            {chapter.jid}
+          </Link>
         </td>
         <td style={{ verticalAlign: 'middle' }}>{chapter.name}</td>
-        <td style={{ width: '120px', textAlign: 'center', verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
-          <Button
-            small
-            intent={Intent.PRIMARY}
-            icon={<Edit />}
-            text="Manage"
-            style={{ marginRight: 6 }}
-            onClick={() => navigate({ to: `/admin/chapters/${chapter.jid}` })}
-          />
-          <Button
-            small
-            minimal
-            intent={Intent.DANGER}
-            icon={<Trash />}
-            onClick={() => setChapterToDelete(chapter)}
-            title="Delete chapter"
-          />
+        <td style={{ width: '160px', textAlign: 'center', verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
+          <div className="action-button-group" style={{ justifyContent: 'center' }}>
+            <Button
+              small
+              intent={Intent.PRIMARY}
+              icon={<Edit />}
+              text="Manage"
+              onClick={() => navigate({ to: `/admin/chapters/${chapter.jid}` })}
+            />
+            <Button
+              small
+              minimal
+              intent={Intent.DANGER}
+              icon={<Trash />}
+              onClick={() => setChapterToDelete(chapter)}
+              title="Delete chapter"
+            />
+          </div>
         </td>
       </tr>
     ));
@@ -67,7 +71,7 @@ export default function ChaptersPage() {
             <th style={{ width: '60px' }}>ID</th>
             <th style={{ width: '200px' }}>JID</th>
             <th>Name</th>
-            <th style={{ width: '120px', textAlign: 'center' }}>Actions</th>
+            <th style={{ width: '160px', textAlign: 'center' }}>Actions</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>

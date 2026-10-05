@@ -1,11 +1,17 @@
 import { stringify } from 'query-string';
+
 import { delete_, get, post, put } from './http';
 
 export function getLessonName(lesson, language) {
   if (!lesson) return '';
   if (lesson.title) return lesson.title;
   if (!lesson.titlesByLanguage) return lesson.slug || '';
-  return (language && lesson.titlesByLanguage[language]) || lesson.titlesByLanguage[lesson.defaultLanguage] || lesson.slug || '';
+  return (
+    (language && lesson.titlesByLanguage[language]) ||
+    lesson.titlesByLanguage[lesson.defaultLanguage] ||
+    lesson.slug ||
+    ''
+  );
 }
 
 export function constructLessonName(title, alias) {

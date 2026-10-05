@@ -1,9 +1,46 @@
 .submissions-table {
+  .id-cell {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    vertical-align: middle;
+    line-height: 1;
+
+    .action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+    }
+  }
+
+  .cell-centered {
+    text-align: center;
+  }
+
   .action {
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    line-height: 1;
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    .bp6-icon,
+    svg {
+      display: inline-block;
+      vertical-align: middle;
+      max-width: none !important;
+    }
   }
 
   .action + .action {
-    margin-left: 2px;
+    margin-left: 4px;
   }
 }

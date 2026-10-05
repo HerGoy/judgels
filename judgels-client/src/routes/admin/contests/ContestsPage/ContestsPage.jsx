@@ -9,8 +9,9 @@ import { ContentCard } from '../../../../components/ContentCard/ContentCard';
 import { LoadingContentCard } from '../../../../components/LoadingContentCard/LoadingContentCard';
 import Pagination from '../../../../components/Pagination/Pagination';
 import { contestsQueryOptions, deleteContestMutationOptions } from '../../../../modules/queries/contest';
-import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 import { ContestCreateDialog } from '../../../contests/contests/ContestCreateDialog/ContestCreateDialog';
+
+import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 
 const PAGE_SIZE = 20;
 
@@ -41,26 +42,29 @@ export default function ContestsPage() {
       <tr key={contest.jid}>
         <td style={{ width: '60px', verticalAlign: 'middle' }}>{contest.id}</td>
         <td style={{ width: '200px', verticalAlign: 'middle' }}>
-          <Link to={`/contests/${contest.slug}`} style={{ fontWeight: 600 }}>{contest.slug}</Link>
+          <Link to={`/contests/${contest.slug}`} style={{ fontWeight: 600 }}>
+            {contest.slug}
+          </Link>
         </td>
         <td style={{ verticalAlign: 'middle' }}>{contest.name}</td>
-        <td style={{ width: '120px', textAlign: 'center', verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
-          <Button
-            small
-            intent={Intent.PRIMARY}
-            icon={<Edit />}
-            text="Manage"
-            style={{ marginRight: 6 }}
-            onClick={() => navigate({ to: `/contests/${contest.slug}` })}
-          />
-          <Button
-            small
-            minimal
-            intent={Intent.DANGER}
-            icon={<Trash />}
-            onClick={() => setContestToDelete(contest)}
-            title="Delete contest"
-          />
+        <td style={{ width: '160px', textAlign: 'center', verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
+          <div className="action-button-group" style={{ justifyContent: 'center' }}>
+            <Button
+              small
+              intent={Intent.PRIMARY}
+              icon={<Edit />}
+              text="Manage"
+              onClick={() => navigate({ to: `/contests/${contest.slug}` })}
+            />
+            <Button
+              small
+              minimal
+              intent={Intent.DANGER}
+              icon={<Trash />}
+              onClick={() => setContestToDelete(contest)}
+              title="Delete contest"
+            />
+          </div>
         </td>
       </tr>
     ));
@@ -72,7 +76,7 @@ export default function ContestsPage() {
             <th style={{ width: '60px' }}>ID</th>
             <th style={{ width: '200px' }}>Slug</th>
             <th>Name</th>
-            <th style={{ width: '120px', textAlign: 'center' }}>Actions</th>
+            <th style={{ width: '160px', textAlign: 'center' }}>Actions</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>

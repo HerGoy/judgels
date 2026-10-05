@@ -8,8 +8,9 @@ import { ActionButtons } from '../../../../components/ActionButtons/ActionButton
 import { ContentCard } from '../../../../components/ContentCard/ContentCard';
 import { LoadingContentCard } from '../../../../components/LoadingContentCard/LoadingContentCard';
 import { archivesQueryOptions, deleteArchiveMutationOptions } from '../../../../modules/queries/archive';
-import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 import { ArchiveCreateDialog } from '../ArchiveCreateDialog/ArchiveCreateDialog';
+
+import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 
 export default function ArchivesPage() {
   const navigate = useNavigate();
@@ -36,27 +37,30 @@ export default function ArchivesPage() {
       <tr key={archive.jid}>
         <td style={{ width: '60px', verticalAlign: 'middle' }}>{archive.id}</td>
         <td style={{ width: '200px', verticalAlign: 'middle' }}>
-          <Link to={`/admin/archives/${archive.slug}`} style={{ fontWeight: 600 }}>{archive.slug}</Link>
+          <Link to={`/admin/archives/${archive.slug}`} style={{ fontWeight: 600 }}>
+            {archive.slug}
+          </Link>
         </td>
         <td style={{ verticalAlign: 'middle' }}>{archive.name}</td>
         <td style={{ verticalAlign: 'middle' }}>{archive.category}</td>
-        <td style={{ width: '120px', textAlign: 'center', verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
-          <Button
-            small
-            intent={Intent.PRIMARY}
-            icon={<Edit />}
-            text="Manage"
-            style={{ marginRight: 6 }}
-            onClick={() => navigate({ to: `/admin/archives/${archive.slug}` })}
-          />
-          <Button
-            small
-            minimal
-            intent={Intent.DANGER}
-            icon={<Trash />}
-            onClick={() => setArchiveToDelete(archive)}
-            title="Delete archive"
-          />
+        <td style={{ width: '160px', textAlign: 'center', verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
+          <div className="action-button-group" style={{ justifyContent: 'center' }}>
+            <Button
+              small
+              intent={Intent.PRIMARY}
+              icon={<Edit />}
+              text="Manage"
+              onClick={() => navigate({ to: `/admin/archives/${archive.slug}` })}
+            />
+            <Button
+              small
+              minimal
+              intent={Intent.DANGER}
+              icon={<Trash />}
+              onClick={() => setArchiveToDelete(archive)}
+              title="Delete archive"
+            />
+          </div>
         </td>
       </tr>
     ));
@@ -69,7 +73,7 @@ export default function ArchivesPage() {
             <th style={{ width: '200px' }}>Slug</th>
             <th>Name</th>
             <th>Category</th>
-            <th style={{ width: '120px', textAlign: 'center' }}>Actions</th>
+            <th style={{ width: '160px', textAlign: 'center' }}>Actions</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>

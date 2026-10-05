@@ -10,8 +10,9 @@ import { FormattedDate } from '../../../../components/FormattedDate/FormattedDat
 import { LoadingState } from '../../../../components/LoadingState/LoadingState';
 import Pagination from '../../../../components/Pagination/Pagination';
 import { deleteProblemMutationOptions, manageableProblemsQueryOptions } from '../../../../modules/queries/problem';
-import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 import { ProblemCreateDialog } from '../ProblemCreateDialog/ProblemCreateDialog';
+
+import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 
 const PAGE_SIZE = 50;
 
@@ -30,13 +31,7 @@ export default function ProblemsPage() {
     return (
       <ActionButtons>
         <ProblemCreateDialog />
-        <AnchorButton
-          href="/problems/manage"
-          target="_blank"
-          minimal
-          icon={<Share />}
-          text="Open Legacy Manager"
-        />
+        <AnchorButton href="/problems/manage" target="_blank" minimal icon={<Share />} text="Open Legacy Manager" />
       </ActionButtons>
     );
   };
@@ -79,40 +74,42 @@ export default function ProblemsPage() {
           </td>
           <td>{problem.authorUsername || '-'}</td>
           <td>{problem.updatedAt ? <FormattedDate value={problem.updatedAt} /> : '-'}</td>
-          <td style={{ textAlign: 'center', whiteSpace: 'nowrap' }}>
-            <Button
-              intent={Intent.PRIMARY}
-              icon={<Edit />}
-              text="Manage"
-              small
-              style={{ marginRight: 6 }}
-              onClick={() => navigate({ to: managePath })}
-            />
-            <Button
-              icon={<Document />}
-              text="Statements"
-              small
-              minimal
-              style={{ marginRight: 4 }}
-              onClick={() => navigate({ to: `${managePath}?tab=statement` })}
-            />
-            {!isBundle && (
+          <td
+            style={{
+              width: '320px',
+              minWidth: '320px',
+              textAlign: 'center',
+              verticalAlign: 'middle',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            <div className="action-button-group" style={{ justifyContent: 'center' }}>
               <Button
-                text="Tests"
+                intent={Intent.PRIMARY}
+                icon={<Edit />}
+                text="Manage"
+                small
+                onClick={() => navigate({ to: managePath })}
+              />
+              <Button
+                icon={<Document />}
+                text="Statements"
                 small
                 minimal
-                style={{ marginRight: 4 }}
-                onClick={() => navigate({ to: `${managePath}?tab=testdata` })}
+                onClick={() => navigate({ to: `${managePath}?tab=statement` })}
               />
-            )}
-            <Button
-              intent={Intent.DANGER}
-              icon={<Trash />}
-              small
-              minimal
-              onClick={() => setProblemToDelete(problem)}
-              title="Delete problem"
-            />
+              {!isBundle && (
+                <Button text="Tests" small minimal onClick={() => navigate({ to: `${managePath}?tab=testdata` })} />
+              )}
+              <Button
+                intent={Intent.DANGER}
+                icon={<Trash />}
+                small
+                minimal
+                onClick={() => setProblemToDelete(problem)}
+                title="Delete problem"
+              />
+            </div>
           </td>
         </tr>
       );
@@ -120,7 +117,16 @@ export default function ProblemsPage() {
 
     return (
       <>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 10 }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: 16,
+            flexWrap: 'wrap',
+            gap: 10,
+          }}
+        >
           <div style={{ width: 280, maxWidth: '100%' }}>
             <InputGroup
               leftIcon="search"
@@ -143,7 +149,7 @@ export default function ProblemsPage() {
                 <th>Type</th>
                 <th>Author</th>
                 <th>Last Updated</th>
-                <th style={{ textAlign: 'center' }}>Actions</th>
+                <th style={{ width: '320px', minWidth: '320px', textAlign: 'center' }}>Actions</th>
               </tr>
             </thead>
             <tbody>{rows}</tbody>

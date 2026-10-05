@@ -1,15 +1,4 @@
-import {
-  Button,
-  Callout,
-  Card,
-  FormGroup,
-  InputGroup,
-  Intent,
-  Tab,
-  Tabs,
-  Tag,
-  TextArea,
-} from '@blueprintjs/core';
+import { Button, Callout, Card, FormGroup, InputGroup, Intent, Tab, Tabs, Tag, TextArea } from '@blueprintjs/core';
 import { Book, ChevronLeft, EyeOpen, FloppyDisk, InfoSign, Plus } from '@blueprintjs/icons';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Link, useNavigate, useParams } from '@tanstack/react-router';
@@ -19,12 +8,10 @@ import { ActionButtons } from '../../../components/ActionButtons/ActionButtons';
 import { ContentCard } from '../../../components/ContentCard/ContentCard';
 import { LoadingState } from '../../../components/LoadingState/LoadingState';
 import RichStatementText from '../../../components/RichStatementText/RichStatementText';
-import {
-  lessonDetailQueryOptions,
-  updateLessonMutationOptions,
-} from '../../../modules/queries/lesson';
-import { showErrorToast, showSuccessToast } from '../../../modules/toast/toastActions';
+import { lessonDetailQueryOptions, updateLessonMutationOptions } from '../../../modules/queries/lesson';
 import { useWebPrefs } from '../../../modules/webPrefs';
+
+import { showErrorToast, showSuccessToast } from '../../../modules/toast/toastActions';
 
 export default function LessonEditPage() {
   const { lessonId } = useParams({ strict: false });
@@ -149,10 +136,7 @@ export default function LessonEditPage() {
               />
             </FormGroup>
 
-            <FormGroup
-              label="Catatan Tambahan (Internal)"
-              labelFor="lesson-note"
-            >
+            <FormGroup label="Catatan Tambahan (Internal)" labelFor="lesson-note">
               <InputGroup
                 id="lesson-note"
                 value={additionalNote}

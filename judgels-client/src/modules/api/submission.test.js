@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+
 import { constructContainerUrl, constructProblemUrl } from './submission';
 
 describe('submission URL helpers', () => {

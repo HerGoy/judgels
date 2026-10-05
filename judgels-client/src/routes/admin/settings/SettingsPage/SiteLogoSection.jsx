@@ -7,8 +7,9 @@ import defaultLogo from '../../../../assets/images/logo-header.png';
 import { ContentCard } from '../../../../components/ContentCard/ContentCard';
 import { updateSettingsMutationOptions } from '../../../../modules/queries/setting';
 import { userWebConfigQueryOptions } from '../../../../modules/queries/userWeb';
-import * as toastActions from '../../../../modules/toast/toastActions';
 import { getSiteLogo } from '../../../../modules/webConfig';
+
+import * as toastActions from '../../../../modules/toast/toastActions';
 
 export function SiteLogoSection({ home = { banner: '' } }) {
   const queryClient = useQueryClient();
@@ -104,12 +105,16 @@ export function SiteLogoSection({ home = { banner: '' } }) {
 
         <div style={{ flex: 1, minWidth: 260 }}>
           <p style={{ margin: '0 0 10px 0', fontSize: 13, color: '#5c7080' }}>
-            Ubah logo website yang tampil pada pojok kiri atas bilah navigasi header. Anda dapat memasukkan URL gambar atau mengunggah file logo baru.
+            Ubah logo website yang tampil pada pojok kiri atas bilah navigasi header. Anda dapat memasukkan URL gambar
+            atau mengunggah file logo baru.
           </p>
 
           {isEditing ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <FormGroup label="Logo Image URL" helperText="Masukkan tautan gambar langsung (PNG, SVG, atau JPG) atau upload file">
+              <FormGroup
+                label="Logo Image URL"
+                helperText="Masukkan tautan gambar langsung (PNG, SVG, atau JPG) atau upload file"
+              >
                 <div style={{ display: 'flex', gap: 8 }}>
                   <InputGroup
                     fill
@@ -120,12 +125,7 @@ export function SiteLogoSection({ home = { banner: '' } }) {
                   <label className="bp5-button bp5-intent-primary bp5-small" style={{ flexShrink: 0 }}>
                     <CloudUpload style={{ marginRight: 6 }} />
                     Upload
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleFileUpload}
-                      style={{ display: 'none' }}
-                    />
+                    <input type="file" accept="image/*" onChange={handleFileUpload} style={{ display: 'none' }} />
                   </label>
                 </div>
               </FormGroup>

@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 
 import { updateProblemGeneralMutationOptions } from '../../../../modules/queries/problem';
+
 import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 
 export default function ProblemGeneralTab({ problem, problemId }) {
@@ -57,7 +58,11 @@ export default function ProblemGeneralTab({ problem, problemId }) {
         />
       </FormGroup>
 
-      <FormGroup label="Additional Note" labelFor="additionalNote" helperText="Private notes visible only to problem setters and admins.">
+      <FormGroup
+        label="Additional Note"
+        labelFor="additionalNote"
+        helperText="Private notes visible only to problem setters and admins."
+      >
         <TextArea
           id="additionalNote"
           fill

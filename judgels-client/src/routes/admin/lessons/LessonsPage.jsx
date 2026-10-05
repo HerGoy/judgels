@@ -26,6 +26,7 @@ import {
   deleteLessonMutationOptions,
   lessonsQueryOptions,
 } from '../../../modules/queries/lesson';
+
 import { showErrorToast, showSuccessToast } from '../../../modules/toast/toastActions';
 
 export default function LessonsPage() {
@@ -127,8 +128,19 @@ export default function LessonsPage() {
       {isLoading ? (
         <LoadingState />
       ) : lessons.length === 0 ? (
-        <div style={{ padding: 40, textAlign: 'center', color: '#8a9ba8', border: '1px dashed #d3dce3', borderRadius: 4, marginTop: 16 }}>
-          {term ? `Tidak ada lesson yang cocok dengan "${term}".` : 'Belum ada lesson. Klik "Buat Lesson Baru" untuk membuat materi pertama.'}
+        <div
+          style={{
+            padding: 40,
+            textAlign: 'center',
+            color: '#8a9ba8',
+            border: '1px dashed #d3dce3',
+            borderRadius: 4,
+            marginTop: 16,
+          }}
+        >
+          {term
+            ? `Tidak ada lesson yang cocok dengan "${term}".`
+            : 'Belum ada lesson. Klik "Buat Lesson Baru" untuk membuat materi pertama.'}
         </div>
       ) : (
         <>
@@ -141,45 +153,38 @@ export default function LessonsPage() {
                   <th>Catatan Tambahan</th>
                   <th style={{ width: 140 }}>Pembuat</th>
                   <th style={{ width: 160 }}>Terakhir Diperbarui</th>
-                  <th style={{ width: 100, textAlign: 'center' }}>Aksi</th>
+                  <th style={{ width: 160, textAlign: 'center' }}>Aksi</th>
                 </tr>
               </thead>
               <tbody>
                 {lessons.map(lesson => (
                   <tr key={lesson.id}>
-                    <td style={{ verticalAlign: 'middle', color: '#5c7080' }}>
-                      #{lesson.id}
-                    </td>
+                    <td style={{ verticalAlign: 'middle', color: '#5c7080' }}>#{lesson.id}</td>
                     <td style={{ verticalAlign: 'middle' }}>
-                      <Link
-                        to={`/admin/lessons/${lesson.id}`}
-                        style={{ fontWeight: 600, color: '#106ba3' }}
-                      >
+                      <Link to={`/admin/lessons/${lesson.id}`} style={{ fontWeight: 600, color: '#106ba3' }}>
                         <Book style={{ marginRight: 6 }} />
                         {lesson.slug}
                       </Link>
                     </td>
-                    <td style={{ verticalAlign: 'middle', color: '#5c7080' }}>
-                      {lesson.additionalNote || '-'}
-                    </td>
-                    <td style={{ verticalAlign: 'middle' }}>
-                      @{lesson.authorUsername}
-                    </td>
+                    <td style={{ verticalAlign: 'middle', color: '#5c7080' }}>{lesson.additionalNote || '-'}</td>
+                    <td style={{ verticalAlign: 'middle' }}>@{lesson.authorUsername}</td>
                     <td style={{ verticalAlign: 'middle', color: '#5c7080', fontSize: 13 }}>
                       {lesson.updatedAt ? new Date(lesson.updatedAt).toLocaleDateString() : '-'}
                     </td>
                     <td style={{ verticalAlign: 'middle', textAlign: 'center', whiteSpace: 'nowrap' }}>
-                      <Link to={`/admin/lessons/${lesson.id}`} style={{ marginRight: 6 }}>
-                        <Button small intent={Intent.PRIMARY} icon={<Edit />} text="Edit" />
-                      </Link>
-                      <Button
-                        small
-                        minimal
-                        intent={Intent.DANGER}
-                        icon={<Trash />}
-                        onClick={() => setLessonToDelete(lesson)}
-                        title="Delete lesson"
-                      />
+                      <div className="action-button-group" style={{ justifyContent: 'center' }}>
+                        <Link to={`/admin/lessons/${lesson.id}`}>
+                          <Button small intent={Intent.PRIMARY} icon={<Edit />} text="Edit" />
+                        </Link>
+                        <Button
+                          small
+                          minimal
+                          intent={Intent.DANGER}
+                          icon={<Trash />}
+                          onClick={() => setLessonToDelete(lesson)}
+                          title="Delete lesson"
+                        />
+                      </div>
                     </td>
                   </tr>
                 ))}
@@ -231,10 +236,7 @@ export default function LessonsPage() {
               />
             </FormGroup>
 
-            <FormGroup
-              label="Catatan Tambahan (Opsional)"
-              labelFor="lesson-note"
-            >
+            <FormGroup label="Catatan Tambahan (Opsional)" labelFor="lesson-note">
               <InputGroup
                 id="lesson-note"
                 placeholder="Catatan internal pengembang materi"
@@ -248,12 +250,7 @@ export default function LessonsPage() {
             actions={
               <>
                 <Button text="Batal" onClick={() => setIsNewDialogOpen(false)} />
-                <Button
-                  type="submit"
-                  intent={Intent.PRIMARY}
-                  text="Buat Lesson"
-                  loading={createMutation.isPending}
-                />
+                <Button type="submit" intent={Intent.PRIMARY} text="Buat Lesson" loading={createMutation.isPending} />
               </>
             }
           />
@@ -282,7 +279,8 @@ export default function LessonsPage() {
           }
         }}
       >
-        Apakah Anda yakin ingin menghapus materi <strong>{lessonToDelete?.slug}</strong>? Tindakan ini tidak dapat dibatalkan.
+        Apakah Anda yakin ingin menghapus materi <strong>{lessonToDelete?.slug}</strong>? Tindakan ini tidak dapat
+        dibatalkan.
       </Alert>
     </ContentCard>
   );

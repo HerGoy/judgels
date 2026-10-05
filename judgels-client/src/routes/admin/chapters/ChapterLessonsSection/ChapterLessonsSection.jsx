@@ -56,8 +56,9 @@ export function ChapterLessonsSection({ chapter }) {
       return (
         <div>
           <Callout intent={Intent.PRIMARY} style={{ marginBottom: 12 }}>
-            Masukkan satu materi pelajaran per baris dengan format <code>alias,slug</code>. Contoh: <code>A,pengenalan-cpp</code>.
-            Pastikan lesson dengan slug tersebut sudah dibuat terlebih dahulu di menu <strong>Lessons</strong>.
+            Masukkan satu materi pelajaran per baris dengan format <code>alias,slug</code>. Contoh:{' '}
+            <code>A,pengenalan-cpp</code>. Pastikan lesson dengan slug tersebut sudah dibuat terlebih dahulu di menu{' '}
+            <strong>Lessons</strong>.
           </Callout>
           <ChapterLessonsEditForm
             initialValues={initialValues}
@@ -72,7 +73,9 @@ export function ChapterLessonsSection({ chapter }) {
     if (data.length === 0) {
       return (
         <p style={{ color: '#5c7080', margin: '8px 0' }}>
-          <em>Belum ada materi pembelajaran (lessons) di bab ini. Klik Edit atau Kelola Lesson untuk menambahkan materi.</em>
+          <em>
+            Belum ada materi pembelajaran (lessons) di bab ini. Klik Edit atau Kelola Lesson untuk menambahkan materi.
+          </em>
         </p>
       );
     }

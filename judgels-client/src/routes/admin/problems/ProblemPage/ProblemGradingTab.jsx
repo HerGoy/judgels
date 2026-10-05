@@ -16,16 +16,7 @@ import {
   RadioGroup,
   Tag,
 } from '@blueprintjs/core';
-import {
-  CloudUpload,
-  Cross,
-  FloppyDisk,
-  InfoSign,
-  Plus,
-  Refresh,
-  Trash,
-  Upload,
-} from '@blueprintjs/icons';
+import { CloudUpload, Cross, FloppyDisk, InfoSign, Plus, Refresh, Trash, Upload } from '@blueprintjs/icons';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 
@@ -35,8 +26,9 @@ import {
   updateProblemGradingMutationOptions,
   uploadProblemHelperMutationOptions,
 } from '../../../../modules/queries/problem';
-import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 import { useWebPrefs } from '../../../../modules/webPrefs';
+
+import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 
 const ALL_LANGUAGES = [
   { id: 'C', label: 'C' },
@@ -77,9 +69,7 @@ export default function ProblemGradingTab({ problem, problemId }) {
   const [customScorer, setCustomScorer] = useState(grading.customScorer || '(none)');
   const [communicator, setCommunicator] = useState(grading.communicator || '(none)');
   const [subtaskPoints, setSubtaskPoints] = useState(
-    grading.subtaskPoints && grading.subtaskPoints.length > 0
-      ? grading.subtaskPoints
-      : [100]
+    grading.subtaskPoints && grading.subtaskPoints.length > 0 ? grading.subtaskPoints : [100]
   );
 
   const fileInputRef = useRef(null);
@@ -98,9 +88,7 @@ export default function ProblemGradingTab({ problem, problemId }) {
   const supportsCustomScorer = !engine.includes('OutputOnly');
 
   const toggleLanguage = langId => {
-    setAllowedLanguages(prev =>
-      prev.includes(langId) ? prev.filter(l => l !== langId) : [...prev, langId]
-    );
+    setAllowedLanguages(prev => (prev.includes(langId) ? prev.filter(l => l !== langId) : [...prev, langId]));
   };
 
   const handleSubtaskPointChange = (index, value) => {
@@ -204,7 +192,8 @@ export default function ProblemGradingTab({ problem, problemId }) {
           </Tag>
         </h4>
         <p style={{ color: textColor, fontSize: 13, marginBottom: 16 }}>
-          Pilih mekanisme penilaian yang sesuai untuk soal ini. Setiap tipe engine mengaktifkan fitur khusus seperti program komunikator, custom scorer (checker), atau penilaian parsial (subtasks).
+          Pilih mekanisme penilaian yang sesuai untuk soal ini. Setiap tipe engine mengaktifkan fitur khusus seperti
+          program komunikator, custom scorer (checker), atau penilaian parsial (subtasks).
         </p>
 
         <FormGroup label="Tipe Engine" labelFor="grading-engine">
@@ -227,12 +216,15 @@ export default function ProblemGradingTab({ problem, problemId }) {
         {/* Engine Description Callout */}
         {isInteractive && (
           <Callout intent={Intent.PRIMARY} icon={<InfoSign />} style={{ marginTop: 12 }}>
-            <strong>Mode Interaktif:</strong> Solusi peserta akan berinteraksi langsung secara real-time dengan program <em>Communicator</em> melalui standard I/O (stdin/stdout). Pastikan Anda telah mengunggah file komunikator (misal <code>communicator.cpp</code>) di bagian Berkas Pembantu di bawah.
+            <strong>Mode Interaktif:</strong> Solusi peserta akan berinteraksi langsung secara real-time dengan program{' '}
+            <em>Communicator</em> melalui standard I/O (stdin/stdout). Pastikan Anda telah mengunggah file komunikator
+            (misal <code>communicator.cpp</code>) di bagian Berkas Pembantu di bawah.
           </Callout>
         )}
         {hasSubtasks && (
           <Callout intent={Intent.WARNING} icon={<InfoSign />} style={{ marginTop: 12 }}>
-            <strong>Penilaian Subtask & Parsial:</strong> Nilai diberikan per subtask. Peserta mendapatkan skor parsial jika berhasil menyelesaikan seluruh test case dalam subtask tertentu.
+            <strong>Penilaian Subtask & Parsial:</strong> Nilai diberikan per subtask. Peserta mendapatkan skor parsial
+            jika berhasil menyelesaikan seluruh test case dalam subtask tertentu.
           </Callout>
         )}
       </Card>
@@ -240,11 +232,10 @@ export default function ProblemGradingTab({ problem, problemId }) {
       {/* 2. INTERACTIVE COMMUNICATOR CONFIGURATION (Shown when interactive) */}
       {isInteractive && (
         <Card style={{ marginBottom: 20, borderLeft: '4px solid #106ba3' }}>
-          <h4 style={{ marginTop: 0, marginBottom: 8 }}>
-            Program Komunikator (Communicator)
-          </h4>
+          <h4 style={{ marginTop: 0, marginBottom: 8 }}>Program Komunikator (Communicator)</h4>
           <p style={{ color: textColor, fontSize: 13 }}>
-            Pilih file kode sumber komunikator yang telah diunggah di Berkas Pembantu. Komunikator akan dikompilasi oleh grader dan dieksekusi bersamaan dengan solusi peserta.
+            Pilih file kode sumber komunikator yang telah diunggah di Berkas Pembantu. Komunikator akan dikompilasi oleh
+            grader dan dieksekusi bersamaan dengan solusi peserta.
           </p>
 
           <FormGroup label="File Komunikator" labelFor="communicator-select">
@@ -275,7 +266,8 @@ export default function ProblemGradingTab({ problem, problemId }) {
 
           {communicator === '(none)' && (
             <Callout intent={Intent.DANGER} style={{ marginTop: 8 }}>
-              Peringatan: Mode interaktif membutuhkan file Communicator. Silakan unggah dan pilih file komunikator di atas agar grader dapat menilai solusi peserta.
+              Peringatan: Mode interaktif membutuhkan file Communicator. Silakan unggah dan pilih file komunikator di
+              atas agar grader dapat menilai solusi peserta.
             </Callout>
           )}
         </Card>
@@ -284,11 +276,11 @@ export default function ProblemGradingTab({ problem, problemId }) {
       {/* 3. CUSTOM SCORER / CHECKER (Shown when supported) */}
       {supportsCustomScorer && (
         <Card style={{ marginBottom: 20 }}>
-          <h4 style={{ marginTop: 0, marginBottom: 8 }}>
-            Custom Scorer / Checker (Opsional)
-          </h4>
+          <h4 style={{ marginTop: 0, marginBottom: 8 }}>Custom Scorer / Checker (Opsional)</h4>
           <p style={{ color: textColor, fontSize: 13 }}>
-            Digunakan apabila pengecekan jawaban tidak bisa dilakukan secara perbandingan teks standar (misalnya jawaban berupa floating point dengan toleransi 10<sup>-6</sup>, atau problem dengan banyak kemungkinan jawaban benar).
+            Digunakan apabila pengecekan jawaban tidak bisa dilakukan secara perbandingan teks standar (misalnya jawaban
+            berupa floating point dengan toleransi 10<sup>-6</sup>, atau problem dengan banyak kemungkinan jawaban
+            benar).
           </p>
 
           <FormGroup label="File Custom Scorer" labelFor="scorer-select">
@@ -322,7 +314,15 @@ export default function ProblemGradingTab({ problem, problemId }) {
       {/* 4. SUBTASKS & PARTIAL POINTS (Shown when WithSubtasks) */}
       {hasSubtasks && (
         <Card style={{ marginBottom: 20, borderLeft: '4px solid #d9822b' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12, flexWrap: 'wrap' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: 12,
+              flexWrap: 'wrap',
+            }}
+          >
             <div>
               <h4 style={{ margin: 0 }}>Subtasks & Skor Parsial</h4>
               <p style={{ color: textColor, fontSize: 13, margin: '4px 0 0' }}>
@@ -345,9 +345,7 @@ export default function ProblemGradingTab({ problem, problemId }) {
             <tbody>
               {subtaskPoints.map((points, idx) => (
                 <tr key={idx}>
-                  <td style={{ verticalAlign: 'middle', fontWeight: 600 }}>
-                    Subtask {idx + 1}
-                  </td>
+                  <td style={{ verticalAlign: 'middle', fontWeight: 600 }}>Subtask {idx + 1}</td>
                   <td>
                     <InputGroup
                       type="number"
@@ -374,33 +372,30 @@ export default function ProblemGradingTab({ problem, problemId }) {
             </tbody>
           </HTMLTable>
 
-          {problem.canEdit && (
-            <Button
-              small
-              icon={<Plus />}
-              text="Tambah Subtask"
-              onClick={addSubtask}
-            />
-          )}
+          {problem.canEdit && <Button small icon={<Plus />} text="Tambah Subtask" onClick={addSubtask} />}
         </Card>
       )}
 
       {/* 5. HELPER FILES MANAGER (Communicator, Scorer, Headers, Zip) */}
       <Card style={{ marginBottom: 20 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12, flexWrap: 'wrap' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: 12,
+            flexWrap: 'wrap',
+          }}
+        >
           <div>
             <h4 style={{ margin: 0 }}>Berkas Pembantu (Helper Files)</h4>
             <p style={{ color: textColor, fontSize: 13, margin: '4px 0 0' }}>
-              Unggah file pendukung grading seperti <code>communicator.cpp</code>, <code>scorer.cpp</code>, <code>checker.cpp</code>, berkas header (<code>.h</code>), atau arsip <code>.zip</code>.
+              Unggah file pendukung grading seperti <code>communicator.cpp</code>, <code>scorer.cpp</code>,{' '}
+              <code>checker.cpp</code>, berkas header (<code>.h</code>), atau arsip <code>.zip</code>.
             </p>
           </div>
           <div>
-            <input
-              type="file"
-              ref={fileInputRef}
-              style={{ display: 'none' }}
-              onChange={handleHelperUpload}
-            />
+            <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleHelperUpload} />
             <Button
               intent={Intent.PRIMARY}
               icon={<CloudUpload />}
@@ -422,7 +417,8 @@ export default function ProblemGradingTab({ problem, problemId }) {
               borderRadius: 4,
             }}
           >
-            Belum ada berkas pembantu yang diunggah. Klik <strong>Upload Berkas Pembantu</strong> untuk mengunggah komunikator atau scorer.
+            Belum ada berkas pembantu yang diunggah. Klik <strong>Upload Berkas Pembantu</strong> untuk mengunggah
+            komunikator atau scorer.
           </div>
         ) : (
           <HTMLTable striped style={{ width: '100%' }}>
@@ -443,9 +439,7 @@ export default function ProblemGradingTab({ problem, problemId }) {
                     <td style={{ verticalAlign: 'middle', fontWeight: 500 }}>
                       <code>{file.name}</code>
                     </td>
-                    <td style={{ verticalAlign: 'middle', color: textColor }}>
-                      {(file.size / 1024).toFixed(1)} KB
-                    </td>
+                    <td style={{ verticalAlign: 'middle', color: textColor }}>{(file.size / 1024).toFixed(1)} KB</td>
                     <td style={{ verticalAlign: 'middle' }}>
                       {isComm && (
                         <Tag intent={Intent.PRIMARY} round style={{ marginRight: 6 }}>
@@ -457,9 +451,7 @@ export default function ProblemGradingTab({ problem, problemId }) {
                           Scorer Aktif
                         </Tag>
                       )}
-                      {!isComm && !isScorer && (
-                        <span style={{ color: '#8a9ba8' }}>Tidak aktif</span>
-                      )}
+                      {!isComm && !isScorer && <span style={{ color: '#8a9ba8' }}>Tidak aktif</span>}
                     </td>
                     <td style={{ verticalAlign: 'middle', textAlign: 'center' }}>
                       <Button

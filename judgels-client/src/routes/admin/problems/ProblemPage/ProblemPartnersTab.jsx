@@ -1,20 +1,5 @@
-import {
-  Button,
-  Callout,
-  Card,
-  FormGroup,
-  HTMLSelect,
-  HTMLTable,
-  InputGroup,
-  Intent,
-  Tag,
-} from '@blueprintjs/core';
-import {
-  InfoSign,
-  People,
-  Plus,
-  Trash,
-} from '@blueprintjs/icons';
+import { Button, Callout, Card, FormGroup, HTMLSelect, HTMLTable, InputGroup, Intent, Tag } from '@blueprintjs/core';
+import { InfoSign, People, Plus, Trash } from '@blueprintjs/icons';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
@@ -23,6 +8,7 @@ import {
   deleteProblemPartnerMutationOptions,
   problemPartnersQueryOptions,
 } from '../../../../modules/queries/problem';
+
 import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 
 export default function ProblemPartnersTab({ problem, problemId }) {
@@ -75,10 +61,16 @@ export default function ProblemPartnersTab({ problem, problemId }) {
   return (
     <div style={{ maxWidth: 850, marginTop: 16 }}>
       <Callout intent={Intent.PRIMARY} icon={<People />} style={{ marginBottom: 20 }}>
-        <strong>Kolaborasi Pembuatan Soal (Partners):</strong> Partner adalah rekan penulis atau pengembang soal yang diberikan hak akses langsung ke draft soal ini sebelum dipublikasikan.
+        <strong>Kolaborasi Pembuatan Soal (Partners):</strong> Partner adalah rekan penulis atau pengembang soal yang
+        diberikan hak akses langsung ke draft soal ini sebelum dipublikasikan.
         <ul style={{ margin: '6px 0 0', paddingLeft: 20 }}>
-          <li><strong>UPDATE:</strong> Dapat melihat, mengedit deskripsi soal, mengunggah data uji, dan mengubah konfigurasi grading.</li>
-          <li><strong>VIEW:</strong> Hanya dapat melihat soal dan data uji tanpa izin mengubah.</li>
+          <li>
+            <strong>UPDATE:</strong> Dapat melihat, mengedit deskripsi soal, mengunggah data uji, dan mengubah
+            konfigurasi grading.
+          </li>
+          <li>
+            <strong>VIEW:</strong> Hanya dapat melihat soal dan data uji tanpa izin mengubah.
+          </li>
         </ul>
       </Callout>
 
@@ -86,8 +78,15 @@ export default function ProblemPartnersTab({ problem, problemId }) {
       {problem.canEdit && (
         <Card style={{ marginBottom: 20 }}>
           <h4 style={{ marginTop: 0, marginBottom: 12 }}>Tambah Partner Baru</h4>
-          <form onSubmit={handleAddPartner} style={{ display: 'flex', gap: 12, alignItems: 'flex-end', flexWrap: 'wrap' }}>
-            <FormGroup label="Username Pengguna" labelFor="partner-username" style={{ marginBottom: 0, flex: 1, minWidth: 200 }}>
+          <form
+            onSubmit={handleAddPartner}
+            style={{ display: 'flex', gap: 12, alignItems: 'flex-end', flexWrap: 'wrap' }}
+          >
+            <FormGroup
+              label="Username Pengguna"
+              labelFor="partner-username"
+              style={{ marginBottom: 0, flex: 1, minWidth: 200 }}
+            >
               <InputGroup
                 id="partner-username"
                 placeholder="Masukkan username (contoh: budi)"
@@ -97,12 +96,12 @@ export default function ProblemPartnersTab({ problem, problemId }) {
               />
             </FormGroup>
 
-            <FormGroup label="Hak Akses (Permission)" labelFor="partner-perm" style={{ marginBottom: 0, minWidth: 160 }}>
-              <HTMLSelect
-                id="partner-perm"
-                value={permission}
-                onChange={e => setPermission(e.target.value)}
-              >
+            <FormGroup
+              label="Hak Akses (Permission)"
+              labelFor="partner-perm"
+              style={{ marginBottom: 0, minWidth: 160 }}
+            >
+              <HTMLSelect id="partner-perm" value={permission} onChange={e => setPermission(e.target.value)}>
                 <option value="UPDATE">UPDATE (Dapat Mengedit)</option>
                 <option value="VIEW">VIEW (Hanya Melihat)</option>
               </HTMLSelect>
@@ -123,7 +122,15 @@ export default function ProblemPartnersTab({ problem, problemId }) {
       <Card>
         <h4 style={{ marginTop: 0, marginBottom: 12 }}>Daftar Partner Terdaftar</h4>
         {partners.length === 0 ? (
-          <div style={{ padding: 24, textAlign: 'center', color: '#8a9ba8', border: '1px dashed #d3dce3', borderRadius: 4 }}>
+          <div
+            style={{
+              padding: 24,
+              textAlign: 'center',
+              color: '#8a9ba8',
+              border: '1px dashed #d3dce3',
+              borderRadius: 4,
+            }}
+          >
             Belum ada partner yang ditambahkan untuk soal ini.
           </div>
         ) : (
@@ -138,15 +145,9 @@ export default function ProblemPartnersTab({ problem, problemId }) {
             <tbody>
               {partners.map(p => (
                 <tr key={p.username}>
-                  <td style={{ verticalAlign: 'middle', fontWeight: 600 }}>
-                    @{p.username}
-                  </td>
+                  <td style={{ verticalAlign: 'middle', fontWeight: 600 }}>@{p.username}</td>
                   <td style={{ verticalAlign: 'middle' }}>
-                    <Tag
-                      intent={p.permission === 'UPDATE' ? Intent.SUCCESS : Intent.NONE}
-                      round
-                      minimal
-                    >
+                    <Tag intent={p.permission === 'UPDATE' ? Intent.SUCCESS : Intent.NONE} round minimal>
                       {p.permission === 'UPDATE' ? 'Dapat Mengedit (UPDATE)' : 'Hanya Melihat (VIEW)'}
                     </Tag>
                   </td>

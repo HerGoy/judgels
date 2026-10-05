@@ -52,7 +52,11 @@ export function CourseGeneralSection({ course }) {
         <em style={{ color: '#8a9ba8' }}>No logo set</em>
       ),
     },
-    { key: 'description', title: 'Description', value: currentDesc || <em style={{ color: '#8a9ba8' }}>No description</em> },
+    {
+      key: 'description',
+      title: 'Description',
+      value: currentDesc || <em style={{ color: '#8a9ba8' }}>No description</em>,
+    },
   ];
 
   const updateCourse = async data => {

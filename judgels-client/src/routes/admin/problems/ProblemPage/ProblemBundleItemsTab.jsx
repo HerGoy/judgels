@@ -28,8 +28,9 @@ import { useState } from 'react';
 import RichStatementText from '../../../../components/RichStatementText/RichStatementText';
 import { problemAPI } from '../../../../modules/api/problem';
 import { getToken } from '../../../../modules/session';
-import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 import { useWebPrefs } from '../../../../modules/webPrefs';
+
+import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 
 export default function ProblemBundleItemsTab({ problem, problemId }) {
   const queryClient = useQueryClient();
@@ -53,7 +54,11 @@ export default function ProblemBundleItemsTab({ problem, problemId }) {
   const [gradingRegex, setGradingRegex] = useState('');
   const [inputValidationRegex, setInputValidationRegex] = useState('.*');
 
-  const { data: items = [], isLoading, refetch } = useQuery({
+  const {
+    data: items = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ['problem-bundle-items', String(problemId)],
     queryFn: () => problemAPI.getBundleItems(getToken(), problemId),
   });
@@ -202,17 +207,23 @@ export default function ProblemBundleItemsTab({ problem, problemId }) {
   return (
     <div style={{ marginTop: 8 }}>
       {/* Informative Guidance Callout */}
-      <Callout
-        intent={Intent.PRIMARY}
-        icon={<Help />}
-        style={{ marginBottom: 16 }}
-      >
+      <Callout intent={Intent.PRIMARY} icon={<Help />} style={{ marginBottom: 16 }}>
         <strong>Tentang Soal Tipe Bundling:</strong> Soal bundling berisi satu atau lebih butir pertanyaan:
-        <strong> Pilihan Ganda (Multiple Choice)</strong> dan/atau <strong>Isian Singkat (Short Answer)</strong>.
-        Kunci jawaban diatur langsung pada setiap butir soal di bawah ini. Anda dapat membuat soal menggunakan teks biasa atau format HTML/Markdown.
+        <strong> Pilihan Ganda (Multiple Choice)</strong> dan/atau <strong>Isian Singkat (Short Answer)</strong>. Kunci
+        jawaban diatur langsung pada setiap butir soal di bawah ini. Anda dapat membuat soal menggunakan teks biasa atau
+        format HTML/Markdown.
       </Callout>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 10 }}>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: 16,
+          flexWrap: 'wrap',
+          gap: 10,
+        }}
+      >
         <div>
           <span style={{ fontSize: 16, fontWeight: 600 }}>Daftar Butir Soal ({items.length})</span>
         </div>
@@ -229,12 +240,7 @@ export default function ProblemBundleItemsTab({ problem, problemId }) {
             text="Tambah Isian Singkat"
             onClick={() => openCreateDialog('SHORT_ANSWER')}
           />
-          <Button
-            minimal
-            icon={<Refresh />}
-            onClick={() => refetch()}
-            title="Refresh items"
-          />
+          <Button minimal icon={<Refresh />} onClick={() => refetch()} title="Refresh items" />
         </div>
       </div>
 
@@ -245,7 +251,8 @@ export default function ProblemBundleItemsTab({ problem, problemId }) {
       ) : items.length === 0 ? (
         <Card style={{ textAlign: 'center', padding: 40 }}>
           <p style={{ margin: 0, color: isDarkMode ? '#8a9ba8' : '#5c7080' }}>
-            Belum ada butir soal dalam bundling ini. Klik <strong>Tambah Pilihan Ganda</strong> atau <strong>Tambah Isian Singkat</strong> di atas untuk membuat soal baru!
+            Belum ada butir soal dalam bundling ini. Klik <strong>Tambah Pilihan Ganda</strong> atau{' '}
+            <strong>Tambah Isian Singkat</strong> di atas untuk membuat soal baru!
           </p>
         </Card>
       ) : (
@@ -268,18 +275,13 @@ export default function ProblemBundleItemsTab({ problem, problemId }) {
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <span style={{ fontSize: 16, fontWeight: 700 }}>
-                      Soal #{item.number ?? index + 1}
-                    </span>
-                    <Tag
-                      minimal
-                      round
-                      intent={isMC ? Intent.PRIMARY : Intent.WARNING}
-                    >
+                    <span style={{ fontSize: 16, fontWeight: 700 }}>Soal #{item.number ?? index + 1}</span>
+                    <Tag minimal round intent={isMC ? Intent.PRIMARY : Intent.WARNING}>
                       {isMC ? 'Pilihan Ganda' : 'Isian Singkat'}
                     </Tag>
                     <span style={{ fontSize: 13, color: isDarkMode ? '#8a9ba8' : '#5c7080' }}>
-                      • Bobot: <strong>{cfg.score ?? 0} poin</strong>{cfg.penalty ? ` (penalti: -${cfg.penalty})` : ''}
+                      • Bobot: <strong>{cfg.score ?? 0} poin</strong>
+                      {cfg.penalty ? ` (penalti: -${cfg.penalty})` : ''}
                     </span>
                   </div>
 
@@ -365,11 +367,7 @@ export default function ProblemBundleItemsTab({ problem, problemId }) {
                                 : 'transparent',
                             }}
                           >
-                            <Tag
-                              intent={isCorrect ? Intent.SUCCESS : Intent.NONE}
-                              minimal={!isCorrect}
-                              round={false}
-                            >
+                            <Tag intent={isCorrect ? Intent.SUCCESS : Intent.NONE} minimal={!isCorrect} round={false}>
                               {ch.alias.toUpperCase()}
                             </Tag>
                             <div style={{ flex: 1, fontSize: 13 }}>
@@ -380,11 +378,7 @@ export default function ProblemBundleItemsTab({ problem, problemId }) {
                               )}
                             </div>
                             {isCorrect && (
-                              <Tag
-                                minimal
-                                intent={Intent.SUCCESS}
-                                style={{ fontSize: 11, fontWeight: 600 }}
-                              >
+                              <Tag minimal intent={Intent.SUCCESS} style={{ fontSize: 11, fontWeight: 600 }}>
                                 <Icon icon="tick" size={12} style={{ marginRight: 4 }} />
                                 Kunci
                               </Tag>
@@ -409,7 +403,9 @@ export default function ProblemBundleItemsTab({ problem, problemId }) {
                       Kunci Jawaban:
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-                      <Tag minimal intent={Intent.SUCCESS}>Regex Pencocokan</Tag>
+                      <Tag minimal intent={Intent.SUCCESS}>
+                        Regex Pencocokan
+                      </Tag>
                       <code>{cfg.gradingRegex || '.*'}</code>
                     </div>
                   </div>
@@ -464,21 +460,10 @@ export default function ProblemBundleItemsTab({ problem, problemId }) {
 
           <div style={{ display: 'flex', gap: 16 }}>
             <FormGroup label="Bobot Poin (Nilai jika Benar)" style={{ flex: 1 }}>
-              <NumericInput
-                fill
-                value={score}
-                onValueChange={v => setScore(v)}
-                min={0}
-                stepSize={1}
-              />
+              <NumericInput fill value={score} onValueChange={v => setScore(v)} min={0} stepSize={1} />
             </FormGroup>
             <FormGroup label="Penalti (Pengurangan jika Salah)" style={{ flex: 1 }}>
-              <NumericInput
-                fill
-                value={penalty}
-                onValueChange={v => setPenalty(v)}
-                stepSize={0.5}
-              />
+              <NumericInput fill value={penalty} onValueChange={v => setPenalty(v)} stepSize={0.5} />
             </FormGroup>
           </div>
 
@@ -503,14 +488,13 @@ export default function ProblemBundleItemsTab({ problem, problemId }) {
                       onChange={e => handleChoiceContentChange(i, e.target.value)}
                       placeholder={`Isi pilihan ${c.alias.toUpperCase()}...`}
                     />
-                    {c.isCorrect && <Tag intent={Intent.SUCCESS} round>Kunci</Tag>}
+                    {c.isCorrect && (
+                      <Tag intent={Intent.SUCCESS} round>
+                        Kunci
+                      </Tag>
+                    )}
                     {choices.length > 2 && (
-                      <Button
-                        minimal
-                        intent={Intent.DANGER}
-                        icon={<Trash />}
-                        onClick={() => removeChoice(i)}
-                      />
+                      <Button minimal intent={Intent.DANGER} icon={<Trash />} onClick={() => removeChoice(i)} />
                     )}
                   </div>
                 ))}

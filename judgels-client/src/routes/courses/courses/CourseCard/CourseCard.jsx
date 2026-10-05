@@ -1,5 +1,3 @@
-
-
 import { ContentCardLink } from '../../../../components/ContentCardLink/ContentCardLink';
 import { HtmlText } from '../../../../components/HtmlText/HtmlText';
 import { ProgressBar } from '../../../../components/ProgressBar/ProgressBar';
@@ -52,15 +50,19 @@ export function CourseCard({ course: { slug, name, description }, progress }) {
               padding: 4,
             }}
           >
-            <img
-              src={logoUrl}
-              alt={name}
-              style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
-            />
+            <img src={logoUrl} alt={name} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
           </div>
         )}
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: 6 }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'baseline',
+              flexWrap: 'wrap',
+              gap: 6,
+            }}
+          >
             <h4 className="course-card__title" style={{ margin: 0 }}>
               {name}
             </h4>

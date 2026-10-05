@@ -28,8 +28,9 @@ import {
   courseChaptersQueryOptions,
   setCourseChaptersMutationOptions,
 } from '../../../../modules/queries/courseChapter';
-import * as toastActions from '../../../../modules/toast/toastActions';
 import CourseChaptersEditForm from '../CourseChaptersEditForm/CourseChaptersEditForm';
+
+import * as toastActions from '../../../../modules/toast/toastActions';
 
 export function CourseChaptersSection({ course }) {
   const navigate = useNavigate();
@@ -53,9 +54,7 @@ export function CourseChaptersSection({ course }) {
     const nextNum = currentChapters.length + 1;
     setAlias(String(nextNum).padStart(2, '0'));
     setNewChapterName('');
-    const unusedChapter = allChapters.find(
-      ac => !currentChapters.some(cc => cc.chapterJid === ac.jid)
-    );
+    const unusedChapter = allChapters.find(ac => !currentChapters.some(cc => cc.chapterJid === ac.jid));
     setSelectedChapterJid(unusedChapter ? unusedChapter.jid : allChapters[0]?.jid || '');
     setAddMode('new');
     setIsAddDialogOpen(true);
@@ -142,9 +141,10 @@ export function CourseChaptersSection({ course }) {
   return (
     <div>
       <Callout intent={Intent.PRIMARY} icon={<Help />} style={{ marginBottom: 16 }}>
-        <strong>Struktur Course & Bab (Chapter):</strong> Course terdiri dari beberapa Bab.
-        Setiap Bab memiliki <strong>Materi (Lessons)</strong> dan <strong>Soal (Problems)</strong>.
-        Klik tombol <strong>Kelola Materi & Soal</strong> pada salah satu bab untuk menambahkan penjelasan materi atau latihan soal ke bab tersebut.
+        <strong>Struktur Course & Bab (Chapter):</strong> Course terdiri dari beberapa Bab. Setiap Bab memiliki{' '}
+        <strong>Materi (Lessons)</strong> dan <strong>Soal (Problems)</strong>. Klik tombol{' '}
+        <strong>Kelola Materi & Soal</strong> pada salah satu bab untuk menambahkan penjelasan materi atau latihan soal
+        ke bab tersebut.
       </Callout>
 
       <Flex justifyContent="space-between" alignItems="center" flexWrap="wrap" gap={2} style={{ marginBottom: 12 }}>
@@ -178,75 +178,76 @@ export function CourseChaptersSection({ course }) {
         />
       ) : currentChapters.length === 0 ? (
         <Callout intent={Intent.NONE} style={{ textAlign: 'center', padding: 24 }}>
-          Course ini belum memiliki bab. Klik <strong>Tambah Bab ke Course</strong> untuk membuat bab baru atau menghubungkan bab yang sudah ada.
+          Course ini belum memiliki bab. Klik <strong>Tambah Bab ke Course</strong> untuk membuat bab baru atau
+          menghubungkan bab yang sudah ada.
         </Callout>
       ) : (
         <div className="table-responsive">
           <HTMLTable striped style={{ width: '100%' }}>
-          <thead>
-            <tr>
-              <th style={{ width: '80px' }}>Alias</th>
-              <th>Nama Bab</th>
-              <th style={{ width: '280px', textAlign: 'right' }}>Aksi & Konten</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentChapters.map((courseChapter, index) => {
-              const chapterName = chaptersMap[courseChapter.chapterJid]?.name || courseChapter.chapterJid;
-              return (
-                <tr key={courseChapter.chapterJid}>
-                  <td style={{ verticalAlign: 'middle' }}>
-                    <Tag round minimal style={{ fontWeight: 600 }}>
-                      {courseChapter.alias}
-                    </Tag>
-                  </td>
-                  <td style={{ verticalAlign: 'middle' }}>
-                    <Link
-                      to={`/admin/chapters/${courseChapter.chapterJid}`}
-                      style={{ fontWeight: 600, fontSize: 14 }}
-                    >
-                      {chapterName}
-                    </Link>
-                  </td>
-                  <td style={{ verticalAlign: 'middle', textAlign: 'right' }}>
-                    <ButtonGroup>
-                      <Button
-                        small
-                        icon={<ArrowUp />}
-                        disabled={index === 0 || setChaptersMutation.isPending}
-                        onClick={() => handleMove(index, 'up')}
-                        title="Geser ke atas"
-                      />
-                      <Button
-                        small
-                        icon={<ArrowDown />}
-                        disabled={index === currentChapters.length - 1 || setChaptersMutation.isPending}
-                        onClick={() => handleMove(index, 'down')}
-                        title="Geser ke bawah"
-                      />
-                      <ButtonLink
-                        small
-                        intent={Intent.PRIMARY}
-                        icon={<Edit />}
-                        text="Kelola Materi & Soal"
+            <thead>
+              <tr>
+                <th style={{ width: '80px' }}>Alias</th>
+                <th>Nama Bab</th>
+                <th style={{ width: '280px', textAlign: 'right' }}>Aksi & Konten</th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentChapters.map((courseChapter, index) => {
+                const chapterName = chaptersMap[courseChapter.chapterJid]?.name || courseChapter.chapterJid;
+                return (
+                  <tr key={courseChapter.chapterJid}>
+                    <td style={{ verticalAlign: 'middle' }}>
+                      <Tag round minimal style={{ fontWeight: 600 }}>
+                        {courseChapter.alias}
+                      </Tag>
+                    </td>
+                    <td style={{ verticalAlign: 'middle' }}>
+                      <Link
                         to={`/admin/chapters/${courseChapter.chapterJid}`}
-                      />
-                      <Button
-                        small
-                        minimal
-                        intent={Intent.DANGER}
-                        icon={<Trash />}
-                        disabled={setChaptersMutation.isPending}
-                        onClick={() => handleRemoveChapter(index)}
-                        title="Hapus bab dari course ini"
-                      />
-                    </ButtonGroup>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </HTMLTable>
+                        style={{ fontWeight: 600, fontSize: 14 }}
+                      >
+                        {chapterName}
+                      </Link>
+                    </td>
+                    <td style={{ verticalAlign: 'middle', textAlign: 'right' }}>
+                      <ButtonGroup>
+                        <Button
+                          small
+                          icon={<ArrowUp />}
+                          disabled={index === 0 || setChaptersMutation.isPending}
+                          onClick={() => handleMove(index, 'up')}
+                          title="Geser ke atas"
+                        />
+                        <Button
+                          small
+                          icon={<ArrowDown />}
+                          disabled={index === currentChapters.length - 1 || setChaptersMutation.isPending}
+                          onClick={() => handleMove(index, 'down')}
+                          title="Geser ke bawah"
+                        />
+                        <ButtonLink
+                          small
+                          intent={Intent.PRIMARY}
+                          icon={<Edit />}
+                          text="Kelola Materi & Soal"
+                          to={`/admin/chapters/${courseChapter.chapterJid}`}
+                        />
+                        <Button
+                          small
+                          minimal
+                          intent={Intent.DANGER}
+                          icon={<Trash />}
+                          disabled={setChaptersMutation.isPending}
+                          onClick={() => handleRemoveChapter(index)}
+                          title="Hapus bab dari course ini"
+                        />
+                      </ButtonGroup>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </HTMLTable>
         </div>
       )}
 
@@ -262,19 +263,11 @@ export function CourseChaptersSection({ course }) {
             label="Alias Bab dalam Course"
             helperText="Kode pengenal urutan bab dalam course (contoh: 01, 02, A, B, bab-1)"
           >
-            <InputGroup
-              value={alias}
-              onChange={e => setAlias(e.target.value)}
-              placeholder="01"
-            />
+            <InputGroup value={alias} onChange={e => setAlias(e.target.value)} placeholder="01" />
           </FormGroup>
 
           <FormGroup label="Pilihan Sumber Bab">
-            <RadioGroup
-              selectedValue={addMode}
-              onChange={e => setAddMode(e.target.value)}
-              inline
-            >
+            <RadioGroup selectedValue={addMode} onChange={e => setAddMode(e.target.value)} inline>
               <Radio label="Buat Bab Baru" value="new" />
               <Radio label="Pilih Bab yang Sudah Ada" value="existing" />
             </RadioGroup>
@@ -292,15 +285,8 @@ export function CourseChaptersSection({ course }) {
               />
             </FormGroup>
           ) : (
-            <FormGroup
-              label="Pilih Bab"
-              helperText="Pilih dari bab yang telah dibuat sebelumnya di sistem"
-            >
-              <HTMLSelect
-                fill
-                value={selectedChapterJid}
-                onChange={e => setSelectedChapterJid(e.target.value)}
-              >
+            <FormGroup label="Pilih Bab" helperText="Pilih dari bab yang telah dibuat sebelumnya di sistem">
+              <HTMLSelect fill value={selectedChapterJid} onChange={e => setSelectedChapterJid(e.target.value)}>
                 {allChapters.map(c => (
                   <option key={c.jid} value={c.jid}>
                     {c.name} ({c.jid})

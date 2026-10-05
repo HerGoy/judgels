@@ -19,12 +19,12 @@ import AceEditor from 'react-ace';
 
 import 'ace-builds/src-noconflict/ext-language_tools';
 import 'ace-builds/src-noconflict/mode-c_cpp';
-import 'ace-builds/src-noconflict/mode-java';
-import 'ace-builds/src-noconflict/mode-python';
 import 'ace-builds/src-noconflict/mode-golang';
+import 'ace-builds/src-noconflict/mode-java';
 import 'ace-builds/src-noconflict/mode-pascal';
-import 'ace-builds/src-noconflict/mode-rust';
 import 'ace-builds/src-noconflict/mode-plain_text';
+import 'ace-builds/src-noconflict/mode-python';
+import 'ace-builds/src-noconflict/mode-rust';
 import 'ace-builds/src-noconflict/theme-tomorrow';
 import 'ace-builds/src-noconflict/theme-tomorrow_night';
 
@@ -34,8 +34,9 @@ import {
   submitProblemSolutionMutationOptions,
 } from '../../../../modules/queries/problem';
 import { getToken } from '../../../../modules/session';
-import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 import { useWebPrefs } from '../../../../modules/webPrefs';
+
+import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 
 const COMMON_SOL_LANGUAGES = [
   { id: 'Cpp17', label: 'C++17' },
@@ -61,20 +62,48 @@ function getAceMode(lang) {
 function getVerdictTag(verdict) {
   switch (verdict) {
     case 'ACCEPTED':
-      return <Tag intent={Intent.SUCCESS} round>Accepted (AC)</Tag>;
+      return (
+        <Tag intent={Intent.SUCCESS} round>
+          Accepted (AC)
+        </Tag>
+      );
     case 'WRONG_ANSWER':
-      return <Tag intent={Intent.DANGER} round>Wrong Answer (WA)</Tag>;
+      return (
+        <Tag intent={Intent.DANGER} round>
+          Wrong Answer (WA)
+        </Tag>
+      );
     case 'TIME_LIMIT_EXCEEDED':
-      return <Tag intent={Intent.WARNING} round>Time Limit Exceeded (TLE)</Tag>;
+      return (
+        <Tag intent={Intent.WARNING} round>
+          Time Limit Exceeded (TLE)
+        </Tag>
+      );
     case 'MEMORY_LIMIT_EXCEEDED':
-      return <Tag intent={Intent.WARNING} round>Memory Limit Exceeded (MLE)</Tag>;
+      return (
+        <Tag intent={Intent.WARNING} round>
+          Memory Limit Exceeded (MLE)
+        </Tag>
+      );
     case 'RUNTIME_ERROR':
-      return <Tag intent={Intent.DANGER} round>Runtime Error (RTE)</Tag>;
+      return (
+        <Tag intent={Intent.DANGER} round>
+          Runtime Error (RTE)
+        </Tag>
+      );
     case 'COMPILATION_ERROR':
-      return <Tag intent={Intent.DANGER} round>Compile Error (CE)</Tag>;
+      return (
+        <Tag intent={Intent.DANGER} round>
+          Compile Error (CE)
+        </Tag>
+      );
     case 'PENDING':
     default:
-      return <Tag intent={Intent.PRIMARY} round minimal>Grading / Pending</Tag>;
+      return (
+        <Tag intent={Intent.PRIMARY} round minimal>
+          Grading / Pending
+        </Tag>
+      );
   }
 }
 
@@ -157,13 +186,7 @@ export default function ProblemSubmissionsTab({ problem, problemId }) {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <Button
-            small
-            minimal
-            icon={<Refresh />}
-            text="Refresh"
-            onClick={() => refetch()}
-          />
+          <Button small minimal icon={<Refresh />} text="Refresh" onClick={() => refetch()} />
           <Tag minimal round>
             {data?.totalCount || submissions.length} Submissions
           </Tag>
@@ -191,11 +214,7 @@ export default function ProblemSubmissionsTab({ problem, problemId }) {
           <h4 style={{ marginTop: 0, marginBottom: 12 }}>Test Solution</h4>
           <form onSubmit={handleQuickSubmit}>
             <FormGroup label="Programming Language" labelFor="sol-lang">
-              <HTMLSelect
-                id="sol-lang"
-                value={selectedLang}
-                onChange={e => setSelectedLang(e.target.value)}
-              >
+              <HTMLSelect id="sol-lang" value={selectedLang} onChange={e => setSelectedLang(e.target.value)}>
                 {COMMON_SOL_LANGUAGES.map(l => (
                   <option key={l.id} value={l.id}>
                     {l.label}
@@ -282,9 +301,7 @@ export default function ProblemSubmissionsTab({ problem, problemId }) {
                   </td>
                   <td>{getVerdictTag(sub.verdict)}</td>
                   <td>
-                    <strong style={{ color: sub.score === 100 ? '#0f9960' : undefined }}>
-                      {sub.score}
-                    </strong>
+                    <strong style={{ color: sub.score === 100 ? '#0f9960' : undefined }}>{sub.score}</strong>
                   </td>
                   <td style={{ color: isDarkMode ? '#a7b6c2' : '#5c7080', fontSize: 12 }}>
                     {new Date(sub.submittedAt).toLocaleString()}
@@ -396,9 +413,7 @@ export default function ProblemSubmissionsTab({ problem, problemId }) {
             </div>
           ) : null}
         </DialogBody>
-        <DialogFooter
-          actions={<Button onClick={() => setSelectedSubmission(null)} text="Close" />}
-        />
+        <DialogFooter actions={<Button onClick={() => setSelectedSubmission(null)} text="Close" />} />
       </Dialog>
     </div>
   );

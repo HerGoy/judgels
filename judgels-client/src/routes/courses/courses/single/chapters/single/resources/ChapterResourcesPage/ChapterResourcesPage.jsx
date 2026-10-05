@@ -77,9 +77,7 @@ export default function ChapterResourcesPage() {
       chapterResources = (
         <div className="chapter-resources-page__lessons-section">
           <h4>Materi Belajar</h4>
-          <div className="chapter-resources-page__resources">
-            {lessons.map(renderLesson)}
-          </div>
+          <div className="chapter-resources-page__resources">{lessons.map(renderLesson)}</div>
         </div>
       );
     }
@@ -89,9 +87,7 @@ export default function ChapterResourcesPage() {
       problemSetResources = (
         <div className="chapter-resources-page__problem-set-problems">
           <h4>Latihan Soal</h4>
-          <div className="chapter-resources-page__resources">
-            {problems.map((p, idx) => renderProblem(p, idx))}
-          </div>
+          <div className="chapter-resources-page__resources">{problems.map((p, idx) => renderProblem(p, idx))}</div>
         </div>
       );
     }

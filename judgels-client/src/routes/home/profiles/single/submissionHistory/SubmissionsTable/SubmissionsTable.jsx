@@ -36,7 +36,8 @@ export function SubmissionsTable({
   const renderRows = () => {
     const rows = submissions.map(submission => {
       const containerPath = containerPathsMap[submission.containerJid] || containerPathsMap[submission.problemJid];
-      const containerName = containerNamesMap[submission.containerJid] || containerNamesMap[submission.problemJid] || '-';
+      const containerName =
+        containerNamesMap[submission.containerJid] || containerNamesMap[submission.problemJid] || '-';
       const problemAlias =
         problemAliasesMap[submission.containerJid + '-' + submission.problemJid] ||
         problemAliasesMap[submission.problemJid];
@@ -47,29 +48,15 @@ export function SubmissionsTable({
         <tr key={submission.jid}>
           <td className="col-fit">{submission.id}</td>
 
-          <td>
-            {containerUrl ? (
-              <Link to={containerUrl}>
-                {containerName}
-              </Link>
-            ) : (
-              <span>{containerName}</span>
-            )}
-          </td>
+          <td>{containerUrl ? <Link to={containerUrl}>{containerName}</Link> : <span>{containerName}</span>}</td>
           <td>
             {problemUrl ? (
               <Link to={problemUrl}>
-                {constructProblemName(
-                  problemNamesMap[submission.problemJid] || '(Deleted Problem)',
-                  problemAlias
-                )}
+                {constructProblemName(problemNamesMap[submission.problemJid] || '(Deleted Problem)', problemAlias)}
               </Link>
             ) : (
               <span>
-                {constructProblemName(
-                  problemNamesMap[submission.problemJid] || '(Deleted Problem)',
-                  problemAlias
-                )}
+                {constructProblemName(problemNamesMap[submission.problemJid] || '(Deleted Problem)', problemAlias)}
               </span>
             )}
           </td>
@@ -80,9 +67,9 @@ export function SubmissionsTable({
           <td>
             <FormattedRelative value={submission.time} />
           </td>
-          <td className="col-fit">
-            <Link className="action" to={`/submissions/${submission.id}`}>
-              <Search title="search" />
+          <td className="col-fit cell-centered">
+            <Link className="action" to={`/submissions/${submission.id}`} title="View submission">
+              <Search title="View submission" />
             </Link>
           </td>
         </tr>

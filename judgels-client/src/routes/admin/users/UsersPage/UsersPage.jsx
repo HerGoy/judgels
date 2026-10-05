@@ -16,8 +16,9 @@ import {
   usersQueryOptions,
 } from '../../../../modules/queries/user';
 import { userWebConfigQueryOptions } from '../../../../modules/queries/userWeb';
-import * as toastActions from '../../../../modules/toast/toastActions';
 import { UserUpsertDialog } from '../UserUpsertDialog/UserUpsertDialog';
+
+import * as toastActions from '../../../../modules/toast/toastActions';
 
 const PAGE_SIZE = 250;
 
@@ -51,7 +52,11 @@ export default function UsersPage() {
   };
 
   const handleDeactivate = async user => {
-    if (!window.confirm(`Are you sure you want to deactivate ${user.username}? The user will be logged out and cannot sign in.`)) {
+    if (
+      !window.confirm(
+        `Are you sure you want to deactivate ${user.username}? The user will be logged out and cannot sign in.`
+      )
+    ) {
       return;
     }
     setLoadingUserJid(user.jid);
@@ -131,39 +136,39 @@ export default function UsersPage() {
             )}
           </td>
           <td>{lastSessionTimesMap[user.jid] ? <FormattedDate value={lastSessionTimesMap[user.jid]} /> : '-'}</td>
-          <td style={{ textAlign: 'center', verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
-            {!isActivated ? (
+          <td style={{ width: '180px', textAlign: 'center', verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
+            <div className="action-button-group" style={{ justifyContent: 'center' }}>
+              {!isActivated ? (
+                <Button
+                  intent={Intent.SUCCESS}
+                  icon={<Tick />}
+                  text="Approve"
+                  small
+                  loading={isLoading}
+                  onClick={() => handleActivate(user)}
+                />
+              ) : (
+                <Button
+                  intent={Intent.WARNING}
+                  icon={<BanCircle />}
+                  text="Deactivate"
+                  small
+                  minimal
+                  loading={isLoading}
+                  disabled={isCurrent}
+                  onClick={() => handleDeactivate(user)}
+                />
+              )}
               <Button
-                intent={Intent.SUCCESS}
-                icon={<Tick />}
-                text="Approve"
-                small
-                loading={isLoading}
-                style={{ marginRight: 6 }}
-                onClick={() => handleActivate(user)}
-              />
-            ) : (
-              <Button
-                intent={Intent.WARNING}
-                icon={<BanCircle />}
-                text="Deactivate"
+                intent={Intent.DANGER}
+                icon={<Trash />}
                 small
                 minimal
-                loading={isLoading}
                 disabled={isCurrent}
-                style={{ marginRight: 6 }}
-                onClick={() => handleDeactivate(user)}
+                onClick={() => setUserToDelete(user)}
+                title={isCurrent ? 'You cannot delete yourself' : 'Delete user'}
               />
-            )}
-            <Button
-              intent={Intent.DANGER}
-              icon={<Trash />}
-              small
-              minimal
-              disabled={isCurrent}
-              onClick={() => setUserToDelete(user)}
-              title={isCurrent ? 'You cannot delete yourself' : 'Delete user'}
-            />
+            </div>
           </td>
         </tr>
       );
@@ -171,7 +176,16 @@ export default function UsersPage() {
 
     return (
       <>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, gap: 12, flexWrap: 'wrap' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: 16,
+            gap: 12,
+            flexWrap: 'wrap',
+          }}
+        >
           <ButtonGroup style={{ flexWrap: 'wrap' }}>
             <Button
               active={filterMode === 'ALL'}
@@ -208,7 +222,7 @@ export default function UsersPage() {
                   <th>Email</th>
                   <th>Status</th>
                   <th>Last login</th>
-                  <th style={{ textAlign: 'center' }}>Actions</th>
+                  <th style={{ width: '180px', textAlign: 'center' }}>Actions</th>
                 </tr>
               </thead>
               <tbody>{rows}</tbody>
@@ -247,7 +261,8 @@ export default function UsersPage() {
           }
         }}
       >
-        Are you sure you want to delete user <strong>{userToDelete?.username}</strong>? This will remove their account and active sessions.
+        Are you sure you want to delete user <strong>{userToDelete?.username}</strong>? This will remove their account
+        and active sessions.
       </Alert>
     </ContentCard>
   );

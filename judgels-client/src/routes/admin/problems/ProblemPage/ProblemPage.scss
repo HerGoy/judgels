@@ -44,7 +44,9 @@
     font-size: 13.5px !important;
     font-weight: 500 !important;
     border-radius: 4px 4px 0 0 !important;
-    transition: background 0.15s ease, color 0.15s ease !important;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease !important;
 
     &:hover {
       background: rgba(128, 128, 128, 0.12) !important;

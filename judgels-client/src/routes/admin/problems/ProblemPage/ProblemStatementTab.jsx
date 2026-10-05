@@ -28,8 +28,9 @@ import {
   updateProblemStatementMutationOptions,
 } from '../../../../modules/queries/problem';
 import { getToken } from '../../../../modules/session';
-import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 import { useWebPrefs } from '../../../../modules/webPrefs';
+
+import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 
 const COMMON_LANGUAGES = [
   { code: 'en-US', name: 'English (US)' },
@@ -199,24 +200,9 @@ export default function ProblemStatementTab({ problem, problemId }) {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
           <ButtonGroup>
-            <Button
-              small
-              active={viewMode === 'edit'}
-              onClick={() => setViewMode('edit')}
-              text="Edit"
-            />
-            <Button
-              small
-              active={viewMode === 'split'}
-              onClick={() => setViewMode('split')}
-              text="Side-by-side"
-            />
-            <Button
-              small
-              active={viewMode === 'preview'}
-              onClick={() => setViewMode('preview')}
-              text="Preview"
-            />
+            <Button small active={viewMode === 'edit'} onClick={() => setViewMode('edit')} text="Edit" />
+            <Button small active={viewMode === 'split'} onClick={() => setViewMode('split')} text="Side-by-side" />
+            <Button small active={viewMode === 'preview'} onClick={() => setViewMode('preview')} text="Preview" />
           </ButtonGroup>
 
           {problem.canEdit && (
@@ -256,8 +242,7 @@ export default function ProblemStatementTab({ problem, problemId }) {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns:
-            viewMode === 'split' ? '1fr 1fr' : '1fr',
+          gridTemplateColumns: viewMode === 'split' ? '1fr 1fr' : '1fr',
           gap: 16,
           minHeight: 520,
         }}
@@ -327,14 +312,8 @@ export default function ProblemStatementTab({ problem, problemId }) {
       >
         <DialogBody>
           <FormGroup label="Select Language">
-            <HTMLSelect
-              fill
-              value={selectedNewLang}
-              onChange={e => setSelectedNewLang(e.target.value)}
-            >
-              {COMMON_LANGUAGES.filter(
-                cl => !availableLanguages.some(al => al.code === cl.code)
-              ).map(cl => (
+            <HTMLSelect fill value={selectedNewLang} onChange={e => setSelectedNewLang(e.target.value)}>
+              {COMMON_LANGUAGES.filter(cl => !availableLanguages.some(al => al.code === cl.code)).map(cl => (
                 <option key={cl.code} value={cl.code}>
                   {cl.name} ({cl.code})
                 </option>
@@ -365,9 +344,18 @@ export default function ProblemStatementTab({ problem, problemId }) {
         style={{ width: 680 }}
       >
         <DialogBody>
-          <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
+          <div
+            style={{
+              marginBottom: 16,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              gap: 16,
+            }}
+          >
             <div style={{ margin: 0, color: isDarkMode ? '#abb3bf' : '#5c7080', fontSize: 13, lineHeight: '1.4' }}>
-              Upload images to use in the statement. You can embed them with <code style={{ whiteSpace: 'nowrap' }}>&lt;img src="..." /&gt;</code>.
+              Upload images to use in the statement. You can embed them with{' '}
+              <code style={{ whiteSpace: 'nowrap' }}>&lt;img src="..." /&gt;</code>.
             </div>
             <label className="bp5-button bp5-intent-primary bp5-small" style={{ flexShrink: 0 }}>
               <CloudUpload style={{ marginRight: 6 }} />
@@ -407,7 +395,18 @@ export default function ProblemStatementTab({ problem, problemId }) {
                         <td style={{ verticalAlign: 'middle' }}>{Math.round(file.size / 1024)} KB</td>
                         <td style={{ verticalAlign: 'middle' }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                            <code style={{ fontSize: 11, background: isDarkMode ? '#1e232a' : '#edf1f5', padding: '2px 6px', borderRadius: 3, maxWidth: 220, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                            <code
+                              style={{
+                                fontSize: 11,
+                                background: isDarkMode ? '#1e232a' : '#edf1f5',
+                                padding: '2px 6px',
+                                borderRadius: 3,
+                                maxWidth: 220,
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap',
+                              }}
+                            >
                               {tag}
                             </code>
                             <Button
@@ -430,9 +429,7 @@ export default function ProblemStatementTab({ problem, problemId }) {
             </div>
           )}
         </DialogBody>
-        <DialogFooter
-          actions={<Button onClick={() => setIsMediaModalOpen(false)} text="Close" />}
-        />
+        <DialogFooter actions={<Button onClick={() => setIsMediaModalOpen(false)} text="Close" />} />
       </Dialog>
     </div>
   );

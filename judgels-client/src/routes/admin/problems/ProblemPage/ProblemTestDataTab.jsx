@@ -1,19 +1,5 @@
-import {
-  Button,
-  Callout,
-  Card,
-  Intent,
-  ProgressBar,
-  Spinner,
-  Tag,
-} from '@blueprintjs/core';
-import {
-  CloudUpload,
-  Download,
-  Flash,
-  Refresh,
-  Trash,
-} from '@blueprintjs/icons';
+import { Button, Callout, Card, Intent, ProgressBar, Spinner, Tag } from '@blueprintjs/core';
+import { CloudUpload, Download, Flash, Refresh, Trash } from '@blueprintjs/icons';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
@@ -23,6 +9,7 @@ import {
   problemTestDataQueryOptions,
   uploadProblemTestDataMutationOptions,
 } from '../../../../modules/queries/problem';
+
 import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 
 export default function ProblemTestDataTab({ problem, problemId }) {
@@ -107,13 +94,7 @@ export default function ProblemTestDataTab({ problem, problemId }) {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-          <Button
-            small
-            minimal
-            icon={<Refresh />}
-            text="Refresh"
-            onClick={() => refetch()}
-          />
+          <Button small minimal icon={<Refresh />} text="Refresh" onClick={() => refetch()} />
           <Tag minimal round intent={files.length > 0 ? Intent.PRIMARY : Intent.NONE}>
             {files.length} Files ({inputFiles.length} Inputs, {outputFiles.length} Outputs)
           </Tag>
@@ -178,8 +159,9 @@ export default function ProblemTestDataTab({ problem, problemId }) {
         <Callout intent={Intent.PRIMARY} icon={<CloudUpload />}>
           <h4 style={{ margin: 0, marginBottom: 6 }}>No Test Data Files</h4>
           <p style={{ margin: 0 }}>
-            Upload testcase files like <code>1.in</code>, <code>1.out</code>, <code>sample_1.in</code>, <code>sample_1.out</code>,
-            or upload a single <code>.zip</code> archive containing all testcases. Then click <strong>Auto-populate Testcases</strong>.
+            Upload testcase files like <code>1.in</code>, <code>1.out</code>, <code>sample_1.in</code>,{' '}
+            <code>sample_1.out</code>, or upload a single <code>.zip</code> archive containing all testcases. Then click{' '}
+            <strong>Auto-populate Testcases</strong>.
           </p>
         </Callout>
       ) : (
@@ -226,27 +208,28 @@ export default function ProblemTestDataTab({ problem, problemId }) {
                     </td>
                     <td>{file.size < 1024 ? `${file.size} B` : `${(file.size / 1024).toFixed(1)} KB`}</td>
                     <td style={{ textAlign: 'right' }}>
-                      <a
-                        href={`/problems/api/${problemId}/testdata/download/${encodeURIComponent(file.name)}`}
-                        download={file.name}
-                        className="bp5-button bp5-minimal bp5-small bp5-intent-primary"
-                        style={{ marginRight: 6 }}
-                        title="Download file"
-                      >
-                        <Download />
-                      </a>
+                      <div className="action-button-group" style={{ justifyContent: 'flex-end' }}>
+                        <a
+                          href={`/problems/api/${problemId}/testdata/download/${encodeURIComponent(file.name)}`}
+                          download={file.name}
+                          className="bp6-button bp6-minimal bp6-small bp6-intent-primary"
+                          title="Download file"
+                        >
+                          <Download />
+                        </a>
 
-                      {problem.canEdit && (
-                        <Button
-                          minimal
-                          small
-                          intent={Intent.DANGER}
-                          icon={<Trash />}
-                          onClick={() => handleDelete(file.name)}
-                          loading={deleteMutation.isPending}
-                          title="Delete file"
-                        />
-                      )}
+                        {problem.canEdit && (
+                          <Button
+                            minimal
+                            small
+                            intent={Intent.DANGER}
+                            icon={<Trash />}
+                            onClick={() => handleDelete(file.name)}
+                            loading={deleteMutation.isPending}
+                            title="Delete file"
+                          />
+                        )}
+                      </div>
                     </td>
                   </tr>
                 );

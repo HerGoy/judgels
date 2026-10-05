@@ -29,13 +29,17 @@ export function ProblemSubmissionsTable({ problemSet, problem, submissions, canM
     const rows = submissions.map(submission => (
       <tr key={submission.jid}>
         <td className="col-fit">
-          {submission.id}
-          {canManage && (
-            <>
-              &nbsp;&nbsp;&nbsp;
-              <Refresh className="action" intent="primary" onClick={onClickRegrade(submission.jid)} />
-            </>
-          )}
+          <span className="id-cell">
+            <span>{submission.id}</span>
+            {canManage && (
+              <Refresh
+                className="action"
+                intent="primary"
+                title="Regrade submission"
+                onClick={onClickRegrade(submission.jid)}
+              />
+            )}
+          </span>
         </td>
         <td>
           <UserRef profile={profilesMap[submission.userJid]} />
@@ -48,9 +52,13 @@ export function ProblemSubmissionsTable({ problemSet, problem, submissions, canM
         <td>
           <FormattedRelative value={submission.time} />
         </td>
-        <td className="col-fit">
-          <Link className="action" to={`/problems/${problemSet.slug}/${problem.alias}/submissions/${submission.id}`}>
-            <Search title="search" />
+        <td className="col-fit cell-centered">
+          <Link
+            className="action"
+            to={`/problems/${problemSet.slug}/${problem.alias}/submissions/${submission.id}`}
+            title="View submission"
+          >
+            <Search title="View submission" />
           </Link>
         </td>
       </tr>

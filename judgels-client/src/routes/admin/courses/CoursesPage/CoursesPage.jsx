@@ -8,8 +8,9 @@ import { ActionButtons } from '../../../../components/ActionButtons/ActionButton
 import { ContentCard } from '../../../../components/ContentCard/ContentCard';
 import { LoadingContentCard } from '../../../../components/LoadingContentCard/LoadingContentCard';
 import { coursesQueryOptions, deleteCourseMutationOptions } from '../../../../modules/queries/course';
-import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 import { CourseCreateDialog } from '../CourseCreateDialog/CourseCreateDialog';
+
+import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 
 export default function CoursesPage() {
   const navigate = useNavigate();
@@ -36,26 +37,29 @@ export default function CoursesPage() {
       <tr key={course.jid}>
         <td style={{ width: '60px', verticalAlign: 'middle' }}>{course.id}</td>
         <td style={{ width: '200px', verticalAlign: 'middle' }}>
-          <Link to={`/admin/courses/${course.slug}`} style={{ fontWeight: 600 }}>{course.slug}</Link>
+          <Link to={`/admin/courses/${course.slug}`} style={{ fontWeight: 600 }}>
+            {course.slug}
+          </Link>
         </td>
         <td style={{ verticalAlign: 'middle' }}>{course.name}</td>
-        <td style={{ width: '120px', textAlign: 'center', verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
-          <Button
-            small
-            intent={Intent.PRIMARY}
-            icon={<Edit />}
-            text="Manage"
-            style={{ marginRight: 6 }}
-            onClick={() => navigate({ to: `/admin/courses/${course.slug}` })}
-          />
-          <Button
-            small
-            minimal
-            intent={Intent.DANGER}
-            icon={<Trash />}
-            onClick={() => setCourseToDelete(course)}
-            title="Delete course"
-          />
+        <td style={{ width: '160px', textAlign: 'center', verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
+          <div className="action-button-group" style={{ justifyContent: 'center' }}>
+            <Button
+              small
+              intent={Intent.PRIMARY}
+              icon={<Edit />}
+              text="Manage"
+              onClick={() => navigate({ to: `/admin/courses/${course.slug}` })}
+            />
+            <Button
+              small
+              minimal
+              intent={Intent.DANGER}
+              icon={<Trash />}
+              onClick={() => setCourseToDelete(course)}
+              title="Delete course"
+            />
+          </div>
         </td>
       </tr>
     ));
@@ -67,7 +71,7 @@ export default function CoursesPage() {
             <th style={{ width: '60px' }}>ID</th>
             <th style={{ width: '200px' }}>Slug</th>
             <th>Name</th>
-            <th style={{ width: '120px', textAlign: 'center' }}>Actions</th>
+            <th style={{ width: '160px', textAlign: 'center' }}>Actions</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>
@@ -110,7 +114,8 @@ export default function CoursesPage() {
           }
         }}
       >
-        Are you sure you want to delete course <strong>{courseToDelete?.name}</strong>? This action will also detach its chapters.
+        Are you sure you want to delete course <strong>{courseToDelete?.name}</strong>? This action will also detach its
+        chapters.
       </Alert>
     </ContentCard>
   );

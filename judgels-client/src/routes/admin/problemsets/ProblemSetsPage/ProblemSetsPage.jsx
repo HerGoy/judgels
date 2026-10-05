@@ -9,8 +9,9 @@ import { ContentCard } from '../../../../components/ContentCard/ContentCard';
 import { LoadingContentCard } from '../../../../components/LoadingContentCard/LoadingContentCard';
 import Pagination from '../../../../components/Pagination/Pagination';
 import { deleteProblemSetMutationOptions, problemSetsQueryOptions } from '../../../../modules/queries/problemSet';
-import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 import { ProblemSetCreateDialog } from '../ProblemSetCreateDialog/ProblemSetCreateDialog';
+
+import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 
 const PAGE_SIZE = 20;
 
@@ -41,27 +42,30 @@ export default function ProblemSetsPage() {
       <tr key={problemSet.jid}>
         <td style={{ width: '60px', verticalAlign: 'middle' }}>{problemSet.id}</td>
         <td style={{ width: '200px', verticalAlign: 'middle' }}>
-          <Link to={`/admin/problemsets/${problemSet.slug}`} style={{ fontWeight: 600 }}>{problemSet.slug}</Link>
+          <Link to={`/admin/problemsets/${problemSet.slug}`} style={{ fontWeight: 600 }}>
+            {problemSet.slug}
+          </Link>
         </td>
         <td style={{ verticalAlign: 'middle' }}>{problemSet.name}</td>
         <td style={{ verticalAlign: 'middle' }}>{archiveSlugsMap[problemSet.archiveJid]}</td>
-        <td style={{ width: '120px', textAlign: 'center', verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
-          <Button
-            small
-            intent={Intent.PRIMARY}
-            icon={<Edit />}
-            text="Manage"
-            style={{ marginRight: 6 }}
-            onClick={() => navigate({ to: `/admin/problemsets/${problemSet.slug}` })}
-          />
-          <Button
-            small
-            minimal
-            intent={Intent.DANGER}
-            icon={<Trash />}
-            onClick={() => setProblemSetToDelete(problemSet)}
-            title="Delete problemset"
-          />
+        <td style={{ width: '160px', textAlign: 'center', verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
+          <div className="action-button-group" style={{ justifyContent: 'center' }}>
+            <Button
+              small
+              intent={Intent.PRIMARY}
+              icon={<Edit />}
+              text="Manage"
+              onClick={() => navigate({ to: `/admin/problemsets/${problemSet.slug}` })}
+            />
+            <Button
+              small
+              minimal
+              intent={Intent.DANGER}
+              icon={<Trash />}
+              onClick={() => setProblemSetToDelete(problemSet)}
+              title="Delete problemset"
+            />
+          </div>
         </td>
       </tr>
     ));
@@ -74,7 +78,7 @@ export default function ProblemSetsPage() {
             <th style={{ width: '200px' }}>Slug</th>
             <th>Name</th>
             <th>Archive</th>
-            <th style={{ width: '120px', textAlign: 'center' }}>Actions</th>
+            <th style={{ width: '160px', textAlign: 'center' }}>Actions</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>

@@ -96,9 +96,16 @@ td {
   .action-button-group {
     display: inline-flex !important;
     flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 6px;
   }
 
   .bp6-button {
     flex-shrink: 0;
+    vertical-align: middle;
   }
+}
+
+.cell-centered {
+  text-align: center !important;
 }

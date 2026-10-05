@@ -38,13 +38,17 @@ export function ContestSubmissionsTable({
     const rows = submissions.map(submission => (
       <tr key={submission.jid}>
         <td className="col-fit">
-          {submission.id}
-          {canManage && (
-            <>
-              &nbsp;&nbsp;&nbsp;
-              <Refresh className="action" intent="primary" title="refresh" onClick={onClickRegrade(submission.jid)} />
-            </>
-          )}
+          <span className="id-cell">
+            <span>{submission.id}</span>
+            {canManage && (
+              <Refresh
+                className="action"
+                intent="primary"
+                title="Regrade submission"
+                onClick={onClickRegrade(submission.jid)}
+              />
+            )}
+          </span>
         </td>
         {canSupervise && (
           <td>
@@ -59,9 +63,13 @@ export function ContestSubmissionsTable({
         <td>
           <FormattedRelative value={submission.time} />
         </td>
-        <td className="col-fit">
-          <Link className="action" to={`/contests/${contest.slug}/submissions/${submission.id}`}>
-            <Search title="search" />
+        <td className="col-fit cell-centered">
+          <Link
+            className="action"
+            to={`/contests/${contest.slug}/submissions/${submission.id}`}
+            title="View submission"
+          >
+            <Search title="View submission" />
           </Link>
         </td>
       </tr>

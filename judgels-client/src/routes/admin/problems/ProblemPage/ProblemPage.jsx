@@ -1,13 +1,4 @@
-import {
-  Alert,
-  AnchorButton,
-  Button,
-  Callout,
-  Intent,
-  Tab,
-  Tabs,
-  Tag,
-} from '@blueprintjs/core';
+import { Alert, AnchorButton, Button, Callout, Intent, Tab, Tabs, Tag } from '@blueprintjs/core';
 import {
   ChevronLeft,
   CloudUpload,
@@ -35,7 +26,6 @@ import {
   discardProblemChangesMutationOptions,
   problemDetailQueryOptions,
 } from '../../../../modules/queries/problem';
-import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 import ProblemBundleItemsTab from './ProblemBundleItemsTab';
 import ProblemGeneralTab from './ProblemGeneralTab';
 import ProblemGradingTab from './ProblemGradingTab';
@@ -43,6 +33,8 @@ import ProblemPartnersTab from './ProblemPartnersTab';
 import ProblemStatementTab from './ProblemStatementTab';
 import ProblemSubmissionsTab from './ProblemSubmissionsTab';
 import ProblemTestDataTab from './ProblemTestDataTab';
+
+import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 
 import './ProblemPage.scss';
 
@@ -180,14 +172,13 @@ export default function ProblemPage() {
 
       {/* Local changes notice banner */}
       {problem.hasLocalChanges && (
-        <Callout
-          intent={Intent.WARNING}
-          icon={<InfoSign />}
-          style={{ marginTop: 16, marginBottom: 16 }}
-        >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+        <Callout intent={Intent.WARNING} icon={<InfoSign />} style={{ marginTop: 16, marginBottom: 16 }}>
+          <div
+            style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}
+          >
             <div>
-              You have unpublished draft changes in your local clone. Click <strong>Publish to Production</strong> to make your updates live for contests and users.
+              You have unpublished draft changes in your local clone. Click <strong>Publish to Production</strong> to
+              make your updates live for contests and users.
             </div>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               <Button
@@ -212,11 +203,7 @@ export default function ProblemPage() {
 
       {/* Tabs navigation */}
       <div className="problem-page-tabs">
-        <Tabs
-          id="problem-management-tabs"
-          selectedTabId={activeTab}
-          onChange={handleTabChange}
-        >
+        <Tabs id="problem-management-tabs" selectedTabId={activeTab} onChange={handleTabChange}>
           <Tab
             id="statement"
             title={
@@ -308,7 +295,8 @@ export default function ProblemPage() {
         icon={<Reset />}
       >
         <p>
-          Are you sure you want to discard your draft changes? Any edits to statements, limits, or testcases that haven't been published will be permanently reverted to the production version.
+          Are you sure you want to discard your draft changes? Any edits to statements, limits, or testcases that
+          haven't been published will be permanently reverted to the production version.
         </p>
       </Alert>
     </ContentCard>

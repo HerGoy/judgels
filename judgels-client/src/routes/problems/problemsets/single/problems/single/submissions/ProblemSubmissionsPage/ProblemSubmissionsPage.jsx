@@ -35,7 +35,11 @@ export default function ProblemSubmissionsPage() {
   const isUserFilterMine = (location.pathname + '/').includes('/mine/');
   const usernameFilter = isUserFilterMine ? username : undefined;
 
-  const { data: response, isLoading, isError } = useQuery(
+  const {
+    data: response,
+    isLoading,
+    isError,
+  } = useQuery(
     problemSetProgrammingSubmissionsQueryOptions(problem.problemJid, { username: usernameFilter, beforeId, afterId })
   );
 

@@ -68,9 +68,7 @@ export function ProblemSetCreateDialog() {
           <>
             <div className={Classes.DIALOG_BODY}>
               <Callout intent={Intent.WARNING} title="No Archives Found" icon="warning-sign">
-                <p>
-                  A problemset must belong to an Archive. No archives currently exist in the system.
-                </p>
+                <p>A problemset must belong to an Archive. No archives currently exist in the system.</p>
                 <p>
                   Please go to{' '}
                   <Link to="/admin/archives" onClick={toggleDialog}>

@@ -6,9 +6,9 @@ import { Outlet, useNavigate } from '@tanstack/react-router';
 import ContentWithSidebar from '../../components/ContentWithSidebar/ContentWithSidebar';
 import { FullWidthPageLayout } from '../../components/FullWidthPageLayout/FullWidthPageLayout';
 import { userWebConfigQueryOptions } from '../../modules/queries/userWeb';
+import { ProblemCreateDialog } from '../admin/problems/ProblemCreateDialog/ProblemCreateDialog';
 import ProblemTagFilter from './problems/ProblemTagFilter/ProblemTagFilter';
 import ProblemSetArchiveFilter from './problemsets/ProblemSetArchiveFilter/ProblemSetArchiveFilter';
-import { ProblemCreateDialog } from '../admin/problems/ProblemCreateDialog/ProblemCreateDialog';
 
 export default function ProblemsIndexLayout() {
   const navigate = useNavigate();

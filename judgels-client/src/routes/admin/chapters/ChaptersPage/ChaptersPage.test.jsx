@@ -48,11 +48,7 @@ describe('ChaptersPage', () => {
           .queryAllByRole('cell')
           .map(cell => cell.textContent)
       )
-    ).toEqual([
-      [],
-      ['1', 'JIDCHAPTER1', 'Chapter 1', 'Manage'],
-      ['2', 'JIDCHAPTER2', 'Chapter 2', 'Manage'],
-    ]);
+    ).toEqual([[], ['1', 'JIDCHAPTER1', 'Chapter 1', 'Manage'], ['2', 'JIDCHAPTER2', 'Chapter 2', 'Manage']]);
   });
 
   test('renders the create button', async () => {

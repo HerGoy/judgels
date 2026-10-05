@@ -72,7 +72,9 @@ export default function ProblemCreateForm({ onSubmit, renderFormComponents }) {
   return (
     <Form initialValues={initialValues} onSubmit={withSubmissionError(onSubmit)}>
       {({ handleSubmit, submitting }) => {
-        const submitButton = <Button type="submit" text="Create Problem" intent={Intent.PRIMARY} loading={submitting} />;
+        const submitButton = (
+          <Button type="submit" text="Create Problem" intent={Intent.PRIMARY} loading={submitting} />
+        );
         return <form onSubmit={handleSubmit}>{renderFormComponents(fields, submitButton)}</form>;
       }}
     </Form>
