@@ -30,8 +30,10 @@ export default function ProblemsPage() {
   const renderAction = () => {
     return (
       <ActionButtons>
-        {response?.canCreate !== false && <ProblemCreateDialog />}
-        <AnchorButton href="/problems/manage" target="_blank" minimal icon={<Share />} text="Open Legacy Manager" />
+        {response?.canCreate === true && <ProblemCreateDialog />}
+        {response?.canCreate === true && (
+          <AnchorButton href="/problems/manage" target="_blank" minimal icon={<Share />} text="Open Legacy Manager" />
+        )}
       </ActionButtons>
     );
   };

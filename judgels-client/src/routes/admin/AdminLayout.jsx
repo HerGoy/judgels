@@ -11,7 +11,7 @@ import {
   Shield,
   TimelineLineChart,
 } from '@blueprintjs/icons';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { Outlet } from '@tanstack/react-router';
 
 import ContentWithSidebar from '../../components/ContentWithSidebar/ContentWithSidebar';
@@ -21,6 +21,7 @@ import { ContestAdminRole } from '../../modules/api/contestAdminRole';
 import { ProblemAdminRole } from '../../modules/api/problemAdminRole';
 import { TrainingAdminRole } from '../../modules/api/trainingAdminRole';
 import { UserAdminRole } from '../../modules/api/userAdminRole';
+import { manageableProblemsQueryOptions } from '../../modules/queries/problem';
 import { userWebConfigQueryOptions } from '../../modules/queries/userWeb';
 
 export default function AdminLayout() {
@@ -30,8 +31,19 @@ export default function AdminLayout() {
 
   const isAccountAdmin = role.account === UserAdminRole.Admin || role.account === UserAdminRole.Superadmin;
   const isProblemAdmin = role.problem === ProblemAdminRole.Admin;
+  const isWriter = role.problem === 'WRITER';
   const isContestAdmin = role.contest === ContestAdminRole.Admin;
   const isTrainingAdmin = isTLX() && role.training === TrainingAdminRole.Admin;
+
+  const isGlobalProblemManager = isProblemAdmin || isWriter || isAccountAdmin;
+
+  const { data: manageableData } = useQuery({
+    ...manageableProblemsQueryOptions({ page: 1 }),
+    enabled: !isGlobalProblemManager,
+    staleTime: 30 * 1000,
+  });
+
+  const hasManageableProblems = isGlobalProblemManager || (manageableData?.totalCount || 0) > 0;
 
   const sidebarItems = [
     {
@@ -63,7 +75,7 @@ export default function AdminLayout() {
     },
     {
       title: 'Problem',
-      visible: true,
+      visible: hasManageableProblems,
       children: [
         {
           path: 'problems',

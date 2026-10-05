@@ -79,6 +79,7 @@ export default function ContestProblemPage() {
         {problemDetail && (
           <Button
             small
+            style={{ whiteSpace: 'nowrap' }}
             intent={problemDetail.canEdit ? Intent.PRIMARY : Intent.NONE}
             icon={<Edit />}
             text={problemDetail.canEdit ? 'Edit problem' : 'View in manager'}

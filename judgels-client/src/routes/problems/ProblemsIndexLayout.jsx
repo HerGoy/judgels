@@ -1,10 +1,11 @@
 import { Button, ButtonGroup } from '@blueprintjs/core';
 import { Edit, Manual, PanelStats, Plus } from '@blueprintjs/icons';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { Outlet, useNavigate } from '@tanstack/react-router';
 
 import ContentWithSidebar from '../../components/ContentWithSidebar/ContentWithSidebar';
 import { FullWidthPageLayout } from '../../components/FullWidthPageLayout/FullWidthPageLayout';
+import { manageableProblemsQueryOptions } from '../../modules/queries/problem';
 import { userWebConfigQueryOptions } from '../../modules/queries/userWeb';
 import { useSession } from '../../modules/session';
 import { ProblemCreateDialog } from '../admin/problems/ProblemCreateDialog/ProblemCreateDialog';
@@ -18,15 +19,23 @@ export default function ProblemsIndexLayout() {
     data: { role },
   } = useSuspenseQuery(userWebConfigQueryOptions());
 
-  const canCreateProblems =
+  const isGlobalManager =
     role?.problem === 'ADMIN' ||
     role?.problem === 'WRITER' ||
     role?.account === 'SUPERADMIN' ||
     role?.account === 'ADMIN';
 
-  const action = user ? (
+  const { data: manageableData } = useQuery({
+    ...manageableProblemsQueryOptions({ page: 1 }),
+    enabled: !!user && !isGlobalManager,
+    staleTime: 30 * 1000,
+  });
+
+  const hasManageableProblems = isGlobalManager || (manageableData?.totalCount || 0) > 0;
+
+  const action = hasManageableProblems ? (
     <ButtonGroup>
-      {canCreateProblems && <ProblemCreateDialog />}
+      {isGlobalManager && <ProblemCreateDialog />}
       <Button small icon={<Edit />} text="Manage" onClick={() => navigate({ to: '/admin/problems' })} />
     </ButtonGroup>
   ) : null;

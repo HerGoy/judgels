@@ -71,20 +71,9 @@ export default function SingleProblemSetProblemLayout() {
     items: sidebarItems,
     basePath: `/problems/${problemSetSlug}/${problemAlias}`,
     action: (
-      <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-        {problemDetail && (
-          <Button
-            small
-            intent={problemDetail.canEdit ? Intent.PRIMARY : Intent.NONE}
-            icon={<Edit />}
-            text={problemDetail.canEdit ? 'Edit problem' : 'View in manager'}
-            onClick={() => navigate({ to: managePath })}
-          />
-        )}
-        <Button small icon={<ChevronLeft />} onClick={clickBack}>
-          Back
-        </Button>
-      </div>
+      <Button small icon={<ChevronLeft />} onClick={clickBack}>
+        Back
+      </Button>
     ),
     contentHeader: (
       <div
@@ -95,6 +84,7 @@ export default function SingleProblemSetProblemLayout() {
           flexWrap: 'wrap',
           gap: 10,
           width: '100%',
+          marginBottom: 20,
         }}
       >
         <h3 className="single-problemset-problem-routes__title" style={{ margin: 0 }}>
@@ -109,6 +99,7 @@ export default function SingleProblemSetProblemLayout() {
         {problemDetail && (
           <Button
             small
+            style={{ whiteSpace: 'nowrap' }}
             intent={problemDetail.canEdit ? Intent.PRIMARY : Intent.NONE}
             icon={<Edit />}
             text={problemDetail.canEdit ? 'Edit problem' : 'View in manager'}

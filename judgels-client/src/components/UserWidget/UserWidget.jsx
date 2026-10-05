@@ -5,6 +5,7 @@ import { Link } from '@tanstack/react-router';
 
 import { isTLX } from '../../conf';
 import { getRatingClass } from '../../modules/api/userRating';
+import { manageableProblemsQueryOptions } from '../../modules/queries/problem';
 import { avatarUrlQueryOptions } from '../../modules/queries/userAvatar';
 import { userWebConfigQueryOptions } from '../../modules/queries/userWeb';
 import { useSession } from '../../modules/session';
@@ -23,19 +24,31 @@ export function UserWidget({ user, profile, items, homeRoute }) {
   });
 
   const role = webConfig?.role;
-  const canManageProblems =
+  const isGlobalManager =
     role?.problem === 'ADMIN' ||
     role?.problem === 'WRITER' ||
     role?.account === 'SUPERADMIN' ||
     role?.account === 'ADMIN';
+
+  const { data: manageableData } = useQuery({
+    ...manageableProblemsQueryOptions({ page: 1 }),
+    enabled: !!user && !isGlobalManager,
+    staleTime: 30 * 1000,
+  });
+
+  const canManageProblems = isGlobalManager || (manageableData?.totalCount || 0) > 0;
 
   const renderForUser = () => {
     const menuItems = (
       <>
         <MenuItemLink text="My profile" to={`/profiles/${profile.username}`} />
         {isTLX() && <MenuItemLink text="My account" to="/account" />}
-        <MenuDivider />
-        <MenuItemLink icon={<Edit />} text="Manage problems" to="/admin/problems" />
+        {canManageProblems && (
+          <>
+            <MenuDivider />
+            <MenuItemLink icon={<Edit />} text="Manage problems" to="/admin/problems" />
+          </>
+        )}
         <MenuDivider />
         <MenuItemLink text="Log out" to="/logout" />
       </>
