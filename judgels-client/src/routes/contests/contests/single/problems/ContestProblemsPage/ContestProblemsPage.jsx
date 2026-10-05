@@ -113,7 +113,7 @@ export default function ContestProblemsPage() {
 
   return (
     <ContentCard title="Problems">
-      <Flex justifyContent="space-between" alignItems="center">
+      <Flex justifyContent="space-between" alignItems="center" flexWrap="wrap" gap={2}>
         {renderAction()}
         {renderStatementLanguageWidget()}
       </Flex>

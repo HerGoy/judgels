@@ -172,7 +172,7 @@ export default function UsersPage() {
     return (
       <>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, gap: 12, flexWrap: 'wrap' }}>
-          <ButtonGroup>
+          <ButtonGroup style={{ flexWrap: 'wrap' }}>
             <Button
               active={filterMode === 'ALL'}
               onClick={() => setFilterMode('ALL')}
@@ -185,7 +185,7 @@ export default function UsersPage() {
               text={`Pending Approval (${pendingCount})`}
             />
           </ButtonGroup>
-          <div style={{ width: 240 }}>
+          <div style={{ width: 240, maxWidth: '100%' }}>
             <InputGroup
               leftIcon="search"
               placeholder="Search username / email..."
@@ -200,18 +200,20 @@ export default function UsersPage() {
             <small>No users matching filter.</small>
           </p>
         ) : (
-          <HTMLTable striped className="table-list" style={{ width: '100%' }}>
-            <thead>
-              <tr>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Status</th>
-                <th>Last login</th>
-                <th style={{ textAlign: 'center' }}>Actions</th>
-              </tr>
-            </thead>
-            <tbody>{rows}</tbody>
-          </HTMLTable>
+          <div className="table-responsive">
+            <HTMLTable striped className="table-list" style={{ width: '100%' }}>
+              <thead>
+                <tr>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                  <th>Last login</th>
+                  <th style={{ textAlign: 'center' }}>Actions</th>
+                </tr>
+              </thead>
+              <tbody>{rows}</tbody>
+            </HTMLTable>
+          </div>
         )}
       </>
     );

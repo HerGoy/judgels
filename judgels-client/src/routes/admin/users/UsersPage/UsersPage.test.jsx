@@ -60,7 +60,11 @@ describe('UsersPage', () => {
           .queryAllByRole('cell')
           .map(cell => cell.textContent)
       )
-    ).toEqual([[], ['andi', 'andi@example.com', expect.any(String)], ['budi', 'budi@example.com', '-']]);
+    ).toEqual([
+      [],
+      ['andi', 'andi@example.com', expect.any(String), expect.any(String), 'Deactivate'],
+      ['budi', 'budi@example.com', 'Active', '-', 'Deactivate'],
+    ]);
   });
 
   test('renders the upsert button', async () => {

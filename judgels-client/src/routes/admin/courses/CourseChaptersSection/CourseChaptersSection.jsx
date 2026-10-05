@@ -147,11 +147,11 @@ export function CourseChaptersSection({ course }) {
         Klik tombol <strong>Kelola Materi & Soal</strong> pada salah satu bab untuk menambahkan penjelasan materi atau latihan soal ke bab tersebut.
       </Callout>
 
-      <Flex justifyContent="space-between" alignItems="center" style={{ marginBottom: 12 }}>
+      <Flex justifyContent="space-between" alignItems="center" flexWrap="wrap" gap={2} style={{ marginBottom: 12 }}>
         <h4 style={{ margin: 0 }}>
           <span>Daftar Bab (Chapters)</span>
         </h4>
-        <div style={{ display: 'flex', gap: 8 }}>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           <Button
             small
             intent={Intent.PRIMARY}
@@ -181,7 +181,8 @@ export function CourseChaptersSection({ course }) {
           Course ini belum memiliki bab. Klik <strong>Tambah Bab ke Course</strong> untuk membuat bab baru atau menghubungkan bab yang sudah ada.
         </Callout>
       ) : (
-        <HTMLTable striped style={{ width: '100%' }}>
+        <div className="table-responsive">
+          <HTMLTable striped style={{ width: '100%' }}>
           <thead>
             <tr>
               <th style={{ width: '80px' }}>Alias</th>
@@ -246,6 +247,7 @@ export function CourseChaptersSection({ course }) {
             })}
           </tbody>
         </HTMLTable>
+        </div>
       )}
 
       {/* Add Chapter Dialog */}

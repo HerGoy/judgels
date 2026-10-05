@@ -64,43 +64,11 @@
   vertical-align: middle;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 960px) {
   .widget-user__avatar-wrapper {
     display: none;
   }
 
-  .widget-user__link {
-    margin-right: 8px;
-    font-size: 13px;
-  }
-
-  .widget-user__user__username {
-    max-width: 100px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .widget-user__burger,
-  .widget-user__menu-helper {
-    display: flex !important;
-    align-items: center;
-    cursor: pointer;
-  }
-}
-
-@media only screen and (max-width: 380px) {
-  .widget-user__user__username {
-    max-width: 75px;
-  }
-
-  .widget-user__link {
-    margin-right: 5px;
-    font-size: 12px;
-  }
-}
-
-@media only screen and (max-width: 960px) {
   .widget-user__avatar-menu {
     margin-right: 10px;
   }
@@ -110,5 +78,35 @@
     display: flex !important;
     align-items: center;
     cursor: pointer;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .widget-user__link {
+    margin-right: 8px;
+    font-size: 13px;
+  }
+
+  .widget-user__user__username {
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  /* On compact mobile devices, avoid button collision by relying on burger menu */
+  .widget-user__avatar-menu {
+    display: none !important;
+  }
+
+  .widget-user__link:not(:first-of-type) {
+    display: none;
+  }
+
+  .widget-user__link {
+    margin-right: 6px;
+    font-size: 12px;
   }
 }

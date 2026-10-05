@@ -1,0 +1,21 @@
+@use '../../styles/base' as *;
+
+.action-buttons {
+  max-width: 100%;
+  box-sizing: border-box;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+
+  .bp6-button {
+    flex-shrink: 0;
+  }
+
+  @media only screen and (max-width: 600px) {
+    width: 100%;
+    gap: 6px !important;
+
+    .bp6-button {
+      font-size: 13px;
+    }
+  }
+}

@@ -19,8 +19,8 @@
 
 @media only screen and (max-width: 860px) {
   .tab-item-with-widget {
-    position: relative;
-    width: 100%;
+    position: relative !important;
+    width: calc(100% - 24px) !important;
     margin-right: 8px;
   }
 }
@@ -31,6 +31,25 @@
       font-size: 20px !important;
       line-height: 22px !important;
       word-break: break-word;
+    }
+  }
+}
+
+.contest-state-widget {
+  .contest-state-widget__right {
+    margin-left: auto;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .contest-state-widget__left,
+    .contest-state-widget__right {
+      width: 100%;
+      margin-left: 0 !important;
+    }
+
+    .contest-state-widget__left .bp6-button {
+      width: 100%;
+      height: 36px;
     }
   }
 }

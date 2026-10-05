@@ -64,7 +64,7 @@ export function ContestClarificationCard({
 
     return (
       <>
-        <Flex justifyContent="space-between">
+        <Flex justifyContent="space-between" alignItems="baseline" flexWrap="wrap" gap={1}>
           <h5>Answer:</h5>
           <p>
             <small>
@@ -80,7 +80,7 @@ export function ContestClarificationCard({
 
   return (
     <Callout role="article" className="contest-clarification-card" intent={questionIntent} icon={null}>
-      <Flex justifyContent="space-between">
+      <Flex justifyContent="space-between" alignItems="baseline" flexWrap="wrap" gap={1}>
         <h5>
           {clarification.title} &nbsp; <Tag>{topic}</Tag>
         </h5>

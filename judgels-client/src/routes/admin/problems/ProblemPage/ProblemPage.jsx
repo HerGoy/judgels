@@ -189,7 +189,7 @@ export default function ProblemPage() {
             <div>
               You have unpublished draft changes in your local clone. Click <strong>Publish to Production</strong> to make your updates live for contests and users.
             </div>
-            <div style={{ display: 'flex', gap: 8 }}>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               <Button
                 small
                 intent={Intent.PRIMARY}

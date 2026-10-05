@@ -175,10 +175,10 @@ export default function ContestStateWidget() {
 
   const { leftComponent, rightComponent } = getWidgetComponents();
   return (
-    <Callout intent={Intent.PRIMARY} className="secondary-info" icon={<InfoSign />}>
-      <Flex justifyContent="space-between" flexWrap="wrap">
-        <div>{leftComponent}</div>
-        <div style={{ marginLeft: 'auto' }}>{rightComponent}</div>
+    <Callout intent={Intent.PRIMARY} className="secondary-info contest-state-widget" icon={<InfoSign />}>
+      <Flex justifyContent="space-between" alignItems="center" flexWrap="wrap" gap={2}>
+        <div className="contest-state-widget__left">{leftComponent}</div>
+        <div className="contest-state-widget__right">{rightComponent}</div>
       </Flex>
       {renderVirtualContestAlert()}
     </Callout>

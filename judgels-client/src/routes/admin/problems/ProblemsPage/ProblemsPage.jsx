@@ -120,8 +120,8 @@ export default function ProblemsPage() {
 
     return (
       <>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-          <div style={{ width: 280 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, flexWrap: 'wrap', gap: 10 }}>
+          <div style={{ width: 280, maxWidth: '100%' }}>
             <InputGroup
               leftIcon="search"
               placeholder="Filter by problem slug..."
@@ -134,19 +134,21 @@ export default function ProblemsPage() {
             Total: <strong>{totalCount}</strong> problems
           </div>
         </div>
-        <HTMLTable striped className="table-list" style={{ width: '100%' }}>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Slug</th>
-              <th>Type</th>
-              <th>Author</th>
-              <th>Last Updated</th>
-              <th style={{ textAlign: 'center' }}>Actions</th>
-            </tr>
-          </thead>
-          <tbody>{rows}</tbody>
-        </HTMLTable>
+        <div className="table-responsive">
+          <HTMLTable striped className="table-list" style={{ width: '100%' }}>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Slug</th>
+                <th>Type</th>
+                <th>Author</th>
+                <th>Last Updated</th>
+                <th style={{ textAlign: 'center' }}>Actions</th>
+              </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+          </HTMLTable>
+        </div>
       </>
     );
   };

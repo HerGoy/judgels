@@ -381,10 +381,11 @@ table.bp6-html-table.bp6-html-table-striped tbody tr:nth-child(odd) td {
     }
 
     .bp6-dialog-footer-actions {
-      flex-wrap: wrap;
-      gap: 8px;
+      flex-wrap: wrap !important;
+      gap: 8px !important;
 
       .bp6-button {
+        margin-left: 0 !important;
         flex-grow: 1;
       }
     }
@@ -447,6 +448,35 @@ table.bp6-html-table.bp6-html-table-striped tbody tr:nth-child(odd) td {
 
   .bp6-dark &:hover {
     background-color: $dark-background-color;
+  }
+}
+
+/* Blueprint horizontal tabs responsiveness */
+.bp6-tabs:not(.bp6-vertical) {
+  width: 100%;
+  max-width: 100%;
+
+  .bp6-tab-list {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+      height: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(125, 125, 125, 0.35);
+      border-radius: 4px;
+    }
+  }
+
+  .bp6-tab {
+    flex-shrink: 0;
+    white-space: nowrap;
   }
 }
 

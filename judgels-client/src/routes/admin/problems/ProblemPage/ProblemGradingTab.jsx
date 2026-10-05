@@ -568,6 +568,7 @@ export default function ProblemGradingTab({ problem, problemId }) {
           icon={<FloppyDisk />}
           text="Simpan Konfigurasi & Batasan Grading"
           loading={updateGradingMutation.isPending}
+          style={{ maxWidth: '100%', whiteSpace: 'normal', height: 'auto', padding: '10px 16px' }}
         />
       )}
     </form>

@@ -44,14 +44,14 @@ export function ChapterProblemCard({
       className={classNames('chapter-problem-card', { 'chapter-problem-card--future': isFuture })}
       to={`/courses/${course.slug}/chapters/${chapterAlias}/problems/${problem.alias}`}
     >
-      <Flex justifyContent="space-between" alignItems="center">
-        <Flex gap={2}>
+      <Flex justifyContent="space-between" alignItems="center" flexWrap="wrap" gap={1}>
+        <Flex gap={2} alignItems="center">
           {problem.type === ProblemType.Programming ? <Code /> : <Form />}
           <h4 data-key="name">
             {problem.alias}. {problemName}
           </h4>
         </Flex>
-        <Flex gap={2} alignItems="baseline">
+        <Flex gap={2} alignItems="baseline" flexWrap="wrap">
           {renderProblemSetProblemPaths()}
           {renderProgress()}
         </Flex>

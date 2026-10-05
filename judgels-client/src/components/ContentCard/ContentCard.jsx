@@ -20,23 +20,21 @@ export function ContentCard({ id, className, header, title, subtitle, action, ch
       return header;
     }
 
-    if (subtitle) {
+    if (subtitle || action) {
       return (
         <>
-          <Flex justifyContent="space-between" alignItems="baseline" wrap="wrap" gap={1}>
-            <h3>{title}</h3>
-            <small>{subtitle}</small>
-          </Flex>
-          <hr />
-        </>
-      );
-    }
-    if (action) {
-      return (
-        <>
-          <Flex gap={2} alignItems="baseline" wrap="wrap">
-            <h3>{title}</h3>
-            {action}
+          <Flex
+            className="content-card__header"
+            justifyContent="space-between"
+            alignItems="center"
+            flexWrap="wrap"
+            gap={2}
+          >
+            <div>
+              <h3>{title}</h3>
+              {subtitle && <small className="content-card__subtitle">{subtitle}</small>}
+            </div>
+            {action && <div className="content-card__action">{action}</div>}
           </Flex>
           <hr />
         </>
@@ -53,9 +51,11 @@ export function ContentCard({ id, className, header, title, subtitle, action, ch
   return (
     <Card id={id} className={classNames(className, 'content-card')}>
       {renderHeader()}
-      <Flex flexDirection="column" gap={2}>
-        {children}
-      </Flex>
+      <div className="content-card__body">
+        <Flex flexDirection="column" gap={2}>
+          {children}
+        </Flex>
+      </div>
     </Card>
   );
 }

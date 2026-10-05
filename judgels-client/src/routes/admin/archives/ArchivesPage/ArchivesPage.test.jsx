@@ -48,7 +48,11 @@ describe('ArchivesPage', () => {
           .queryAllByRole('cell')
           .map(cell => cell.textContent)
       )
-    ).toEqual([[], ['1', 'archive-1', 'Archive 1', 'Category 1'], ['2', 'archive-2', 'Archive 2', 'Category 2']]);
+    ).toEqual([
+      [],
+      ['1', 'archive-1', 'Archive 1', 'Category 1', 'Manage'],
+      ['2', 'archive-2', 'Archive 2', 'Category 2', 'Manage'],
+    ]);
   });
 
   test('renders the create button', async () => {

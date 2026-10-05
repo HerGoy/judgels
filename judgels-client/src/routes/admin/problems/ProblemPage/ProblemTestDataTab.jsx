@@ -106,7 +106,7 @@ export default function ProblemTestDataTab({ problem, problemId }) {
           marginBottom: 16,
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
           <Button
             small
             minimal
@@ -125,8 +125,8 @@ export default function ProblemTestDataTab({ problem, problemId }) {
         </div>
 
         {problem.canEdit && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <label className="bp5-button bp5-small bp5-intent-primary">
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+            <label className="bp6-button bp6-small bp6-intent-primary">
               <CloudUpload style={{ marginRight: 6 }} />
               Upload .in / .out File
               <input
@@ -137,7 +137,7 @@ export default function ProblemTestDataTab({ problem, problemId }) {
               />
             </label>
 
-            <label className="bp5-button bp5-small bp5-intent-success">
+            <label className="bp6-button bp6-small bp6-intent-success">
               <CloudUpload style={{ marginRight: 6 }} />
               Upload .zip Archive
               <input

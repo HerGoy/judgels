@@ -118,8 +118,11 @@ export function UserWidget({ user, profile, items, homeRoute }) {
       <Menu className="widget-user__menu">
         <MenuItemLink text={homeRoute.title} to="/" />
         {items.map(item => (
-          <MenuItemLink text={item.title} to={item.route.path} />
+          <MenuItemLink key={item.route.path} text={item.title} to={item.route.path} />
         ))}
+        <MenuDivider />
+        <MenuItemLink text="Log in" to="/login" />
+        {isTLX() && <MenuItemLink text="Register" to="/register" />}
       </Menu>
     );
 

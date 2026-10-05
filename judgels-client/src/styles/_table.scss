@@ -69,3 +69,36 @@
     min-width: 540px;
   }
 }
+
+/* Safety for tables in content cards and containers */
+.content-card__body {
+  > .bp6-html-table,
+  > form > .bp6-html-table,
+  > div > .bp6-html-table {
+    max-width: 100%;
+  }
+
+  @media only screen and (max-width: 768px) {
+    > .bp6-html-table,
+    > form > .bp6-html-table,
+    > div > .bp6-html-table {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+  }
+}
+
+td {
+  .bp6-button-group,
+  .action-button-group {
+    display: inline-flex !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .bp6-button {
+    flex-shrink: 0;
+  }
+}

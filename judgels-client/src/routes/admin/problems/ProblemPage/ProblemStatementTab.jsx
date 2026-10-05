@@ -164,7 +164,7 @@ export default function ProblemStatementTab({ problem, problemId }) {
           marginBottom: 16,
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
           <span style={{ fontWeight: 600 }}>Language:</span>
           <HTMLSelect value={currentLang} onChange={handleLanguageChange}>
             {availableLanguages.map(l => (
@@ -197,7 +197,7 @@ export default function ProblemStatementTab({ problem, problemId }) {
           />
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
           <ButtonGroup>
             <Button
               small

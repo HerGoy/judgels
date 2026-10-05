@@ -1,13 +1,37 @@
 @use '../../styles/variables/colors' as *;
 
 .content-card {
-  overflow-x: auto;
   max-width: 100%;
   box-sizing: border-box;
 
   h3 {
     line-height: normal;
     margin-bottom: 4px;
+    word-break: break-word;
+  }
+
+  .content-card__header {
+    width: 100%;
+    margin-bottom: 4px;
+  }
+
+  .content-card__subtitle {
+    display: block;
+    color: #5c7080;
+    margin-top: 2px;
+  }
+
+  .content-card__action {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .content-card__body {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
   }
 
   @media only screen and (max-width: 600px) {
@@ -16,6 +40,12 @@
     h3 {
       font-size: 16px;
     }
+  }
+}
+
+.bp6-dark .content-card {
+  .content-card__subtitle {
+    color: #8a9ba8;
   }
 }
 

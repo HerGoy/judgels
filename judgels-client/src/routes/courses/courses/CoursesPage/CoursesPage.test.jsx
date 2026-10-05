@@ -67,7 +67,7 @@ describe('CoursesPage', () => {
     expect(links).toHaveLength(2);
 
     expect(within(links[0]).getByRole('heading', { level: 4 })).toHaveTextContent('Course 1');
-    expect(within(links[0]).getByRole('heading', { level: 4 })).toHaveTextContent('2 / 6 problems completed');
+    expect(links[0]).toHaveTextContent('2 / 6 problems completed');
     expect(links[0]).toHaveAttribute('href', '/courses/course-1');
     expect(links[0]).toHaveTextContent('This is course 1');
 

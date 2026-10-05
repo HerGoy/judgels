@@ -26,7 +26,7 @@ export function ContestProblemCard({
 
   return (
     <ContentCardLink className="contest-problem-card" to={`/contests/${contest.slug}/problems/${alias}`}>
-      <Flex justifyContent="space-between">
+      <Flex justifyContent="space-between" alignItems="center" flexWrap="wrap" gap={1}>
         <div>
           <span data-key="name">
             {alias}. {problemName}

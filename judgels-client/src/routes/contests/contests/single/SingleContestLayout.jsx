@@ -141,7 +141,7 @@ export default function SingleContestLayout() {
     basePath: `/contests/${contestSlug}`,
     contentHeader: (
       <div className="single-contest-routes__header">
-        <Flex gap={2} justifyContent="space-between" alignItems="baseline">
+        <Flex gap={2} justifyContent="space-between" alignItems="center" flexWrap="wrap">
           <h2>{contest.name}</h2>
           <ContestEditDialog
             contest={contest}

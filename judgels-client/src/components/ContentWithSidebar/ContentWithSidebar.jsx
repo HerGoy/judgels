@@ -1,17 +1,37 @@
 import { useLocation } from '@tanstack/react-router';
 import classNames from 'classnames';
+import { useEffect, useState } from 'react';
 
 import { Sidebar } from '../Sidebar/Sidebar';
 
 import './ContentWithSidebar.scss';
 
 function ContentAndSidebar({ sidebarElement, contentElement, stickyWidget, smallContent }) {
-  const responsive = window.matchMedia && window.matchMedia('(max-width: 750px)').matches;
+  const [isResponsive, setIsResponsive] = useState(() => {
+    return typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(max-width: 860px)').matches;
+  });
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) {
+      return;
+    }
+    const mql = window.matchMedia('(max-width: 860px)');
+    const handler = e => setIsResponsive(e.matches);
+
+    if (mql.addEventListener) {
+      mql.addEventListener('change', handler);
+      return () => mql.removeEventListener('change', handler);
+    } else if (mql.addListener) {
+      mql.addListener(handler);
+      return () => mql.removeListener(handler);
+    }
+  }, []);
+
   return (
     <div className="content-with-sidebar">
       <div className="content-with-sidebar__sidebar">
         {sidebarElement}
-        {!responsive && stickyWidget}
+        {!isResponsive && stickyWidget}
       </div>
       <div
         className={classNames('content-with-sidebar__content', {
@@ -19,7 +39,7 @@ function ContentAndSidebar({ sidebarElement, contentElement, stickyWidget, small
         })}
       >
         {contentElement}
-        {responsive && stickyWidget}
+        {isResponsive && stickyWidget}
       </div>
     </div>
   );

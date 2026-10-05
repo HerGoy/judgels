@@ -36,7 +36,7 @@ export function ProblemSetProblemCard({ problemSet, problem, showAlias, problemN
 
   const renderSpoilers = () => {
     return (
-      <Flex justifyContent="space-between">
+      <Flex justifyContent="space-between" alignItems="center" flexWrap="wrap" gap={1}>
         {renderDifficulty()}
         {renderMetadata()}
       </Flex>
@@ -62,12 +62,12 @@ export function ProblemSetProblemCard({ problemSet, problem, showAlias, problemN
   return (
     <ContentCardLink to={`/problems/${problemSet.slug}/${problem.alias}`} className="problemset-problem-cardd">
       <h4 data-key="name">
-        <Flex justifyContent="space-between">
+        <Flex justifyContent="space-between" alignItems="center" flexWrap="wrap" gap={1}>
           <span>
             {showAlias && <>{problem.alias}. </>}
             {problemName}
           </span>
-          <Flex gap={1}>
+          <Flex gap={1} alignItems="center" flexWrap="wrap">
             {renderEditorialTag()}
             {renderProgress()}
           </Flex>

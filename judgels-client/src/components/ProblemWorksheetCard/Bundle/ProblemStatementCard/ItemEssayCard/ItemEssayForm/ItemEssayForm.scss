@@ -38,4 +38,22 @@
   .divider {
     margin-top: 3px;
   }
+
+  @media only screen and (max-width: 640px) {
+    margin-left: 0;
+
+    .text-area {
+      width: 100% !important;
+    }
+
+    .essay-button {
+      width: 100%;
+      height: 38px;
+    }
+
+    .essay-callout {
+      width: 100%;
+      height: auto;
+    }
+  }
 }

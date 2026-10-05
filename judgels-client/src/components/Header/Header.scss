@@ -32,6 +32,7 @@
 
 .header__wrapper {
   display: flex;
+  justify-content: space-between;
   margin: 0 auto;
   width: 100%;
   max-width: 100%;
@@ -126,6 +127,10 @@
 
 @media only screen and (max-width: 960px) {
   .header__subtitle {
+    display: none;
+  }
+
+  .header__center-wrapper {
     display: none;
   }
 }

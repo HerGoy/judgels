@@ -101,13 +101,13 @@ export default function LessonsPage() {
       {renderHeaderActions()}
 
       <div style={{ marginTop: 16, marginBottom: 16 }}>
-        <form onSubmit={handleSearch} style={{ display: 'flex', gap: 8, maxWidth: 450 }}>
+        <form onSubmit={handleSearch} style={{ display: 'flex', gap: 8, maxWidth: 450, flexWrap: 'wrap' }}>
           <InputGroup
             leftIcon="search"
             placeholder="Cari lesson berdasarkan slug atau catatan..."
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
-            style={{ flex: 1 }}
+            style={{ flex: 1, minWidth: 200 }}
           />
           <Button type="submit" icon={<Search />} text="Cari" />
           {term && (
@@ -132,58 +132,60 @@ export default function LessonsPage() {
         </div>
       ) : (
         <>
-          <HTMLTable striped interactive style={{ width: '100%', marginTop: 16 }}>
-            <thead>
-              <tr>
-                <th style={{ width: 70 }}>ID</th>
-                <th>Slug (Identifier)</th>
-                <th>Catatan Tambahan</th>
-                <th style={{ width: 140 }}>Pembuat</th>
-                <th style={{ width: 160 }}>Terakhir Diperbarui</th>
-                <th style={{ width: 100, textAlign: 'center' }}>Aksi</th>
-              </tr>
-            </thead>
-            <tbody>
-              {lessons.map(lesson => (
-                <tr key={lesson.id}>
-                  <td style={{ verticalAlign: 'middle', color: '#5c7080' }}>
-                    #{lesson.id}
-                  </td>
-                  <td style={{ verticalAlign: 'middle' }}>
-                    <Link
-                      to={`/admin/lessons/${lesson.id}`}
-                      style={{ fontWeight: 600, color: '#106ba3' }}
-                    >
-                      <Book style={{ marginRight: 6 }} />
-                      {lesson.slug}
-                    </Link>
-                  </td>
-                  <td style={{ verticalAlign: 'middle', color: '#5c7080' }}>
-                    {lesson.additionalNote || '-'}
-                  </td>
-                  <td style={{ verticalAlign: 'middle' }}>
-                    @{lesson.authorUsername}
-                  </td>
-                  <td style={{ verticalAlign: 'middle', color: '#5c7080', fontSize: 13 }}>
-                    {lesson.updatedAt ? new Date(lesson.updatedAt).toLocaleDateString() : '-'}
-                  </td>
-                  <td style={{ verticalAlign: 'middle', textAlign: 'center', whiteSpace: 'nowrap' }}>
-                    <Link to={`/admin/lessons/${lesson.id}`} style={{ marginRight: 6 }}>
-                      <Button small intent={Intent.PRIMARY} icon={<Edit />} text="Edit" />
-                    </Link>
-                    <Button
-                      small
-                      minimal
-                      intent={Intent.DANGER}
-                      icon={<Trash />}
-                      onClick={() => setLessonToDelete(lesson)}
-                      title="Delete lesson"
-                    />
-                  </td>
+          <div className="table-responsive">
+            <HTMLTable striped interactive style={{ width: '100%', marginTop: 16 }}>
+              <thead>
+                <tr>
+                  <th style={{ width: 70 }}>ID</th>
+                  <th>Slug (Identifier)</th>
+                  <th>Catatan Tambahan</th>
+                  <th style={{ width: 140 }}>Pembuat</th>
+                  <th style={{ width: 160 }}>Terakhir Diperbarui</th>
+                  <th style={{ width: 100, textAlign: 'center' }}>Aksi</th>
                 </tr>
-              ))}
-            </tbody>
-          </HTMLTable>
+              </thead>
+              <tbody>
+                {lessons.map(lesson => (
+                  <tr key={lesson.id}>
+                    <td style={{ verticalAlign: 'middle', color: '#5c7080' }}>
+                      #{lesson.id}
+                    </td>
+                    <td style={{ verticalAlign: 'middle' }}>
+                      <Link
+                        to={`/admin/lessons/${lesson.id}`}
+                        style={{ fontWeight: 600, color: '#106ba3' }}
+                      >
+                        <Book style={{ marginRight: 6 }} />
+                        {lesson.slug}
+                      </Link>
+                    </td>
+                    <td style={{ verticalAlign: 'middle', color: '#5c7080' }}>
+                      {lesson.additionalNote || '-'}
+                    </td>
+                    <td style={{ verticalAlign: 'middle' }}>
+                      @{lesson.authorUsername}
+                    </td>
+                    <td style={{ verticalAlign: 'middle', color: '#5c7080', fontSize: 13 }}>
+                      {lesson.updatedAt ? new Date(lesson.updatedAt).toLocaleDateString() : '-'}
+                    </td>
+                    <td style={{ verticalAlign: 'middle', textAlign: 'center', whiteSpace: 'nowrap' }}>
+                      <Link to={`/admin/lessons/${lesson.id}`} style={{ marginRight: 6 }}>
+                        <Button small intent={Intent.PRIMARY} icon={<Edit />} text="Edit" />
+                      </Link>
+                      <Button
+                        small
+                        minimal
+                        intent={Intent.DANGER}
+                        icon={<Trash />}
+                        onClick={() => setLessonToDelete(lesson)}
+                        title="Delete lesson"
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </HTMLTable>
+          </div>
 
           {total > 20 && (
             <div style={{ marginTop: 20, display: 'flex', justifyContent: 'center' }}>

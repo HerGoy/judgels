@@ -58,6 +58,7 @@ describe('CoursePage', () => {
     ).toEqual([
       ['Slug', 'course-1'],
       ['Name', 'Course 1'],
+      ['Course Logo', 'No logo set'],
       ['Description', 'Description 1'],
     ]);
 
@@ -70,7 +71,7 @@ describe('CoursePage', () => {
             .getAllByRole('cell')
             .map(cell => cell.textContent)
         )
-    ).toEqual([['A', 'Chapter 1']]);
+    ).toEqual([['A', 'Chapter 1', expect.any(String)]]);
   });
 
   test('general form', async () => {

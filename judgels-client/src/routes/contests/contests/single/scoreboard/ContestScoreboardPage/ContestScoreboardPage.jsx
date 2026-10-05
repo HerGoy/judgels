@@ -267,7 +267,7 @@ function ContestScoreboardPage() {
 
   return (
     <ContentCard title="Scoreboard" subtitle={renderScoreboardUpdatedTime()}>
-      <Flex justifyContent="space-between" alignItems="center">
+      <Flex justifyContent="space-between" alignItems="center" flexWrap="wrap" gap={2}>
         {renderFilter()}
         {renderForceRefreshButton()}
       </Flex>

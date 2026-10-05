@@ -54,7 +54,11 @@ describe('ContestsPage', () => {
           .queryAllByRole('cell')
           .map(cell => cell.textContent)
       )
-    ).toEqual([[], ['1', 'contest-1', 'Contest 1'], ['2', 'contest-2', 'Contest 2']]);
+    ).toEqual([
+      [],
+      ['1', 'contest-1', 'Contest 1', 'Manage'],
+      ['2', 'contest-2', 'Contest 2', 'Manage'],
+    ]);
   });
 
   test('renders the create button', async () => {

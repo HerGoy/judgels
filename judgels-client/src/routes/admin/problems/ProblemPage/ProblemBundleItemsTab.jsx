@@ -216,7 +216,7 @@ export default function ProblemBundleItemsTab({ problem, problemId }) {
         <div>
           <span style={{ fontSize: 16, fontWeight: 600 }}>Daftar Butir Soal ({items.length})</span>
         </div>
-        <div style={{ display: 'flex', gap: 8 }}>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
           <Button
             intent={Intent.PRIMARY}
             icon={<Plus />}
