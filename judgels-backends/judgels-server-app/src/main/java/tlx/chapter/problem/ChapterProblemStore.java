@@ -88,26 +88,34 @@ public class ChapterProblemStore {
     }
 
     public ChapterProblem upsertProblem(String chapterJid, String alias, String problemJid, ProblemType type) {
+        ProblemType resolvedType = (problemJid != null && problemJid.startsWith("JIDBUND"))
+                ? ProblemType.BUNDLE
+                : type;
+
         Optional<ChapterProblemModel> maybeModel = problemDao.selectByProblemJid(problemJid);
         if (maybeModel.isPresent()) {
             ChapterProblemModel model = maybeModel.get();
             model.alias = alias;
+            model.type = resolvedType.name();
             return fromModel(problemDao.update(model));
         } else {
             ChapterProblemModel model = new ChapterProblemModel();
             model.chapterJid = chapterJid;
             model.alias = alias;
             model.problemJid = problemJid;
-            model.type = type.name();
+            model.type = resolvedType.name();
             return fromModel(problemDao.insert(model));
         }
     }
 
     private static ChapterProblem fromModel(ChapterProblemModel model) {
+        ProblemType type = (model.problemJid != null && model.problemJid.startsWith("JIDBUND"))
+                ? ProblemType.BUNDLE
+                : ProblemType.valueOf(model.type);
         return new ChapterProblem.Builder()
                 .problemJid(model.problemJid)
                 .alias(model.alias)
-                .type(ProblemType.valueOf(model.type))
+                .type(type)
                 .build();
     }
 }

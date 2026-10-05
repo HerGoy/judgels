@@ -16,3 +16,12 @@ export function getAppSlogan() {
 export function getHomeBanner() {
   return getUserWebConfig()?.homeBanner;
 }
+
+export function getSiteLogo() {
+  const banner = getUserWebConfig()?.homeBanner;
+  if (banner) {
+    const match = banner.match(/<!--\s*site_logo:\s*([^\s>]+)\s*-->/);
+    if (match) return match[1];
+  }
+  return localStorage.getItem('judgels_site_logo') || null;
+}

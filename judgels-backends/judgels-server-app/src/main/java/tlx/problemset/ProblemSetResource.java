@@ -12,6 +12,7 @@ import com.google.common.collect.Lists;
 import io.dropwizard.hibernate.UnitOfWork;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.HeaderParam;
@@ -20,6 +21,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Response;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -232,5 +234,21 @@ public class ProblemSetResource {
         checkAllowed(roleChecker.isAdmin(actorJid));
 
         return problemSetStore.updateProblemSet(problemSetJid, data);
+    }
+
+    @DELETE
+    @Path("/{problemSetJid}")
+    @Produces(APPLICATION_JSON)
+    @UnitOfWork
+    public Response deleteProblemSet(
+            @HeaderParam(AUTHORIZATION) AuthHeader authHeader,
+            @PathParam("problemSetJid") String problemSetJid) {
+
+        String actorJid = actorChecker.check(authHeader);
+        checkAllowed(roleChecker.isAdmin(actorJid));
+
+        problemSetProblemStore.setProblems(problemSetJid, List.of());
+        problemSetStore.deleteProblemSet(problemSetJid);
+        return Response.ok(Map.of("success", true)).build();
     }
 }

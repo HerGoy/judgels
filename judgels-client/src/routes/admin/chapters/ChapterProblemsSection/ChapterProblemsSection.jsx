@@ -21,11 +21,18 @@ export function ChapterProblemsSection({ chapter }) {
   const [isEditing, setIsEditing] = useState(false);
 
   const updateProblems = data => {
-    const problems = deserializeProblems(data.problems);
+    const problems = deserializeProblems(data.problems, response.problemsMap);
     setProblemsMutation.mutate(problems, {
-      onSuccess: () => toastActions.showSuccessToast('Chapter problems updated.'),
+      onSuccess: () => {
+        toastActions.showSuccessToast('Chapter problems updated.');
+        setIsEditing(false);
+      },
+      onError: err => {
+        toastActions.showErrorToast(
+          err?.response?.data?.message || err?.message || 'Failed to update problems. Check problem slugs.'
+        );
+      },
     });
-    setIsEditing(false);
   };
 
   const renderEditButton = () => {
@@ -76,7 +83,7 @@ export function ChapterProblemsSection({ chapter }) {
     <div>
       <Flex asChild justifyContent="space-between" alignItems="baseline">
         <h4>
-          <span>Problems</span>
+          <span>Latihan Soal (Practice Problems)</span>
           {renderEditButton()}
         </h4>
       </Flex>
@@ -97,18 +104,27 @@ function serializeProblems(problems, problemsMap) {
     .join('\n');
 }
 
-function deserializeProblems(problems) {
+function deserializeProblems(problems, problemsMap) {
   return problems
     .split('\n')
     .map(s => s.trim())
     .filter(s => s.length > 0)
     .map(s => s.split(','))
     .map(s => s.map(t => t.trim()))
-    .map(s => ({
-      alias: s[0],
-      slug: s[1],
-      type: s[2] || ProblemType.Programming,
-    }));
+    .map(s => {
+      let type = s[2];
+      if (!type && problemsMap) {
+        const found = Object.values(problemsMap).find(info => info && info.slug === s[1]);
+        if (found?.type) {
+          type = found.type;
+        }
+      }
+      return {
+        alias: s[0],
+        slug: s[1],
+        type: type || ProblemType.Programming,
+      };
+    });
 }
 
 function validateProblems(value) {

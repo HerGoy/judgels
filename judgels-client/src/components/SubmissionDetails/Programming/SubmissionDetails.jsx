@@ -30,6 +30,7 @@ export function SubmissionDetails({
   problemAlias,
   problemUrl,
   containerName,
+  containerUrl,
   onDownload,
   hideSourceFilename,
   onClickViewSource,
@@ -69,12 +70,18 @@ export function SubmissionDetails({
     const separator = <>&nbsp;&bull;&nbsp;</>;
 
     const grading = latestGrading;
+    const hasContainer = containerName && containerName !== '-';
 
     return (
       <div className="general-info">
-        {(containerName || problemName) && (
+        {(hasContainer || problemName) && (
           <h4>
-            {containerName && <>{containerName} / </>}
+            {hasContainer && (
+              <>
+                {containerUrl ? <Link to={containerUrl}>{containerName}</Link> : containerName}
+                {' / '}
+              </>
+            )}
             {problemName && !!problemUrl ? (
               <Link to={problemUrl}>{constructProblemName(problemName, problemAlias)}</Link>
             ) : (

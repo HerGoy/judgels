@@ -39,53 +39,71 @@ export function SubmissionsTable({
   };
 
   const renderRows = () => {
-    const rows = submissions.map(submission => (
-      <tr key={submission.jid}>
-        <td className="col-fit">
-          {submission.id}
-          {canManage && (
-            <>
-              &nbsp;&nbsp;&nbsp;
-              <Refresh className="action" intent="primary" onClick={onClickRegrade(submission.jid)} />
-            </>
-          )}
-        </td>
-        <td>
-          <UserRef profile={profilesMap[submission.userJid]} />
-        </td>
+    const rows = submissions.map(submission => {
+      const containerPath = containerPathsMap[submission.containerJid] || containerPathsMap[submission.problemJid];
+      const containerName = containerNamesMap[submission.containerJid] || containerNamesMap[submission.problemJid] || '-';
+      const problemAlias =
+        problemAliasesMap[submission.containerJid + '-' + submission.problemJid] ||
+        problemAliasesMap[submission.problemJid];
+      const containerUrl = constructContainerUrl(containerPath);
+      const problemUrl = constructProblemUrl(containerPath, problemAlias);
 
-        <td>
-          <Link to={constructContainerUrl(containerPathsMap[submission.containerJid])}>
-            {containerNamesMap[submission.containerJid]}
-          </Link>
-        </td>
-        <td>
-          <Link
-            to={`${constructProblemUrl(
-              containerPathsMap[submission.containerJid],
-              problemAliasesMap[submission.containerJid + '-' + submission.problemJid] || '#'
-            )}`}
-          >
-            {constructProblemName(
-              problemNamesMap[submission.problemJid],
-              problemAliasesMap[submission.containerJid + '-' + submission.problemJid]
+      return (
+        <tr key={submission.jid}>
+          <td className="col-fit">
+            {submission.id}
+            {canManage && (
+              <>
+                &nbsp;&nbsp;&nbsp;
+                <Refresh className="action" intent="primary" onClick={onClickRegrade(submission.jid)} />
+              </>
             )}
-          </Link>
-        </td>
-        <td className="col-fit">{getGradingLanguageName(submission.gradingLanguage)}</td>
-        <td className="col-fit">
-          {submission.latestGrading && <GradingVerdictTag wide grading={submission.latestGrading} />}
-        </td>
-        <td>
-          <FormattedRelative value={submission.time} />
-        </td>
-        <td className="col-fit">
-          <Link className="action" to={`/submissions/${submission.id}`}>
-            <Search title="search" />
-          </Link>
-        </td>
-      </tr>
-    ));
+          </td>
+          <td>
+            <UserRef profile={profilesMap[submission.userJid]} />
+          </td>
+
+          <td>
+            {containerUrl ? (
+              <Link to={containerUrl}>
+                {containerName}
+              </Link>
+            ) : (
+              <span>{containerName}</span>
+            )}
+          </td>
+          <td>
+            {problemUrl ? (
+              <Link to={problemUrl}>
+                {constructProblemName(
+                  problemNamesMap[submission.problemJid] || '(Deleted Problem)',
+                  problemAlias
+                )}
+              </Link>
+            ) : (
+              <span>
+                {constructProblemName(
+                  problemNamesMap[submission.problemJid] || '(Deleted Problem)',
+                  problemAlias
+                )}
+              </span>
+            )}
+          </td>
+          <td className="col-fit">{getGradingLanguageName(submission.gradingLanguage)}</td>
+          <td className="col-fit">
+            {submission.latestGrading && <GradingVerdictTag wide grading={submission.latestGrading} />}
+          </td>
+          <td>
+            <FormattedRelative value={submission.time} />
+          </td>
+          <td className="col-fit">
+            <Link className="action" to={`/submissions/${submission.id}`}>
+              <Search title="search" />
+            </Link>
+          </td>
+        </tr>
+      );
+    });
 
     return <tbody>{rows}</tbody>;
   };

@@ -9,9 +9,11 @@ import { SourceCode } from '../SourceCode/SourceCode';
 import './RichStatementText.scss';
 import 'katex/dist/katex.min.css';
 
-export default function RichStatementText({ children }) {
+export default function RichStatementText({ children, text }) {
   const ref = useRef();
   const { isDarkMode } = useWebPrefs();
+
+  const content = typeof children === 'string' ? children : typeof text === 'string' ? text : '';
 
   const typesetKatex = async isStale => {
     if (!ref.current) {
@@ -31,10 +33,13 @@ export default function RichStatementText({ children }) {
     });
   };
 
-  const containsKatexSyntax = text => {
+  const containsKatexSyntax = str => {
+    if (!str || typeof str !== 'string') {
+      return false;
+    }
     const delimiters = ['$', '\\(', '\\)', '\\[', '\\]'];
     for (let delimiter of delimiters) {
-      if (text.includes(delimiter)) {
+      if (str.includes(delimiter)) {
         return true;
       }
     }
@@ -43,23 +48,25 @@ export default function RichStatementText({ children }) {
 
   useEffect(() => {
     let stale = false;
-    if (containsKatexSyntax(children)) {
+    if (containsKatexSyntax(content)) {
       typesetKatex(() => stale);
     }
     return () => {
       stale = true;
     };
-  }, [children]);
+  }, [content]);
 
-  let str = children;
+  let str = content || '';
 
-  str = str.replace(/<pre data-lang="(.+?)">(.*?)<\/pre>/gs, (_match, lang, code) => {
-    return renderToString(
-      <SourceCode isDarkMode={isDarkMode} language={lang} showLineNumbers={false}>
-        {HTMLReactParser(code.trim())}
-      </SourceCode>
-    );
-  });
+  if (typeof str === 'string') {
+    str = str.replace(/<pre data-lang="(.+?)">(.*?)<\/pre>/gs, (_match, lang, code) => {
+      return renderToString(
+        <SourceCode isDarkMode={isDarkMode} language={lang} showLineNumbers={false}>
+          {HTMLReactParser(code.trim())}
+        </SourceCode>
+      );
+    });
+  }
 
   return (
     <div className="rich-statement-text" ref={ref}>

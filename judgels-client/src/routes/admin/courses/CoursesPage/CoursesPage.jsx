@@ -1,15 +1,22 @@
-import { HTMLTable } from '@blueprintjs/core';
-import { useQuery } from '@tanstack/react-query';
-import { Link } from '@tanstack/react-router';
+import { Alert, Button, HTMLTable, Intent } from '@blueprintjs/core';
+import { Edit, Trash } from '@blueprintjs/icons';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { Link, useNavigate } from '@tanstack/react-router';
+import { useState } from 'react';
 
 import { ActionButtons } from '../../../../components/ActionButtons/ActionButtons';
 import { ContentCard } from '../../../../components/ContentCard/ContentCard';
 import { LoadingContentCard } from '../../../../components/LoadingContentCard/LoadingContentCard';
-import { coursesQueryOptions } from '../../../../modules/queries/course';
+import { coursesQueryOptions, deleteCourseMutationOptions } from '../../../../modules/queries/course';
+import { showErrorToast, showSuccessToast } from '../../../../modules/toast/toastActions';
 import { CourseCreateDialog } from '../CourseCreateDialog/CourseCreateDialog';
 
 export default function CoursesPage() {
+  const navigate = useNavigate();
+  const [courseToDelete, setCourseToDelete] = useState(null);
+
   const { data: response } = useQuery(coursesQueryOptions());
+  const deleteMutation = useMutation(deleteCourseMutationOptions());
 
   const renderCourses = () => {
     if (!response) {
@@ -27,11 +34,29 @@ export default function CoursesPage() {
 
     const rows = courses.map(course => (
       <tr key={course.jid}>
-        <td style={{ width: '60px' }}>{course.id}</td>
-        <td style={{ width: '200px' }}>
-          <Link to={`/admin/courses/${course.slug}`}>{course.slug}</Link>
+        <td style={{ width: '60px', verticalAlign: 'middle' }}>{course.id}</td>
+        <td style={{ width: '200px', verticalAlign: 'middle' }}>
+          <Link to={`/admin/courses/${course.slug}`} style={{ fontWeight: 600 }}>{course.slug}</Link>
         </td>
-        <td>{course.name}</td>
+        <td style={{ verticalAlign: 'middle' }}>{course.name}</td>
+        <td style={{ width: '120px', textAlign: 'center', verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
+          <Button
+            small
+            intent={Intent.PRIMARY}
+            icon={<Edit />}
+            text="Manage"
+            style={{ marginRight: 6 }}
+            onClick={() => navigate({ to: `/admin/courses/${course.slug}` })}
+          />
+          <Button
+            small
+            minimal
+            intent={Intent.DANGER}
+            icon={<Trash />}
+            onClick={() => setCourseToDelete(course)}
+            title="Delete course"
+          />
+        </td>
       </tr>
     ));
 
@@ -42,6 +67,7 @@ export default function CoursesPage() {
             <th style={{ width: '60px' }}>ID</th>
             <th style={{ width: '200px' }}>Slug</th>
             <th>Name</th>
+            <th style={{ width: '120px', textAlign: 'center' }}>Actions</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>
@@ -61,6 +87,31 @@ export default function CoursesPage() {
     <ContentCard title="Courses">
       {renderAction()}
       {renderCourses()}
+
+      <Alert
+        isOpen={courseToDelete !== null}
+        cancelButtonText="Cancel"
+        confirmButtonText="Delete"
+        intent={Intent.DANGER}
+        icon="trash"
+        loading={deleteMutation.isPending}
+        onCancel={() => setCourseToDelete(null)}
+        onConfirm={() => {
+          if (courseToDelete) {
+            deleteMutation.mutate(courseToDelete.jid, {
+              onSuccess: () => {
+                showSuccessToast(`Course "${courseToDelete.name}" deleted successfully.`);
+                setCourseToDelete(null);
+              },
+              onError: err => {
+                showErrorToast(err?.response?.data?.message || err?.message || 'Failed to delete course.');
+              },
+            });
+          }
+        }}
+      >
+        Are you sure you want to delete course <strong>{courseToDelete?.name}</strong>? This action will also detach its chapters.
+      </Alert>
     </ContentCard>
   );
 }

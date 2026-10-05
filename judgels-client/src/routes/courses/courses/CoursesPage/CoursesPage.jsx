@@ -27,9 +27,11 @@ export default function CoursesPage() {
 
   return (
     <>
-      <Callout intent={Intent.PRIMARY} icon={null}>
-        <HtmlText>{curriculum.description}</HtmlText>
-      </Callout>
+      {curriculum && (
+        <Callout intent={Intent.PRIMARY} icon={null}>
+          <HtmlText>{curriculum.description}</HtmlText>
+        </Callout>
+      )}
       <hr />
       <div className="courses">
         {courses.map(course => (

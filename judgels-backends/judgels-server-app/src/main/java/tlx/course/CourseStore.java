@@ -66,6 +66,10 @@ public class CourseStore {
         return fromModel(courseDao.update(model));
     }
 
+    public void deleteCourse(String courseJid) {
+        courseDao.selectByJid(courseJid).ifPresent(courseDao::delete);
+    }
+
     private static Course fromModel(CourseModel model) {
         return new Course.Builder()
                 .id(model.id)

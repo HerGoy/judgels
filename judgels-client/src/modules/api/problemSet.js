@@ -1,7 +1,7 @@
 import { stringify } from 'query-string';
 
 import { APP_CONFIG } from '../../conf';
-import { get, post } from './http';
+import { delete_, get, post } from './http';
 
 export const ProblemSetErrors = {
   SlugAlreadyExists: 'ProblemSetSlugAlreadyExists',
@@ -22,6 +22,10 @@ export const problemSetAPI = {
 
   updateProblemSet: (token, problemSetJid, data) => {
     return post(`${baseProblemSetURL(problemSetJid)}`, token, data);
+  },
+
+  deleteProblemSet: (token, problemSetJid) => {
+    return delete_(`${baseProblemSetURL(problemSetJid)}`, token);
   },
 
   getProblemSets: (token, archiveSlug, name, page) => {

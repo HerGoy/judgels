@@ -27,9 +27,19 @@ function saveToStorage(session) {
       user: JSON.stringify(session.user || null),
     })
   );
+  if (session.token) {
+    document.cookie = `JUDGELS_TOKEN=${session.token}; path=/;`;
+  } else {
+    document.cookie = `JUDGELS_TOKEN=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;`;
+  }
 }
 
 let currentSession = loadFromStorage();
+if (currentSession.token) {
+  document.cookie = `JUDGELS_TOKEN=${currentSession.token}; path=/;`;
+} else {
+  document.cookie = `JUDGELS_TOKEN=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;`;
+}
 let listeners = new Set();
 
 function emitChange() {
@@ -53,6 +63,7 @@ export function setSession(token, user) {
 export function clearSession() {
   currentSession = defaultSession;
   localStorage.removeItem(STORAGE_KEY);
+  document.cookie = `JUDGELS_TOKEN=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;`;
   listeners.forEach(l => l());
 }
 

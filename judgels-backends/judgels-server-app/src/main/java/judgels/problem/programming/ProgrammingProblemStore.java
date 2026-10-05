@@ -128,6 +128,22 @@ public final class ProgrammingProblemStore extends BaseProblemStore {
         return problemFs.getPublicFileUrl(getGradingTestDataDirPath(userJid, problemJid).resolve(filename));
     }
 
+    public void deleteGradingTestDataFile(String userJid, String problemJid, String filename) {
+        java.io.File file = problemFs.getFile(getGradingTestDataDirPath(userJid, problemJid).resolve(filename));
+        if (file.exists()) {
+            file.delete();
+        }
+        updateGradingLastUpdateTime(userJid, problemJid);
+    }
+
+    public void deleteGradingHelperFile(String userJid, String problemJid, String filename) {
+        java.io.File file = problemFs.getFile(getGradingHelpersDirPath(userJid, problemJid).resolve(filename));
+        if (file.exists()) {
+            file.delete();
+        }
+        updateGradingLastUpdateTime(userJid, problemJid);
+    }
+
 
     public String getGradingHelperFileURL(String userJid, String problemJid, String filename) {
         return problemFs.getPublicFileUrl(getGradingHelpersDirPath(userJid, problemJid).resolve(filename));

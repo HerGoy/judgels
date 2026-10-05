@@ -21,7 +21,7 @@ export function ProblemSetProblemsSection({ problemSet }) {
   const [isEditing, setIsEditing] = useState(false);
 
   const updateProblems = data => {
-    const problems = deserializeProblems(data.problems);
+    const problems = deserializeProblems(data.problems, response.problemsMap);
     setProblemsMutation.mutate(problems, {
       onSuccess: () => toastActions.showSuccessToast('Problemset problems updated.'),
     });
@@ -112,22 +112,31 @@ function serializeProblems(problems, problemsMap, contestsMap) {
     .join('\n');
 }
 
-function deserializeProblems(problems) {
+function deserializeProblems(problems, problemsMap) {
   return problems
     .split('\n')
     .map(s => s.trim())
     .filter(s => s.length > 0)
     .map(s => s.split(','))
     .map(s => s.map(t => t.trim()))
-    .map(s => ({
-      alias: s[0],
-      slug: s[1],
-      type: s[2] || ProblemType.Programming,
-      contestSlugs: (s[3] || '')
-        .split(';')
-        .filter(slug => slug)
-        .map(slug => slug.trim()),
-    }));
+    .map(s => {
+      let type = s[2];
+      if (!type && problemsMap) {
+        const found = Object.values(problemsMap).find(info => info && info.slug === s[1]);
+        if (found?.type) {
+          type = found.type;
+        }
+      }
+      return {
+        alias: s[0],
+        slug: s[1],
+        type: type || ProblemType.Programming,
+        contestSlugs: (s[3] || '')
+          .split(';')
+          .filter(slug => slug)
+          .map(slug => slug.trim()),
+      };
+    });
 }
 
 function validateProblems(value) {

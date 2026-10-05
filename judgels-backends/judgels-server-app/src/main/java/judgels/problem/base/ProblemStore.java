@@ -135,6 +135,16 @@ public class ProblemStore extends BaseProblemStore {
         problemDao.update(model);
     }
 
+    public void deleteProblem(String problemJid) {
+        setterDao.selectAllByProblemJid(problemJid).forEach(setterDao::delete);
+        partnerDao.selectAllByProblemJid(problemJid).forEach(partnerDao::delete);
+        try {
+            problemFs.removeFile(getRootDirPath(null, problemJid));
+            problemFs.removeFile(getClonesDirPath(problemJid));
+        } catch (Exception ignored) {}
+        problemDao.selectByJid(problemJid).ifPresent(problemDao::delete);
+    }
+
     public void initRepository(String userJid, String problemJid) {
         Path root = getRootDirPath(null, problemJid);
 

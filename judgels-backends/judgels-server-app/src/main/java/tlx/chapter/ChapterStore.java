@@ -98,6 +98,11 @@ public class ChapterStore {
         return fromModel(chapterDao.update(model));
     }
 
+    public void deleteChapter(String chapterJid) {
+        courseChapterDao.selectByChapterJid(chapterJid).ifPresent(courseChapterDao::delete);
+        chapterDao.selectByJid(chapterJid).ifPresent(chapterDao::delete);
+    }
+
     private static Chapter fromModel(ChapterModel model) {
         return new Chapter.Builder()
                 .id(model.id)

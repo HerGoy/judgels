@@ -72,26 +72,25 @@ export default function ChapterResourcesPage() {
       );
     }
 
-    const chapterProblems = problems.filter(p => !problemSetProblemPathsMap[p.problemJid]);
-    const problemSetProblems = problems.filter(p => !!problemSetProblemPathsMap[p.problemJid]);
-
     let chapterResources = null;
-    if (lessons.length > 0 || chapterProblems.length > 0) {
+    if (lessons.length > 0) {
       chapterResources = (
-        <div className="chapter-resources-page__resources">
-          {lessons.map(renderLesson)}
-          {chapterProblems.map(renderProblem)}
+        <div className="chapter-resources-page__lessons-section">
+          <h4>Materi Belajar</h4>
+          <div className="chapter-resources-page__resources">
+            {lessons.map(renderLesson)}
+          </div>
         </div>
       );
     }
 
     let problemSetResources = null;
-    if (problemSetProblems.length > 0) {
+    if (problems.length > 0) {
       problemSetResources = (
         <div className="chapter-resources-page__problem-set-problems">
-          <h4>Practice Problems</h4>
+          <h4>Latihan Soal</h4>
           <div className="chapter-resources-page__resources">
-            {problemSetProblems.map((p, idx) => renderProblem(p, idx + chapterProblems.length))}
+            {problems.map((p, idx) => renderProblem(p, idx))}
           </div>
         </div>
       );

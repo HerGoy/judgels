@@ -5,11 +5,17 @@ import { lazyRetry } from '../../../lazy';
 import { FormInputValidation } from '../FormInputValidation/FormInputValidation';
 import { getIntent } from '../meta';
 
-export function FormRichTextArea({ rows, input, label, meta }) {
+export function FormRichTextArea({ rows, input, label, labelInfo, helperText, meta }) {
   const LazyTinyMCETextArea = lazy(() => lazyRetry(() => import('./TinyMCETextArea')));
 
   return (
-    <FormGroup labelFor={input.name} label={label} intent={getIntent(meta)}>
+    <FormGroup
+      labelFor={input.name}
+      label={label}
+      labelInfo={labelInfo}
+      helperText={helperText}
+      intent={getIntent(meta)}
+    >
       <Suspense fallback={null}>
         <LazyTinyMCETextArea onChange={input.onChange} id={input.name} />
       </Suspense>

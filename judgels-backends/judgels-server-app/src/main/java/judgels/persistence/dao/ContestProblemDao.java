@@ -12,6 +12,7 @@ public interface ContestProblemDao extends Dao<ContestProblemModel> {
     Optional<ContestProblemModel> selectByContestJidAndProblemJid(String contestJid, String problemJid);
     Optional<ContestProblemModel> selectByContestJidAndProblemAlias(String contestJid, String problemAlias);
     void updateProblemJid(String oldProblemJid, String newProblemJid);
+    void deleteAllByProblemJid(String problemJid);
     void dump(PrintWriter output, String contestJid);
 
     interface ContestProblemQueryBuilder extends QueryBuilder<ContestProblemModel> {

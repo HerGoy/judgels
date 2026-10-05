@@ -35,7 +35,7 @@ export default function ProblemSubmissionsPage() {
   const isUserFilterMine = (location.pathname + '/').includes('/mine/');
   const usernameFilter = isUserFilterMine ? username : undefined;
 
-  const { data: response } = useQuery(
+  const { data: response, isLoading, isError } = useQuery(
     problemSetProgrammingSubmissionsQueryOptions(problem.problemJid, { username: usernameFilter, beforeId, afterId })
   );
 
@@ -80,8 +80,15 @@ export default function ProblemSubmissionsPage() {
   };
 
   const renderSubmissions = () => {
-    if (!response) {
+    if (isLoading) {
       return <LoadingState />;
+    }
+    if (isError || !response) {
+      return (
+        <p>
+          <small>Failed to load submissions.</small>
+        </p>
+      );
     }
 
     const { data: submissions, config, profilesMap, problemAliasesMap } = response;

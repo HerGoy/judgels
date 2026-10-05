@@ -38,7 +38,7 @@ export function FormTableSelect2(props) {
           disabled={disabled}
           data-key={inputProps.name}
           alignText={Alignment.LEFT}
-          text={optionNamesMap[input.value]}
+          text={optionNamesMap[input.value] || 'Select...'}
           rightIcon={<CaretDown />}
         />
       </Select>

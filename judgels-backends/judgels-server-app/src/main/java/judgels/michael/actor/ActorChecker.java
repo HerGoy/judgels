@@ -29,27 +29,48 @@ public class ActorChecker {
     }
 
     public Actor check(HttpServletRequest req) {
+        String token = null;
         Cookie[] cookies = req.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("JUDGELS_TOKEN")) {
-                    Optional<Session> session = sessionStore.getSessionByToken(cookie.getValue());
-                    if (session.isPresent()) {
-                        String userJid = session.get().getUserJid();
-                        Optional<User> user = userStore.getUserByJid(userJid);
-                        if (user.isPresent()) {
-                            PerRequestActorProvider.setJid(userJid);
-                            UserRole role = userRoleStore.getRole(userJid);
-                            return new Actor.Builder()
-                                    .userJid(userJid)
-                                    .username(user.get().getUsername())
-                                    .role(role)
-                                    .avatarUrl("/api/v2/users/" + userJid + "/avatar")
-                                    .build();
-                        }
-                    }
+                    token = cookie.getValue();
+                    break;
                 }
             }
+        }
+        if (token == null) {
+            String authHeader = req.getHeader("Authorization");
+            if (authHeader != null && authHeader.startsWith("Bearer ")) {
+                token = authHeader.substring(7).trim();
+            }
+        }
+
+        if (token != null) {
+            Optional<Session> session = sessionStore.getSessionByToken(token);
+            if (session.isPresent()) {
+                String userJid = session.get().getUserJid();
+                Optional<User> user = userStore.getUserByJid(userJid);
+                if (user.isPresent()) {
+                    PerRequestActorProvider.setJid(userJid);
+                    UserRole role = userRoleStore.getRole(userJid);
+                    return new Actor.Builder()
+                            .userJid(userJid)
+                            .username(user.get().getUsername())
+                            .role(role)
+                            .avatarUrl("/api/v2/users/" + userJid + "/avatar")
+                            .build();
+                }
+            }
+        }
+
+        String uri = req.getRequestURI();
+        String accept = req.getHeader("Accept");
+        if ((uri != null && uri.contains("/api")) || (accept != null && accept.contains("application/json"))) {
+            throw new WebApplicationException(Response.status(Response.Status.UNAUTHORIZED)
+                    .entity("{\"message\":\"Unauthorized\"}")
+                    .type("application/json")
+                    .build());
         }
 
         throw new WebApplicationException(Response.seeOther(URI.create("/login")).build());

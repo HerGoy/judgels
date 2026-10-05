@@ -57,6 +57,16 @@ public class ContestProblemHibernateDao extends HibernateDao<ContestProblemModel
     }
 
     @Override
+    public void deleteAllByProblemJid(String problemJid) {
+        Query<?> query = currentSession().createQuery(
+                "DELETE FROM uriel_contest_problem "
+                        + "WHERE problemJid = :problemJid");
+
+        query.setParameter("problemJid", problemJid);
+        query.executeUpdate();
+    }
+
+    @Override
     public void dump(PrintWriter output, String contestJid) {
         List<ContestProblemModel> results = selectByContestJid(contestJid).orderBy(Model_.ID, OrderDir.ASC).all();
         if (results.isEmpty()) {

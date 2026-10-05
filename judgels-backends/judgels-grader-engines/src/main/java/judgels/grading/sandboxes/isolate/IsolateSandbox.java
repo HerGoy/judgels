@@ -241,7 +241,14 @@ public class IsolateSandbox implements Sandbox {
 
         int time = (int) (Double.parseDouble(items.get("time")) * 1000);
         int wallTime = (int) (Double.parseDouble(items.get("time-wall")) * 1000);
-        int memory = (int) (Double.parseDouble(items.get("cg-mem")));
+        int memory;
+        if (items.containsKey("cg-mem")) {
+            memory = (int) (Double.parseDouble(items.get("cg-mem")));
+        } else if (items.containsKey("max-rss")) {
+            memory = (int) (Double.parseDouble(items.get("max-rss")));
+        } else {
+            memory = 0;
+        }
         String status = items.get("status");
 
         SandboxExecutionStatus executionStatus;

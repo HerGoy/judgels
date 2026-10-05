@@ -1,5 +1,5 @@
 export function constructContainerUrl(subpaths) {
-  if (!subpaths) {
+  if (!subpaths || !Array.isArray(subpaths) || subpaths.length === 0 || !subpaths[0]) {
     return '';
   }
   if (subpaths.length === 2) {
@@ -10,12 +10,16 @@ export function constructContainerUrl(subpaths) {
 }
 
 export function constructProblemUrl(subpaths, problemAlias) {
-  if (!subpaths) {
+  if (!problemAlias || problemAlias === '-' || problemAlias === '#') {
+    return '';
+  }
+  const containerUrl = constructContainerUrl(subpaths);
+  if (!containerUrl) {
     return '';
   }
   if (subpaths.length === 2) {
-    return `${constructContainerUrl(subpaths)}/problems/${problemAlias}`;
+    return `${containerUrl}/problems/${problemAlias}`;
   } else {
-    return `${constructContainerUrl(subpaths)}/${problemAlias}`;
+    return `${containerUrl}/${problemAlias}`;
   }
 }

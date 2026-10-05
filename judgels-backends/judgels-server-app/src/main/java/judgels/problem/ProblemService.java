@@ -70,24 +70,50 @@ public class ProblemService {
     }
 
     public ProblemInfo getProblem(String problemJid) {
-        Problem problem = problemStore.getProblemByJid(problemJid).get();
+        Optional<Problem> problemOpt = problemJid == null ? Optional.empty() : problemStore.getProblemByJid(problemJid);
+        if (problemOpt.isEmpty()) {
+            return new ProblemInfo.Builder()
+                    .slug("(deleted)")
+                    .type(problemJid != null && problemJid.startsWith("JIDPROG") ? ProblemType.PROGRAMMING : ProblemType.BUNDLE)
+                    .defaultLanguage("en")
+                    .titlesByLanguage(Map.of("en", "(Deleted Problem)"))
+                    .build();
+        }
+
+        Problem problem = problemOpt.get();
+        String defaultLanguage = "en";
+        Map<String, String> titlesByLanguage = Map.of();
+        try {
+            defaultLanguage = simplifyLanguageCode(problemStatementStore.getStatementDefaultLanguage(null, problemJid));
+            titlesByLanguage = problemStatementStore.getTitlesByLanguage(null, problemJid).entrySet()
+                    .stream()
+                    .collect(toMap(e -> simplifyLanguageCode(e.getKey()), e -> e.getValue()));
+        } catch (Exception ignored) {
+            titlesByLanguage = Map.of("en", Optional.ofNullable(problem.getSlug()).orElse("(unknown)"));
+        }
 
         return new ProblemInfo.Builder()
                 .slug(problem.getSlug())
                 .type(ProblemType.valueOf(problem.getType().name()))
-                .defaultLanguage(simplifyLanguageCode(problemStatementStore.getStatementDefaultLanguage(null, problemJid)))
-                .titlesByLanguage(problemStatementStore.getTitlesByLanguage(null, problemJid).entrySet()
-                        .stream()
-                        .collect(toMap(e -> simplifyLanguageCode(e.getKey()), e -> e.getValue())))
+                .defaultLanguage(defaultLanguage)
+                .titlesByLanguage(titlesByLanguage.isEmpty() ? Map.of(defaultLanguage, Optional.ofNullable(problem.getSlug()).orElse("(unknown)")) : titlesByLanguage)
                 .build();
     }
 
     public ProblemMetadata getProblemMetadata(String problemJid) {
-        return new ProblemMetadata.Builder()
-                .hasEditorial(problemEditorialStore.hasEditorial(null, problemJid))
-                .tags(problemTagStore.findTopicTags(problemJid))
-                .settersMap(problemStore.getProblemSetters(problemJid))
-                .build();
+        try {
+            return new ProblemMetadata.Builder()
+                    .hasEditorial(problemEditorialStore.hasEditorial(null, problemJid))
+                    .tags(problemTagStore.findTopicTags(problemJid))
+                    .settersMap(problemStore.getProblemSetters(problemJid))
+                    .build();
+        } catch (Exception ignored) {
+            return new ProblemMetadata.Builder()
+                    .hasEditorial(false)
+                    .tags(List.of())
+                    .settersMap(Map.of())
+                    .build();
+        }
     }
 
     public Map<String, ProblemMetadata> getProblemMetadatas(Collection<String> problemJids) {
@@ -104,7 +130,13 @@ public class ProblemService {
                 .stream()
                 .collect(toMap(
                         Map.Entry::getKey,
-                        e -> ProblemUtils.getProblemName(e.getValue(), language)
+                        e -> {
+                            String name = ProblemUtils.getProblemName(e.getValue(), language);
+                            if (name != null) {
+                                return name;
+                            }
+                            return e.getValue().getSlug().orElse("(Deleted Problem)");
+                        }
                 ));
     }
 

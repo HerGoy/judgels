@@ -34,6 +34,9 @@ export const logInMutationOptions = {
 export async function afterLogin(session) {
   const user = await userAPI.getMyself(session.token);
 
+  // Sync token with the backend SSR session
+  document.cookie = 'JUDGELS_TOKEN=' + session.token + '; path=/; max-age=604800; samesite=lax';
+
   toastActions.showToast(`Welcome, ${user.username}.`);
   setSession(session.token, user);
   queryClient.invalidateQueries(userWebConfigQueryOptions());
@@ -51,6 +54,9 @@ export const logOutMutationOptions = {
       }
       throw error;
     }
+    // Clear backend SSR session
+    document.cookie = 'JUDGELS_TOKEN=; path=/; max-age=0; samesite=lax';
+
     clearSession();
     queryClient.invalidateQueries(userWebConfigQueryOptions());
   },

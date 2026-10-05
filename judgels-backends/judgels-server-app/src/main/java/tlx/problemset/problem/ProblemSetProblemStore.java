@@ -121,18 +121,23 @@ public class ProblemSetProblemStore {
 
         upsertProblemContests(problemJid, contestJids);
 
+        ProblemType resolvedType = (problemJid != null && problemJid.startsWith("JIDBUND"))
+                ? ProblemType.BUNDLE
+                : type;
+
         Optional<ProblemSetProblemModel> maybeModel =
                 problemDao.selectByProblemSetJidAndProblemJid(problemSetJid, problemJid);
         if (maybeModel.isPresent()) {
             ProblemSetProblemModel model = maybeModel.get();
             model.alias = alias;
+            model.type = resolvedType.name();
             return fromModel(problemDao.update(model), contestJids);
         } else {
             ProblemSetProblemModel model = new ProblemSetProblemModel();
             model.problemSetJid = problemSetJid;
             model.alias = alias;
             model.problemJid = problemJid;
-            model.type = type.name();
+            model.type = resolvedType.name();
             return fromModel(problemDao.insert(model), contestJids);
         }
     }
@@ -177,10 +182,13 @@ public class ProblemSetProblemStore {
     }
 
     private static ProblemSetProblem fromModel(ProblemSetProblemModel model, List<String> contestJids) {
+        ProblemType type = (model.problemJid != null && model.problemJid.startsWith("JIDBUND"))
+                ? ProblemType.BUNDLE
+                : ProblemType.valueOf(model.type);
         return new ProblemSetProblem.Builder()
                 .problemJid(model.problemJid)
                 .alias(model.alias)
-                .type(ProblemType.valueOf(model.type))
+                .type(type)
                 .contestJids(contestJids)
                 .build();
     }

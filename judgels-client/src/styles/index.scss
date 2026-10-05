@@ -199,6 +199,56 @@ blockquote {
 
 /* Blueprint overrides */
 
+.bp6-input-group,
+.bp5-input-group {
+  > .bp6-input-left-container,
+  > .bp5-input-left-container,
+  > .bp6-icon,
+  > .bp5-icon,
+  > .bp6-input-action,
+  > .bp5-input-action {
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    > .bp6-icon,
+    > .bp5-icon {
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+  }
+
+  &.bp6-small,
+  &.bp5-small {
+    .bp6-input,
+    .bp5-input {
+      height: 28px !important;
+      line-height: 28px !important;
+    }
+    > .bp6-input-left-container,
+    > .bp5-input-left-container,
+    > .bp6-icon,
+    > .bp5-icon,
+    > .bp6-input-action,
+    > .bp5-input-action {
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+
+      > .bp6-icon,
+      > .bp5-icon {
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+      }
+    }
+  }
+}
+
 .toast {
   margin-top: 50px;
 }

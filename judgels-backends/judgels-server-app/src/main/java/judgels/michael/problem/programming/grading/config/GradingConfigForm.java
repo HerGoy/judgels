@@ -8,13 +8,13 @@ import judgels.michael.template.HtmlForm;
 
 public class GradingConfigForm extends HtmlForm {
     static final int DEFAULT_SUBTASK_COUNT = 12;
-    static final String HELPER_NONE = "(none)";
+    public static final String HELPER_NONE = "(none)";
 
     @FormParam("timeLimit")
-    int timeLimit;
+    public int timeLimit;
 
     @FormParam("memoryLimit")
-    int memoryLimit;
+    public int memoryLimit;
 
     @FormParam("sourceFileFieldKeys")
     String sourceFileFieldKeys;
@@ -32,13 +32,13 @@ public class GradingConfigForm extends HtmlForm {
     List<String> testGroupSubtaskIds = Collections.emptyList();
 
     @FormParam("subtaskPoints")
-    List<Integer> subtaskPoints = Collections.emptyList();
+    public List<Integer> subtaskPoints = Collections.emptyList();
 
     @FormParam("customScorer")
-    String customScorer = HELPER_NONE;
+    public String customScorer = HELPER_NONE;
 
     @FormParam("communicator")
-    String communicator = HELPER_NONE;
+    public String communicator = HELPER_NONE;
 
     public int getTimeLimit() {
         return timeLimit;

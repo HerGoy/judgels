@@ -34,6 +34,18 @@ This is a non-exhaustive list of Judgels's features:
   - announcements, clarifications, scoreboards
   - various user roles: contestants, supervisors, and managers
 
+## 🚀 Enhancements in This Fork
+
+This repository is an optimized and modernized edition of the original [ia-toki/judgels](https://github.com/ia-toki/judgels), featuring:
+
+- **Complete Modern Problem Management SPA:** Full REST API (`/problems/api`) and React interfaces for creating and editing statements, test data, grading configs, and permissions without legacy server-side rendering.
+- **Resilient Submission & Container Routing:** Eliminates broken or unclickable problem links when problemsets or course chapters are reorganized or deleted through automatic fallback resolution.
+- **Crash-Resistant Frontend Initialization:** Defensive client bootstrapping and synchronous configuration execution preventing blank white screen issues.
+- **High-Concurrency Performance & Capacity Tuning:** Multi-threaded sandboxed grading (4 workers = 80 submissions/minute), MySQL 8.4 buffer pool and connection optimizations, G1GC tuning, and Nginx HTTP keepalive caching.
+- **Security Hardened Deployments:** Internal daemon port isolation and clean environment separation.
+
+For full technical specifications and code breakdown, see [CHANGELOG_ENHANCEMENTS.md](./CHANGELOG_ENHANCEMENTS.md).
+
 ## Docs
 
 For user guide, visit the Judgels website at [judgels.toki.id](https://judgels.toki.id).

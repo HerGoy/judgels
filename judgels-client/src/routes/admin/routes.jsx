@@ -57,6 +57,18 @@ export const createAdminRoutes = appRoute => {
     component: lazyRouteComponent(retryImport(() => import('./ratings/RatingsPage/RatingsPage'))),
   });
 
+  const adminProblemsRoute = createRoute({
+    getParentRoute: () => adminRoute,
+    path: 'problems',
+    component: lazyRouteComponent(retryImport(() => import('./problems/ProblemsPage/ProblemsPage'))),
+  });
+
+  const adminProblemRoute = createRoute({
+    getParentRoute: () => adminRoute,
+    path: 'problems/$problemId',
+    component: lazyRouteComponent(retryImport(() => import('./problems/ProblemPage/ProblemPage'))),
+  });
+
   const adminContestsRoute = createRoute({
     getParentRoute: () => adminRoute,
     path: 'contests',
@@ -98,6 +110,18 @@ export const createAdminRoutes = appRoute => {
     },
   });
 
+  const adminLessonsRoute = createRoute({
+    getParentRoute: () => adminRoute,
+    path: 'lessons',
+    component: lazyRouteComponent(retryImport(() => import('./lessons/LessonsPage'))),
+  });
+
+  const adminLessonRoute = createRoute({
+    getParentRoute: () => adminRoute,
+    path: 'lessons/$lessonId',
+    component: lazyRouteComponent(retryImport(() => import('./lessons/LessonEditPage'))),
+  });
+
   const adminArchivesRoute = createRoute({
     getParentRoute: () => adminRoute,
     path: 'archives',
@@ -117,6 +141,7 @@ export const createAdminRoutes = appRoute => {
     getParentRoute: () => adminRoute,
     path: 'problemsets',
     component: lazyRouteComponent(retryImport(() => import('./problemsets/ProblemSetsPage/ProblemSetsPage'))),
+    loader: () => queryClient.ensureQueryData(archivesQueryOptions()),
   });
 
   const adminProblemSetRoute = createRoute({
@@ -144,11 +169,15 @@ export const createAdminRoutes = appRoute => {
     adminUserRoute,
     adminRolesRoute,
     adminRatingsRoute,
+    adminProblemsRoute,
+    adminProblemRoute,
     adminContestsRoute,
     adminCoursesRoute,
     adminCourseRoute,
     adminChaptersRoute,
     adminChapterRoute,
+    adminLessonsRoute,
+    adminLessonRoute,
     adminArchivesRoute,
     adminArchiveRoute,
     adminProblemSetsRoute,

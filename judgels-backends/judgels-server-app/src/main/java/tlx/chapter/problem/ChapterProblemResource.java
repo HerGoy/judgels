@@ -85,13 +85,23 @@ public class ChapterProblemResource {
 
         Map<String, String> slugToJidMap = problemService.translateAllowedProblemSlugsToJids(actorJid, slugs);
 
-        List<ChapterProblem> setData = data.stream().filter(cp -> slugToJidMap.containsKey(cp.getSlug())).map(problem ->
-                new ChapterProblem.Builder()
-                        .alias(problem.getAlias())
-                        .problemJid(slugToJidMap.get(problem.getSlug()))
-                        .type(problem.getType())
-                        .build())
-                .collect(Collectors.toList());
+        for (ChapterProblemData item : data) {
+            if (!slugToJidMap.containsKey(item.getSlug())) {
+                throw new IllegalArgumentException("Problem with slug '" + item.getSlug() + "' does not exist. Please check the slug or create the problem first.");
+            }
+        }
+
+        List<ChapterProblem> setData = data.stream().map(problem -> {
+            String problemJid = slugToJidMap.get(problem.getSlug());
+            ProblemType actualType = (problemJid != null && problemJid.startsWith("JIDBUND"))
+                    ? ProblemType.BUNDLE
+                    : (problem.getType() != null ? problem.getType() : ProblemType.PROGRAMMING);
+            return new ChapterProblem.Builder()
+                    .alias(problem.getAlias())
+                    .problemJid(problemJid)
+                    .type(actualType)
+                    .build();
+        }).collect(Collectors.toList());
 
         chapterProblemStore.setProblems(chapterJid, setData);
     }

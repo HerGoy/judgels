@@ -83,6 +83,10 @@ public class ArchiveStore {
         return fromModel(archiveDao.update(model));
     }
 
+    public void deleteArchive(String archiveJid) {
+        archiveDao.selectByJid(archiveJid).ifPresent(archiveDao::delete);
+    }
+
     private static Archive fromModel(ArchiveModel model) {
         return new Archive.Builder()
                 .id(model.id)

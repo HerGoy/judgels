@@ -154,6 +154,10 @@ public class ContestStore {
         return fromModel(contestDao.update(model));
     }
 
+    public void deleteContest(String contestJid) {
+        contestDao.selectByJid(contestJid).ifPresent(contestDao::delete);
+    }
+
     public String getContestDescription(String contestJid) {
         return contestDao.findByJid(contestJid).description;
     }

@@ -8,12 +8,15 @@ import static judgels.service.ServiceUtils.checkFound;
 import io.dropwizard.hibernate.UnitOfWork;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Response;
+import java.util.Map;
 import java.util.Optional;
 import judgels.service.actor.ActorChecker;
 import judgels.service.api.actor.AuthHeader;
@@ -71,5 +74,20 @@ public class ArchiveResource {
         checkAllowed(roleChecker.isAdmin(actorJid));
 
         return archiveStore.updateArchive(archiveJid, data);
+    }
+
+    @DELETE
+    @Path("/{archiveJid}")
+    @Produces(APPLICATION_JSON)
+    @UnitOfWork
+    public Response deleteArchive(
+            @HeaderParam(AUTHORIZATION) AuthHeader authHeader,
+            @PathParam("archiveJid") String archiveJid) {
+
+        String actorJid = actorChecker.check(authHeader);
+        checkAllowed(roleChecker.isAdmin(actorJid));
+
+        archiveStore.deleteArchive(archiveJid);
+        return Response.ok(Map.of("success", true)).build();
     }
 }

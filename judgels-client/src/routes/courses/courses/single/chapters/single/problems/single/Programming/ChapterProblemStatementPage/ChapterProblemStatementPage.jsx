@@ -1,4 +1,6 @@
+import { Button, Collapse, Intent, Tag } from '@blueprintjs/core';
 import { Flex } from '@blueprintjs/labs';
+import { useState } from 'react';
 
 import { ContentCard } from '../../../../../../../../../../components/ContentCard/ContentCard';
 import StatementLanguageWidget from '../../../../../../../../../../components/LanguageWidget/StatementLanguageWidget';
@@ -8,6 +10,8 @@ import { ProblemWorksheetCard } from '../../../../../../../../../../components/P
 import './ChapterProblemStatementPage.scss';
 
 export default function ChapterProblemStatementPage({ worksheet }) {
+  const [showEditorial, setShowEditorial] = useState(false);
+
   const renderTimeLimit = timeLimit => {
     if (!timeLimit) {
       return '-';
@@ -74,15 +78,32 @@ export default function ChapterProblemStatementPage({ worksheet }) {
       return null;
     }
     return (
-      <>
+      <div style={{ marginTop: 24 }}>
         <hr />
-        <ProblemEditorialCard
-          alias={problem.alias}
-          statement={worksheet.worksheet.statement}
-          editorial={editorial}
-          showTitle={false}
-        />
-      </>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span style={{ fontWeight: 600, fontSize: 16 }}>Official Editorial & Solution</span>
+            <Tag intent={Intent.SUCCESS} round minimal>
+              Unlocked
+            </Tag>
+          </div>
+          <Button
+            small
+            intent={showEditorial ? Intent.NONE : Intent.PRIMARY}
+            icon={showEditorial ? 'chevron-up' : 'chevron-down'}
+            text={showEditorial ? 'Hide Editorial' : 'View Editorial'}
+            onClick={() => setShowEditorial(!showEditorial)}
+          />
+        </div>
+        <Collapse isOpen={showEditorial}>
+          <ProblemEditorialCard
+            alias={problem.alias}
+            statement={worksheet.worksheet.statement}
+            editorial={editorial}
+            showTitle={false}
+          />
+        </Collapse>
+      </div>
     );
   };
 

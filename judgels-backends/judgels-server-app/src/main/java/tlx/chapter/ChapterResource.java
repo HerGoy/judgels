@@ -8,13 +8,18 @@ import static judgels.service.ServiceUtils.checkFound;
 import io.dropwizard.hibernate.UnitOfWork;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Response;
 import java.util.List;
+import java.util.Map;
+import judgels.persistence.dao.ChapterLessonDao;
+import judgels.persistence.dao.ChapterProblemDao;
 import judgels.service.actor.ActorChecker;
 import judgels.service.api.actor.AuthHeader;
 import tlx.api.chapter.Chapter;
@@ -28,6 +33,8 @@ public class ChapterResource {
     @Inject protected ActorChecker actorChecker;
     @Inject protected TrainingAdminRoleChecker roleChecker;
     @Inject protected ChapterStore chapterStore;
+    @Inject protected ChapterProblemDao chapterProblemDao;
+    @Inject protected ChapterLessonDao chapterLessonDao;
 
     @Inject public ChapterResource() {}
 
@@ -73,5 +80,22 @@ public class ChapterResource {
         checkAllowed(roleChecker.isAdmin(actorJid));
 
         return chapterStore.updateChapter(chapterJid, data);
+    }
+
+    @DELETE
+    @Path("/{chapterJid}")
+    @Produces(APPLICATION_JSON)
+    @UnitOfWork
+    public Response deleteChapter(
+            @HeaderParam(AUTHORIZATION) AuthHeader authHeader,
+            @PathParam("chapterJid") String chapterJid) {
+
+        String actorJid = actorChecker.check(authHeader);
+        checkAllowed(roleChecker.isAdmin(actorJid));
+
+        chapterProblemDao.selectByChapterJid(chapterJid).all().forEach(chapterProblemDao::delete);
+        chapterLessonDao.selectByChapterJid(chapterJid).all().forEach(chapterLessonDao::delete);
+        chapterStore.deleteChapter(chapterJid);
+        return Response.ok(Map.of("success", true)).build();
     }
 }

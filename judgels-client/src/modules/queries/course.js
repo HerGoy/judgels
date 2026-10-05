@@ -64,6 +64,13 @@ export const updateCourseMutationOptions = courseJid => ({
   },
 });
 
+export const deleteCourseMutationOptions = () => ({
+  mutationFn: courseJid => courseAPI.deleteCourse(getToken(), courseJid),
+  onSuccess: () => {
+    queryClient.invalidateQueries(coursesQueryOptions());
+  },
+});
+
 export const setCourseChaptersMutationOptions = courseJid => ({
   mutationFn: data => courseChapterAPI.setChapters(getToken(), courseJid, data),
   onSuccess: () => {

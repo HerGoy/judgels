@@ -30,3 +30,24 @@ export const upsertUsersMutationOptions = () => ({
     queryClient.invalidateQueries({ queryKey: ['users'] });
   },
 });
+
+export const activateUserMutationOptions = () => ({
+  mutationFn: userJid => userAPI.activateUser(getToken(), userJid),
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['users'] });
+  },
+});
+
+export const deactivateUserMutationOptions = () => ({
+  mutationFn: userJid => userAPI.deactivateUser(getToken(), userJid),
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['users'] });
+  },
+});
+
+export const deleteUserMutationOptions = () => ({
+  mutationFn: userJid => userAPI.deleteUser(getToken(), userJid),
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['users'] });
+  },
+});

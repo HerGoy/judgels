@@ -30,13 +30,14 @@ export default function SingleProblemSetProblemLayout() {
     navigate({ to: `/problems/${problemSet.slug}` });
   };
 
+  const isBundle = problem.type === ProblemType.Bundle || problem.problemJid?.startsWith('JIDBUND');
   const sidebarItems = [
     {
       path: '',
       titleIcon: <Document />,
       title: 'Statement',
     },
-    ...(problem.type === ProblemType.Programming
+    ...(!isBundle
       ? [
           {
             path: 'submissions',

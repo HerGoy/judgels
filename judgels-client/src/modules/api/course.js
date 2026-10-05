@@ -1,5 +1,5 @@
 import { APP_CONFIG } from '../../conf';
-import { get, post } from './http';
+import { delete_, get, post } from './http';
 
 export const CourseErrors = {
   SlugAlreadyExists: 'CourseSlugAlreadyExists',
@@ -18,6 +18,10 @@ export const courseAPI = {
 
   updateCourse: (token, courseJid, data) => {
     return post(`${baseCourseURL(courseJid)}`, token, data);
+  },
+
+  deleteCourse: (token, courseJid) => {
+    return delete_(`${baseCourseURL(courseJid)}`, token);
   },
 
   getCourses: token => {

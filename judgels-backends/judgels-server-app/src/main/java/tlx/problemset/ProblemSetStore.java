@@ -162,6 +162,10 @@ public class ProblemSetStore {
         return fromModel(problemSetDao.update(model));
     }
 
+    public void deleteProblemSet(String problemSetJid) {
+        problemSetDao.selectByJid(problemSetJid).ifPresent(problemSetDao::delete);
+    }
+
     private static ProblemSet fromModel(ProblemSetModel model) {
         return new ProblemSet.Builder()
                 .id(model.id)

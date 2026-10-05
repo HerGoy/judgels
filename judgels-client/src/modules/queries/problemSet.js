@@ -94,6 +94,13 @@ export const updateProblemSetMutationOptions = problemSetJid => ({
   },
 });
 
+export const deleteProblemSetMutationOptions = () => ({
+  mutationFn: problemSetJid => problemSetAPI.deleteProblemSet(getToken(), problemSetJid),
+  onSuccess: () => {
+    queryClient.invalidateQueries(problemSetsQueryOptions());
+  },
+});
+
 export const setProblemSetProblemsMutationOptions = problemSetJid => ({
   mutationFn: async data => {
     try {

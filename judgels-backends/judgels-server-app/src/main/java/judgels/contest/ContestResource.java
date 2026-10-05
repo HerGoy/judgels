@@ -8,6 +8,7 @@ import static judgels.service.ServiceUtils.checkFound;
 import io.dropwizard.hibernate.UnitOfWork;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.HeaderParam;
@@ -17,6 +18,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Response;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -86,6 +88,21 @@ public class ContestResource {
         contestLogger.log(contestJid, "UPDATE_CONTEST");
 
         return contest;
+    }
+
+    @DELETE
+    @Path("/{contestJid}")
+    @Produces(APPLICATION_JSON)
+    @UnitOfWork
+    public Response deleteContest(
+            @HeaderParam(AUTHORIZATION) AuthHeader authHeader,
+            @PathParam("contestJid") String contestJid) {
+
+        String actorJid = actorChecker.check(authHeader);
+        checkAllowed(contestRoleChecker.canAdminister(actorJid));
+
+        contestStore.deleteContest(contestJid);
+        return Response.ok(Map.of("success", true)).build();
     }
 
     @GET

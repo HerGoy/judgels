@@ -1,5 +1,5 @@
 import { APP_CONFIG } from '../../conf';
-import { get, post } from './http';
+import { delete_, get, post } from './http';
 
 export const ArchiveErrors = {
   SlugAlreadyExists: 'ArchiveSlugAlreadyExists',
@@ -18,6 +18,10 @@ export const archiveAPI = {
 
   updateArchive: (token, archiveJid, data) => {
     return post(`${baseArchiveURL(archiveJid)}`, token, data);
+  },
+
+  deleteArchive: (token, archiveJid) => {
+    return delete_(`${baseArchiveURL(archiveJid)}`, token);
   },
 
   getArchives: token => {

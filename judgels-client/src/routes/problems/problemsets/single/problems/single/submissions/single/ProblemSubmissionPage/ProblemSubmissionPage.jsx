@@ -62,6 +62,7 @@ export default function ProblemSubmissionPage() {
         problemAlias={problemAlias}
         problemUrl={`/problems/${problemSet.slug}/${problemAlias}`}
         containerName={containerName}
+        containerUrl={`/problems/${problemSet.slug}`}
       />
     );
   };

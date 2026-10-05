@@ -24,7 +24,7 @@ export default function SubmissionsPage() {
   const isUserFilterMine = (location.pathname + '/').includes('/mine/');
   const usernameFilter = isUserFilterMine ? username : undefined;
 
-  const { data: response } = useQuery(submissionsQueryOptions({ username: usernameFilter, beforeId, afterId }));
+  const { data: response, isLoading, isError } = useQuery(submissionsQueryOptions({ username: usernameFilter, beforeId, afterId }));
 
   const regradeMutation = useMutation(regradeSubmissionMutationOptions);
 
@@ -37,8 +37,15 @@ export default function SubmissionsPage() {
   };
 
   const renderSubmissions = () => {
-    if (!response) {
+    if (isLoading) {
       return <LoadingState />;
+    }
+    if (isError || !response) {
+      return (
+        <p>
+          <small>Failed to load submissions.</small>
+        </p>
+      );
     }
 
     const {

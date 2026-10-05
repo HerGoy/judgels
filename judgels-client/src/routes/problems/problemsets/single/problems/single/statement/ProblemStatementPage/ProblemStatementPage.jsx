@@ -39,10 +39,15 @@ export default function ProblemStatementPage() {
     return <LoadingState />;
   }
 
-  const { problem: problemData } = response;
-  if (problemData.type === ProblemType.Programming) {
-    return <ProblemSetProblemProgrammingStatementPage worksheet={response} />;
-  } else {
+  const { problem: problemData, worksheet: worksheetData } = response;
+  const isBundle =
+    problemData?.type === ProblemType.Bundle ||
+    problemData?.problemJid?.startsWith('JIDBUND') ||
+    Boolean(worksheetData?.items);
+
+  if (isBundle) {
     return <ProblemSetProblemBundleStatementPage worksheet={response} />;
+  } else {
+    return <ProblemSetProblemProgrammingStatementPage worksheet={response} />;
   }
 }

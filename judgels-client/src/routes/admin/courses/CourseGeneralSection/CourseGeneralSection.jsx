@@ -5,6 +5,11 @@ import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 
 import { FormTable } from '../../../../components/forms/FormTable/FormTable';
+import {
+  buildCourseDescriptionWithLogo,
+  cleanCourseDescription,
+  extractCourseLogo,
+} from '../../../../modules/courseUtils';
 import { updateCourseMutationOptions } from '../../../../modules/queries/course';
 import CourseGeneralEditForm from '../CourseGeneralEditForm/CourseGeneralEditForm';
 
@@ -17,16 +22,47 @@ export function CourseGeneralSection({ course }) {
 
   const keyStyles = { width: '250px' };
 
+  const currentLogo = extractCourseLogo(course.description);
+  const currentDesc = cleanCourseDescription(course.description);
+
   const rows = [
     { key: 'slug', title: 'Slug', value: course.slug },
     { key: 'name', title: 'Name', value: course.name },
-    { key: 'description', title: 'Description', value: course.description },
+    {
+      key: 'logo',
+      title: 'Course Logo',
+      value: currentLogo ? (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <img
+            src={currentLogo}
+            alt="Logo"
+            style={{
+              width: 44,
+              height: 44,
+              objectFit: 'contain',
+              borderRadius: 6,
+              background: '#f5f8fa',
+              border: '1px solid #e1e8ed',
+              padding: 2,
+            }}
+          />
+          <code style={{ fontSize: 11 }}>{currentLogo}</code>
+        </div>
+      ) : (
+        <em style={{ color: '#8a9ba8' }}>No logo set</em>
+      ),
+    },
+    { key: 'description', title: 'Description', value: currentDesc || <em style={{ color: '#8a9ba8' }}>No description</em> },
   ];
 
   const updateCourse = async data => {
-    await updateCourseMutation.mutateAsync(data, {
-      onSuccess: () => toastActions.showSuccessToast('Course updated.'),
-    });
+    const fullDesc = buildCourseDescriptionWithLogo(data.description, data.logoUrl);
+    await updateCourseMutation.mutateAsync(
+      { slug: data.slug, name: data.name, description: fullDesc },
+      {
+        onSuccess: () => toastActions.showSuccessToast('Course updated.'),
+      }
+    );
     setIsEditing(false);
   };
 
@@ -45,7 +81,8 @@ export function CourseGeneralSection({ course }) {
       const initialValues = {
         slug: course.slug || '',
         name: course.name || '',
-        description: course.description || '',
+        logoUrl: currentLogo,
+        description: currentDesc,
       };
       return (
         <CourseGeneralEditForm

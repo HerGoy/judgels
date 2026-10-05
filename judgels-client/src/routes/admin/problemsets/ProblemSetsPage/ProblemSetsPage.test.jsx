@@ -58,8 +58,8 @@ describe('ProblemSetsPage', () => {
       )
     ).toEqual([
       [],
-      ['1', 'problemset-1', 'Problemset 1', 'archive-1'],
-      ['2', 'problemset-2', 'Problemset 2', 'archive-1'],
+      ['1', 'problemset-1', 'Problemset 1', 'archive-1', 'Manage'],
+      ['2', 'problemset-2', 'Problemset 2', 'archive-1', 'Manage'],
     ]);
   });
 

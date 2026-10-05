@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { ContentCard } from '../../../../components/ContentCard/ContentCard';
 import { LoadingState } from '../../../../components/LoadingState/LoadingState';
 import { SubmissionDetails } from '../../../../components/SubmissionDetails/Programming/SubmissionDetails';
-import { constructProblemUrl } from '../../../../modules/api/submission';
+import { constructContainerUrl, constructProblemUrl } from '../../../../modules/api/submission';
 import { submissionProgrammingAPI } from '../../../../modules/api/submissionProgramming';
 import { submissionWithSourceQueryOptions } from '../../../../modules/queries/submissionProgramming';
 import { useWebPrefs } from '../../../../modules/webPrefs';
@@ -36,6 +36,8 @@ export default function SubmissionPage() {
     }
 
     const { data: submissionWithSource, profile, problemName, problemAlias, containerPath, containerName } = response;
+    const problemUrl = constructProblemUrl(containerPath, problemAlias);
+    const containerUrl = constructContainerUrl(containerPath);
 
     return (
       <SubmissionDetails
@@ -46,8 +48,9 @@ export default function SubmissionPage() {
         profile={profile}
         problemName={problemName}
         problemAlias={problemAlias}
-        problemUrl={`${constructProblemUrl(containerPath, problemAlias)}`}
+        problemUrl={problemUrl}
         containerName={containerName}
+        containerUrl={containerUrl}
       />
     );
   };

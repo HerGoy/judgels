@@ -13,6 +13,7 @@ import com.opencsv.ICSVWriter;
 import io.dropwizard.hibernate.UnitOfWork;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.HeaderParam;
@@ -21,10 +22,12 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.core.Response;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -36,6 +39,12 @@ import judgels.api.user.UsersResponse;
 import judgels.api.user.UsersUpsertResponse;
 import judgels.persistence.api.OrderDir;
 import judgels.persistence.api.Page;
+import judgels.persistence.dao.UserRegistrationEmailDao;
+import judgels.persistence.model.UserRegistrationEmailModel;
+import judgels.service.RandomCodeGenerator;
+import judgels.persistence.dao.UserDao;
+import judgels.persistence.dao.UserInfoDao;
+import judgels.persistence.dao.UserRoleDao;
 import judgels.service.actor.ActorChecker;
 import judgels.service.api.actor.AuthHeader;
 import judgels.session.SessionStore;
@@ -49,6 +58,10 @@ public class UserResource {
     @Inject protected UserStore userStore;
     @Inject protected SessionStore sessionStore;
     @Inject protected UserCreator userCreator;
+    @Inject protected UserRegistrationEmailDao userRegistrationEmailDao;
+    @Inject protected UserDao userDao;
+    @Inject protected UserInfoDao userInfoDao;
+    @Inject protected UserRoleDao userRoleDao;
 
     @Inject public UserResource() {}
 
@@ -134,10 +147,89 @@ public class UserResource {
 
         var userJids = Lists.transform(users.getPage(), User::getJid);
         Map<String, Instant> lastSessionTimesMap = sessionStore.getLatestSessionTimeByUserJids(userJids);
+
+        Map<String, Boolean> activationStatusesMap = new HashMap<>();
+        for (String userJid : userJids) {
+            Optional<UserRegistrationEmailModel> maybeModel = userRegistrationEmailDao.selectByUserJid(userJid);
+            boolean isActivated = maybeModel.map(m -> m.verified).orElse(true);
+            activationStatusesMap.put(userJid, isActivated);
+        }
+
         return new UsersResponse.Builder()
                 .data(users)
                 .lastSessionTimesMap(lastSessionTimesMap)
+                .activationStatusesMap(activationStatusesMap)
                 .build();
+    }
+
+    @POST
+    @Path("/{userJid}/activate")
+    @UnitOfWork
+    public void activateUser(
+            @HeaderParam(AUTHORIZATION) AuthHeader authHeader,
+            @PathParam("userJid") String userJid) {
+
+        String actorJid = actorChecker.check(authHeader);
+        checkAllowed(roleChecker.canAdminister(actorJid));
+
+        Optional<UserRegistrationEmailModel> maybeModel = userRegistrationEmailDao.selectByUserJid(userJid);
+        if (maybeModel.isPresent()) {
+            UserRegistrationEmailModel model = maybeModel.get();
+            model.verified = true;
+            userRegistrationEmailDao.update(model);
+        } else {
+            UserRegistrationEmailModel model = new UserRegistrationEmailModel();
+            model.userJid = userJid;
+            model.emailCode = RandomCodeGenerator.newCode();
+            model.verified = true;
+            userRegistrationEmailDao.insert(model);
+        }
+    }
+
+    @POST
+    @Path("/{userJid}/deactivate")
+    @UnitOfWork
+    public void deactivateUser(
+            @HeaderParam(AUTHORIZATION) AuthHeader authHeader,
+            @PathParam("userJid") String userJid) {
+
+        String actorJid = actorChecker.check(authHeader);
+        checkAllowed(roleChecker.canAdminister(actorJid));
+
+        Optional<UserRegistrationEmailModel> maybeModel = userRegistrationEmailDao.selectByUserJid(userJid);
+        if (maybeModel.isPresent()) {
+            UserRegistrationEmailModel model = maybeModel.get();
+            model.verified = false;
+            userRegistrationEmailDao.update(model);
+        } else {
+            UserRegistrationEmailModel model = new UserRegistrationEmailModel();
+            model.userJid = userJid;
+            model.emailCode = RandomCodeGenerator.newCode();
+            model.verified = false;
+            userRegistrationEmailDao.insert(model);
+        }
+        sessionStore.deleteSessionsByUserJid(userJid);
+    }
+
+    @DELETE
+    @Path("/{userJid}")
+    @Produces(APPLICATION_JSON)
+    @UnitOfWork
+    public Response deleteUser(
+            @HeaderParam(AUTHORIZATION) AuthHeader authHeader,
+            @PathParam("userJid") String userJid) {
+
+        String actorJid = actorChecker.check(authHeader);
+        checkAllowed(roleChecker.canAdminister(actorJid));
+        checkArgument(!actorJid.equals(userJid), "Cannot delete yourself.");
+
+        sessionStore.deleteSessionsByUserJid(userJid);
+        userRegistrationEmailDao.selectByUserJid(userJid).ifPresent(userRegistrationEmailDao::delete);
+        userInfoDao.selectByUserJid(userJid).ifPresent(userInfoDao::delete);
+        userRoleDao.selectByUserJid(userJid).ifPresent(userRoleDao::delete);
+        userDao.selectByJid(userJid).ifPresent(userDao::delete);
+
+        return Response.ok(Map.of("success", true)).build();
     }
 
     @POST

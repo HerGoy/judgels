@@ -1,5 +1,7 @@
 import {
+  Book,
   Box,
+  Code,
   Cog,
   Console,
   PanelStats,
@@ -16,6 +18,7 @@ import ContentWithSidebar from '../../components/ContentWithSidebar/ContentWithS
 import { FullWidthPageLayout } from '../../components/FullWidthPageLayout/FullWidthPageLayout';
 import { isTLX } from '../../conf';
 import { ContestAdminRole } from '../../modules/api/contestAdminRole';
+import { ProblemAdminRole } from '../../modules/api/problemAdminRole';
 import { TrainingAdminRole } from '../../modules/api/trainingAdminRole';
 import { UserAdminRole } from '../../modules/api/userAdminRole';
 import { userWebConfigQueryOptions } from '../../modules/queries/userWeb';
@@ -26,6 +29,7 @@ export default function AdminLayout() {
   } = useSuspenseQuery(userWebConfigQueryOptions());
 
   const isAccountAdmin = role.account === UserAdminRole.Admin || role.account === UserAdminRole.Superadmin;
+  const isProblemAdmin = role.problem === ProblemAdminRole.Admin;
   const isContestAdmin = role.contest === ContestAdminRole.Admin;
   const isTrainingAdmin = isTLX() && role.training === TrainingAdminRole.Admin;
 
@@ -58,6 +62,17 @@ export default function AdminLayout() {
       ].filter(child => child.visible !== false),
     },
     {
+      title: 'Problem',
+      visible: isProblemAdmin,
+      children: [
+        {
+          path: 'problems',
+          titleIcon: <Code />,
+          title: 'Problems',
+        },
+      ],
+    },
+    {
       title: 'Contest',
       visible: isContestAdmin,
       children: [
@@ -81,6 +96,11 @@ export default function AdminLayout() {
           path: 'chapters',
           titleIcon: <Properties />,
           title: 'Chapters',
+        },
+        {
+          path: 'lessons',
+          titleIcon: <Book />,
+          title: 'Lessons',
         },
         {
           path: 'archives',

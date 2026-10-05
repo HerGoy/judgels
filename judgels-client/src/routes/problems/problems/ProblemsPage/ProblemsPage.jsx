@@ -26,11 +26,18 @@ export default function ProblemsPage() {
   const tags = parseTags(location.search.tags);
   const page = location.search.page;
 
-  const { data: response } = useQuery(problemsQueryOptions({ tags, page }));
+  const { data: response, isLoading, isError } = useQuery(problemsQueryOptions({ tags, page }));
 
   const renderProblems = () => {
-    if (!response || !response.data) {
+    if (isLoading) {
       return <LoadingState />;
+    }
+    if (isError || !response || !response.data) {
+      return (
+        <p>
+          <small>Failed to load problems.</small>
+        </p>
+      );
     }
 
     const { data: problems, problemsMap, problemMetadatasMap, problemDifficultiesMap, problemProgressesMap } = response;

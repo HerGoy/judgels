@@ -1,0 +1,57 @@
+.problem-page-tabs {
+  width: 100%;
+  position: relative;
+
+  .bp6-tabs {
+    width: 100%;
+  }
+
+  /* Ensure tab list is horizontally scrollable and never wraps or clips */
+  .bp6-tab-list {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    white-space: nowrap !important;
+    scrollbar-width: thin !important;
+    padding-bottom: 4px !important;
+    margin-bottom: 16px !important;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.25) !important;
+    gap: 2px !important;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+      height: 4px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(125, 125, 125, 0.35);
+      border-radius: 4px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background: rgba(125, 125, 125, 0.6);
+    }
+  }
+
+  /* Individual tabs never shrink, preventing overlap or cutoffs */
+  .bp6-tab {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    padding: 8px 16px !important;
+    font-size: 13.5px !important;
+    font-weight: 500 !important;
+    border-radius: 4px 4px 0 0 !important;
+    transition: background 0.15s ease, color 0.15s ease !important;
+
+    &:hover {
+      background: rgba(128, 128, 128, 0.12) !important;
+    }
+  }
+
+  .bp6-tab-panel {
+    margin-top: 0 !important;
+  }
+}

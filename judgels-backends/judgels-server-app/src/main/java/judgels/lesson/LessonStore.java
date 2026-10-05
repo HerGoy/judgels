@@ -98,6 +98,15 @@ public final class LessonStore extends BaseLessonStore {
         lessonDao.update(model);
     }
 
+    public void deleteLesson(String lessonJid) {
+        partnerDao.selectAllByLessonJid(lessonJid).forEach(partnerDao::delete);
+        try {
+            lessonFs.removeFile(getRootDirPath(lessonFs, null, lessonJid));
+            lessonFs.removeFile(getClonesDirPath(lessonJid));
+        } catch (Exception ignored) {}
+        lessonDao.selectByJid(lessonJid).ifPresent(lessonDao::delete);
+    }
+
     public void initRepository(String userJid, String lessonJid) {
         Path root = getRootDirPath(lessonFs, null, lessonJid);
 

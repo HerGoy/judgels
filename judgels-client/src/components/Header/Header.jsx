@@ -3,7 +3,7 @@ import { Link } from '@tanstack/react-router';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import logo from '../../assets/images/logo-header.png';
-import { getAppName, getAppSlogan } from '../../modules/webConfig';
+import { getAppName, getAppSlogan, getSiteLogo } from '../../modules/webConfig';
 import DarkModeWidget from '../DarkModeWidget/DarkModeWidget';
 import Menubar from '../Menubar/Menubar';
 import UserWidget from '../UserWidget/UserWidget';
@@ -38,7 +38,7 @@ export default function Header({ items, homeRoute }) {
       <div className="header__wrapper">
         <div className="header__left">
           <Link to="/">
-            <img src={logo} alt="header" className="header__logo" />
+            <img src={getSiteLogo() || logo} alt="header" className="header__logo" />
           </Link>
           <div className="header__text">
             <div className="header__title">{getAppName()}</div>

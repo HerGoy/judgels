@@ -8,11 +8,17 @@ import { getIntent, getIntentClassName } from '../meta';
 
 import './FormDateInput.scss';
 
-export function FormDateInput({ input, className, label, meta }) {
+export function FormDateInput({ input, className, label, labelInfo, helperText, meta }) {
   const { onChange, ...inputProps } = input;
 
   return (
-    <FormGroup className={className} label={label} intent={getIntent(meta)}>
+    <FormGroup
+      className={className}
+      label={label}
+      labelInfo={labelInfo}
+      helperText={helperText}
+      intent={getIntent(meta)}
+    >
       <DateInput
         className={classNames('form-date-input', getIntentClassName(meta))}
         formatDate={formatDateTime}

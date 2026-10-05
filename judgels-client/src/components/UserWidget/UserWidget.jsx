@@ -1,5 +1,5 @@
-import { Alignment, Menu, MenuDivider, Navbar, Popover, Position } from '@blueprintjs/core';
-import { ChevronDown, Menu as IconMenu } from '@blueprintjs/icons';
+import { Alignment, Menu, MenuDivider, MenuItem, Navbar, Popover, Position } from '@blueprintjs/core';
+import { ChevronDown, Edit, Menu as IconMenu, Plus } from '@blueprintjs/icons';
 import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { Link } from '@tanstack/react-router';
 
@@ -17,12 +17,30 @@ export function UserWidget({ user, profile, items, homeRoute }) {
     ...avatarUrlQueryOptions(user?.jid),
     enabled: !!user,
   });
+  const { data: webConfig } = useQuery({
+    ...userWebConfigQueryOptions(),
+    enabled: !!user,
+  });
+
+  const role = webConfig?.role;
+  const canManageProblems =
+    role?.problem === 'ADMIN' ||
+    role?.problem === 'WRITER' ||
+    role?.account === 'SUPERADMIN' ||
+    role?.account === 'ADMIN';
 
   const renderForUser = () => {
     const menuItems = (
       <>
         <MenuItemLink text="My profile" to={`/profiles/${profile.username}`} />
         {isTLX() && <MenuItemLink text="My account" to="/account" />}
+        {canManageProblems && (
+          <>
+            <MenuDivider />
+            <MenuItemLink icon={<Edit />} text="Manage problems" to="/admin/problems" />
+          </>
+        )}
+        <MenuDivider />
         <MenuItemLink text="Log out" to="/logout" />
       </>
     );

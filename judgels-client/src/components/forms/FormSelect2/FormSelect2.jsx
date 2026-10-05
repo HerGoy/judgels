@@ -6,7 +6,19 @@ import classNames from 'classnames';
 import { FormInputValidation } from '../FormInputValidation/FormInputValidation';
 import { getIntent, getIntentClassName } from '../meta';
 
-export function FormSelect2({ input, className, label, meta, optionValues, optionNamesMap, small }) {
+export function FormSelect2({
+  input,
+  className,
+  label,
+  helperText,
+  labelInfo,
+  meta,
+  optionValues = [],
+  optionNamesMap = {},
+  small,
+  placeholder,
+  fill = false,
+}) {
   const isUsingFilter = optionValues.length >= 10;
 
   const renderOption = (value, { handleClick, modifiers }) => {
@@ -14,13 +26,21 @@ export function FormSelect2({ input, className, label, meta, optionValues, optio
   };
 
   const filterOption = (query, option) => {
-    return option.toLowerCase().indexOf(query.toLowerCase()) >= 0;
+    const text = (optionNamesMap[option] || option).toLowerCase();
+    return text.indexOf(query.toLowerCase()) >= 0;
   };
 
   const { onChange, ...inputProps } = input;
 
   return (
-    <FormGroup className={className} labelFor={input.name} label={label} intent={getIntent(meta)}>
+    <FormGroup
+      className={className}
+      labelFor={input.name}
+      label={label}
+      labelInfo={labelInfo}
+      helperText={helperText}
+      intent={getIntent(meta)}
+    >
       <Select
         className={classNames('form-group__select', getIntentClassName(meta))}
         items={optionValues}
@@ -30,14 +50,16 @@ export function FormSelect2({ input, className, label, meta, optionValues, optio
         onItemSelect={onChange}
         inputProps={{ ...inputProps, autoComplete: 'off' }}
         filterable={isUsingFilter}
-        popoverProps={{ usePortal: false }}
+        popoverProps={{ usePortal: false, matchTargetWidth: fill }}
+        fill={fill}
       >
         <Button
           data-key={inputProps.name}
           alignText={Alignment.LEFT}
-          text={optionNamesMap[input.value]}
+          text={optionNamesMap[input.value] || placeholder || 'Select...'}
           rightIcon={<CaretDown />}
           small={small}
+          fill={fill}
         />
       </Select>
       <FormInputValidation meta={meta} />

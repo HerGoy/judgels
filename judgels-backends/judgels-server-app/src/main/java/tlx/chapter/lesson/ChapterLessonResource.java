@@ -91,7 +91,13 @@ public class ChapterLessonResource {
 
         Map<String, String> slugToJidMap = lessonService.translateAllowedLessonSlugsToJids(actorJid, slugs);
 
-        List<ChapterLesson> setData = data.stream().filter(cp -> slugToJidMap.containsKey(cp.getSlug())).map(lesson ->
+        for (ChapterLessonData item : data) {
+            if (!slugToJidMap.containsKey(item.getSlug())) {
+                throw new IllegalArgumentException("Lesson with slug '" + item.getSlug() + "' does not exist. Please create the lesson first under Lessons.");
+            }
+        }
+
+        List<ChapterLesson> setData = data.stream().map(lesson ->
                 new ChapterLesson.Builder()
                         .alias(lesson.getAlias())
                         .lessonJid(slugToJidMap.get(lesson.getSlug()))

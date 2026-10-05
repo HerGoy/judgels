@@ -1,7 +1,7 @@
 import { stringify } from 'query-string';
 
 import { APP_CONFIG } from '../../conf';
-import { get, post, postText } from './http';
+import { delete_, get, post, postText } from './http';
 
 export const baseUsersURL = `${APP_CONFIG.apiUrl}/users`;
 
@@ -31,7 +31,19 @@ export const userAPI = {
     return post(baseUsersURL, token, data);
   },
 
+  activateUser: (token, userJid) => {
+    return post(`${baseUsersURL}/${userJid}/activate`, token);
+  },
+
+  deactivateUser: (token, userJid) => {
+    return post(`${baseUsersURL}/${userJid}/deactivate`, token);
+  },
+
   upsertUsers: (token, csv) => {
     return postText(`${baseUsersURL}/batch-upsert`, token, csv);
+  },
+
+  deleteUser: (token, userJid) => {
+    return delete_(`${baseUsersURL}/${userJid}`, token);
   },
 };

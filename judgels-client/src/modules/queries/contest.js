@@ -49,6 +49,13 @@ export const updateContestMutationOptions = (contestJid, contestSlug) => ({
   },
 });
 
+export const deleteContestMutationOptions = () => ({
+  mutationFn: contestJid => contestAPI.deleteContest(getToken(), contestJid),
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['contests'] });
+  },
+});
+
 export const activeContestsQueryOptions = () =>
   queryOptions({
     queryKey: ['contests', 'active'],

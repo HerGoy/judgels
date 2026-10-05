@@ -261,17 +261,21 @@ public class ProblemSetProblemResource {
             throw ProblemSetErrors.contestSlugsNotAllowed(notAllowedContestSlugs);
         }
 
-        List<ProblemSetProblem> setData = data.stream().filter(cp -> slugToJidMap.containsKey(cp.getSlug())).map(p ->
-                new ProblemSetProblem.Builder()
-                        .alias(p.getAlias())
-                        .problemJid(slugToJidMap.get(p.getSlug()))
-                        .type(p.getType())
-                        .contestJids(p.getContestSlugs().stream()
-                                .filter(contestSlugToJidMap::containsKey)
-                                .map(contestSlugToJidMap::get)
-                                .collect(Collectors.toList()))
-                        .build())
-                .collect(Collectors.toList());
+        List<ProblemSetProblem> setData = data.stream().filter(cp -> slugToJidMap.containsKey(cp.getSlug())).map(p -> {
+            String problemJid = slugToJidMap.get(p.getSlug());
+            ProblemType actualType = (problemJid != null && problemJid.startsWith("JIDBUND"))
+                    ? ProblemType.BUNDLE
+                    : (p.getType() != null ? p.getType() : ProblemType.PROGRAMMING);
+            return new ProblemSetProblem.Builder()
+                    .alias(p.getAlias())
+                    .problemJid(problemJid)
+                    .type(actualType)
+                    .contestJids(p.getContestSlugs().stream()
+                            .filter(contestSlugToJidMap::containsKey)
+                            .map(contestSlugToJidMap::get)
+                            .collect(Collectors.toList()))
+                    .build();
+        }).collect(Collectors.toList());
 
         Map<String, Boolean> problemVisibilitiesMap = problemStore.setProblems(problemSetJid, setData);
         problemService.setProblemVisibilityTagsByJids(problemVisibilitiesMap);

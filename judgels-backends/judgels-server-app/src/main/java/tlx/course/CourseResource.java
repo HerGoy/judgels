@@ -9,15 +9,18 @@ import com.google.common.collect.Lists;
 import io.dropwizard.hibernate.UnitOfWork;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Response;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import judgels.persistence.dao.CourseChapterDao;
 import judgels.service.actor.ActorChecker;
 import judgels.service.api.actor.AuthHeader;
 import tlx.api.course.Course;
@@ -35,6 +38,7 @@ public class CourseResource {
     @Inject protected ActorChecker actorChecker;
     @Inject protected TrainingAdminRoleChecker roleChecker;
     @Inject protected CourseStore courseStore;
+    @Inject protected CourseChapterDao courseChapterDao;
     @Inject protected CurriculumStore curriculumStore;
     @Inject protected StatsStore statsStore;
 
@@ -100,5 +104,21 @@ public class CourseResource {
         checkAllowed(roleChecker.isAdmin(actorJid));
 
         return courseStore.updateCourse(courseJid, data);
+    }
+
+    @DELETE
+    @Path("/{courseJid}")
+    @Produces(APPLICATION_JSON)
+    @UnitOfWork
+    public Response deleteCourse(
+            @HeaderParam(AUTHORIZATION) AuthHeader authHeader,
+            @PathParam("courseJid") String courseJid) {
+
+        String actorJid = actorChecker.check(authHeader);
+        checkAllowed(roleChecker.isAdmin(actorJid));
+
+        courseChapterDao.selectByCourseJid(courseJid).all().forEach(courseChapterDao::delete);
+        courseStore.deleteCourse(courseJid);
+        return Response.ok(Map.of("success", true)).build();
     }
 }

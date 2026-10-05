@@ -1,5 +1,5 @@
 import { APP_CONFIG } from '../../conf';
-import { get, post } from './http';
+import { delete_, get, post } from './http';
 
 export const baseChaptersURL = `${APP_CONFIG.apiUrl}/chapters`;
 
@@ -14,6 +14,10 @@ export const chapterAPI = {
 
   updateChapter: (token, chapterJid, data) => {
     return post(`${baseChapterURL(chapterJid)}`, token, data);
+  },
+
+  deleteChapter: (token, chapterJid) => {
+    return delete_(`${baseChapterURL(chapterJid)}`, token);
   },
 
   getChapters: token => {

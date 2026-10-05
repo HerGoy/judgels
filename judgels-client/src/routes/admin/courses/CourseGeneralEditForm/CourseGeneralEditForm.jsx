@@ -23,6 +23,12 @@ const nameField = {
   validate: Required,
 };
 
+const logoUrlField = {
+  name: 'logoUrl',
+  label: 'Course Logo URL',
+  placeholder: 'https://example.com/logo.png',
+};
+
 const descriptionField = {
   name: 'description',
   label: 'Description',
@@ -38,6 +44,7 @@ export default function CourseGeneralEditForm({ onSubmit, initialValues, onCance
               <tbody>
                 <Field component={FormTableTextInput} {...slugField} />
                 <Field component={FormTableTextInput} {...nameField} />
+                <Field component={FormTableTextInput} {...logoUrlField} />
                 <Field component={FormTableTextArea} {...descriptionField} />
               </tbody>
             </HTMLTable>

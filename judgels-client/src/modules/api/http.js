@@ -68,8 +68,13 @@ export async function postText(url, token, text) {
 }
 
 export async function postMultipart(url, token, parts) {
-  const body = new FormData();
-  Object.keys(parts).forEach(part => body.append(part, parts[part]));
+  let body;
+  if (parts instanceof FormData) {
+    body = parts;
+  } else {
+    body = new FormData();
+    Object.keys(parts).forEach(part => body.append(part, parts[part]));
+  }
 
   return request('POST', url, token, {}, body);
 }

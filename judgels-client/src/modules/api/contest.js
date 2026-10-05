@@ -1,7 +1,7 @@
 import { stringify } from 'query-string';
 
 import { APP_CONFIG } from '../../conf';
-import { get, post, put } from './http';
+import { delete_, get, post, put } from './http';
 
 export const ContestStyle = {
   TROC: 'TROC',
@@ -30,6 +30,10 @@ export const contestAPI = {
 
   updateContest: (token, contestJid, data) => {
     return post(`${baseContestURL(contestJid)}`, token, data);
+  },
+
+  deleteContest: (token, contestJid) => {
+    return delete_(`${baseContestURL(contestJid)}`, token);
   },
 
   getContests: (token, name, page) => {

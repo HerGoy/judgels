@@ -39,6 +39,10 @@ import judgels.api.submission.programming.SubmissionWithSourceResponse;
 import judgels.grading.api.GradingOptions;
 import judgels.grading.api.SubmissionSource;
 import judgels.persistence.api.CursorPage;
+import judgels.persistence.dao.ChapterProblemDao;
+import judgels.persistence.dao.ProblemSetProblemDao;
+import judgels.persistence.model.ChapterProblemModel;
+import judgels.persistence.model.ProblemSetProblemModel;
 import judgels.problem.ProblemService;
 import judgels.problem.ProblemUtils;
 import judgels.profile.ProfileStore;
@@ -85,6 +89,9 @@ public class SubmissionResource {
 
     @Inject protected ChapterStore chapterStore;
     @Inject protected ChapterProblemStore chapterProblemStore;
+
+    @Inject protected ProblemSetProblemDao problemSetProblemDao;
+    @Inject protected ChapterProblemDao chapterProblemDao;
 
     @Inject public SubmissionResource() {}
 
@@ -151,6 +158,50 @@ public class SubmissionResource {
             containerPathsMap.putAll(chapterStore.getChapterPathsByJids(containerJids));
         }
 
+        // Resolve container info for submissions whose container is deleted, moved, or unmapped
+        for (Submission submission : submissions.getPage()) {
+            String sContainerJid = submission.getContainerJid();
+            String sProblemJid = submission.getProblemJid();
+            if (!containerPathsMap.containsKey(sContainerJid) || containerPathsMap.get(sContainerJid).isEmpty()) {
+                List<ProblemSetProblemModel> psps = problemSetProblemDao.selectAllByProblemJid(sProblemJid);
+                boolean resolved = false;
+                for (ProblemSetProblemModel psp : psps) {
+                    Optional<ProblemSet> maybePs = problemSetStore.getProblemSetByJid(psp.problemSetJid);
+                    if (maybePs.isPresent()) {
+                        ProblemSet ps = maybePs.get();
+                        List<String> path = problemSetStore.getProblemSetPathByJid(ps.getJid())
+                                .orElse(List.of(ps.getSlug()));
+                        containerNamesMap.put(sContainerJid, ps.getName());
+                        containerPathsMap.put(sContainerJid, path);
+                        problemAliasesMap.put(sContainerJid + "-" + sProblemJid, psp.alias);
+                        problemAliasesMap.put(sProblemJid, psp.alias);
+                        resolved = true;
+                        break;
+                    }
+                }
+                if (!resolved) {
+                    Optional<ChapterProblemModel> maybeCp = chapterProblemDao.selectByProblemJid(sProblemJid);
+                    if (maybeCp.isPresent()) {
+                        ChapterProblemModel cp = maybeCp.get();
+                        Optional<Chapter> maybeCh = chapterStore.getChapterByJid(cp.chapterJid);
+                        if (maybeCh.isPresent()) {
+                            Chapter ch = maybeCh.get();
+                            List<String> path = chapterStore.getChapterPathByJid(ch.getJid()).orElse(List.of());
+                            containerNamesMap.put(sContainerJid, ch.getName());
+                            containerPathsMap.put(sContainerJid, path);
+                            problemAliasesMap.put(sContainerJid + "-" + sProblemJid, cp.alias);
+                            problemAliasesMap.put(sProblemJid, cp.alias);
+                        }
+                    }
+                }
+            } else {
+                String alias = problemAliasesMap.get(sContainerJid + "-" + sProblemJid);
+                if (alias != null) {
+                    problemAliasesMap.putIfAbsent(sProblemJid, alias);
+                }
+            }
+        }
+
         return new TrainingSubmissionsResponse.Builder()
                 .data(submissions)
                 .config(config)
@@ -186,30 +237,71 @@ public class SubmissionResource {
         String problemJid = submission.getProblemJid();
         String userJid = submission.getUserJid();
 
-        List<String> containerPath;
-        String containerName;
-        String problemAlias;
-        Optional<String> reasonNotAllowedToViewSource;
+        List<String> containerPath = List.of();
+        String containerName = "-";
+        String problemAlias = "-";
+        Optional<String> reasonNotAllowedToViewSource = Optional.empty();
 
         if (SubmissionUtils.isProblemSet(containerJid)) {
-            ProblemSet problemSet = checkFound(problemSetStore.getProblemSetByJid(containerJid));
-            ProblemSetProblem problem = checkFound(problemSetProblemStore.getProblem(problemSet.getJid(), problemJid));
-            containerPath = checkFound(problemSetStore.getProblemSetPathByJid(containerJid));
-            containerName = problemSet.getName();
-            problemAlias = problem.getAlias();
-            reasonNotAllowedToViewSource = submissionRoleChecker.canViewProblemSetSource(actorJid, userJid, problemJid);
+            Optional<ProblemSet> maybeProblemSet = problemSetStore.getProblemSetByJid(containerJid);
+            if (maybeProblemSet.isPresent()) {
+                ProblemSet problemSet = maybeProblemSet.get();
+                Optional<ProblemSetProblem> maybeProblem = problemSetProblemStore.getProblem(problemSet.getJid(), problemJid);
+                containerPath = problemSetStore.getProblemSetPathByJid(containerJid).orElse(List.of());
+                containerName = problemSet.getName();
+                problemAlias = maybeProblem.map(ProblemSetProblem::getAlias).orElse("-");
+                reasonNotAllowedToViewSource = submissionRoleChecker.canViewProblemSetSource(actorJid, userJid, problemJid);
+            }
         } else {
-            Chapter chapter = checkFound(chapterStore.getChapterByJid(containerJid));
-            ChapterProblem problem = checkFound(chapterProblemStore.getProblem(problemJid));
-            containerPath = checkFound(chapterStore.getChapterPathByJid(containerJid));
-            containerName = chapter.getName();
-            problemAlias = problem.getAlias();
-            reasonNotAllowedToViewSource = submissionRoleChecker.canViewChapterSource(actorJid, userJid, problemJid);
+            Optional<Chapter> maybeChapter = chapterStore.getChapterByJid(containerJid);
+            if (maybeChapter.isPresent()) {
+                Chapter chapter = maybeChapter.get();
+                Optional<ChapterProblem> maybeProblem = chapterProblemStore.getProblem(problemJid);
+                containerPath = chapterStore.getChapterPathByJid(containerJid).orElse(List.of());
+                containerName = chapter.getName();
+                problemAlias = maybeProblem.map(ChapterProblem::getAlias).orElse("-");
+                reasonNotAllowedToViewSource = submissionRoleChecker.canViewChapterSource(actorJid, userJid, problemJid);
+            }
+        }
+
+        // Fallback: If container was deleted or not resolved, look up where problemJid currently lives
+        if (containerPath.isEmpty()) {
+            List<ProblemSetProblemModel> psps = problemSetProblemDao.selectAllByProblemJid(problemJid);
+            for (ProblemSetProblemModel psp : psps) {
+                Optional<ProblemSet> maybePs = problemSetStore.getProblemSetByJid(psp.problemSetJid);
+                if (maybePs.isPresent()) {
+                    ProblemSet ps = maybePs.get();
+                    containerPath = problemSetStore.getProblemSetPathByJid(ps.getJid()).orElse(List.of(ps.getSlug()));
+                    containerName = ps.getName();
+                    problemAlias = psp.alias;
+                    reasonNotAllowedToViewSource = submissionRoleChecker.canViewProblemSetSource(actorJid, userJid, problemJid);
+                    break;
+                }
+            }
+        }
+        if (containerPath.isEmpty()) {
+            Optional<ChapterProblemModel> maybeCp = chapterProblemDao.selectByProblemJid(problemJid);
+            if (maybeCp.isPresent()) {
+                ChapterProblemModel cp = maybeCp.get();
+                Optional<Chapter> maybeCh = chapterStore.getChapterByJid(cp.chapterJid);
+                if (maybeCh.isPresent()) {
+                    Chapter ch = maybeCh.get();
+                    containerPath = chapterStore.getChapterPathByJid(ch.getJid()).orElse(List.of());
+                    containerName = ch.getName();
+                    problemAlias = cp.alias;
+                    reasonNotAllowedToViewSource = submissionRoleChecker.canViewChapterSource(actorJid, userJid, problemJid);
+                }
+            }
+        }
+
+        if (!reasonNotAllowedToViewSource.isPresent()) {
+            reasonNotAllowedToViewSource = submissionRoleChecker.canViewProblemSetSource(actorJid, userJid, problemJid);
         }
 
         ProblemInfo problem = problemService.getProblem(submission.getProblemJid());
 
-        Profile profile = checkFound(Optional.ofNullable(profileStore.getProfile(userJid)));
+        Profile profile = Optional.ofNullable(profileStore.getProfile(userJid))
+                .orElseGet(() -> new Profile.Builder().username("(unknown)").build());
 
         SubmissionWithSource submissionWithSource;
         if (reasonNotAllowedToViewSource.isPresent()) {
@@ -225,11 +317,14 @@ public class SubmissionResource {
                     .build();
         }
 
+        String problemName = Optional.ofNullable(ProblemUtils.getProblemName(problem, language))
+                .orElseGet(() -> problem.getSlug().orElse("(Deleted Problem)"));
+
         return new SubmissionWithSourceResponse.Builder()
                 .data(submissionWithSource)
                 .profile(profile)
                 .problemAlias(problemAlias)
-                .problemName(ProblemUtils.getProblemName(problem, language))
+                .problemName(problemName)
                 .containerPath(containerPath)
                 .containerName(containerName)
                 .build();

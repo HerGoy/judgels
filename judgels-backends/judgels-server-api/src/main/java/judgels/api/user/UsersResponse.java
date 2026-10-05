@@ -12,5 +12,10 @@ public interface UsersResponse {
     Page<User> getData();
     Map<String, Instant> getLastSessionTimesMap();
 
+    @Value.Default
+    default Map<String, Boolean> getActivationStatusesMap() {
+        return Map.of();
+    }
+
     class Builder extends ImmutableUsersResponse.Builder {}
 }

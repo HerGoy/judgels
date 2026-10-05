@@ -54,3 +54,10 @@ export const updateArchiveMutationOptions = archiveJid => ({
     queryClient.invalidateQueries({ queryKey: ['archive-by-slug'] });
   },
 });
+
+export const deleteArchiveMutationOptions = () => ({
+  mutationFn: archiveJid => archiveAPI.deleteArchive(getToken(), archiveJid),
+  onSuccess: () => {
+    queryClient.invalidateQueries(archivesQueryOptions());
+  },
+});

@@ -34,3 +34,11 @@ export const updateChapterMutationOptions = chapterJid => ({
     queryClient.invalidateQueries({ queryKey: ['chapter-by-jid'] });
   },
 });
+
+export const deleteChapterMutationOptions = () => ({
+  mutationFn: chapterJid => chapterAPI.deleteChapter(getToken(), chapterJid),
+  onSuccess: () => {
+    queryClient.invalidateQueries(chaptersQueryOptions());
+    queryClient.invalidateQueries({ queryKey: ['chapter-by-jid'] });
+  },
+});
